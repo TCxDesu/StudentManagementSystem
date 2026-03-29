@@ -249,7 +249,7 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
-        jLabel7.setText("Project Version: v1.0.5");
+        jLabel7.setText("Project Version: v1.0.5.2");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle8.png"))); // NOI18N
@@ -331,7 +331,7 @@ public class LogIn extends javax.swing.JFrame {
 
     private void pwdPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdPassFocusLost
         pwdPass.setForeground(Color.GRAY);
-        if (password.trim().length() != 0 && !password.trim().equals("Enter Username")) {
+        if (password.trim().length() != 0 && !password.trim().equals("Enter Password")) {
             txtUser.setText(username);
             pwdPass.setEchoChar('\u25cf');
         } else {
@@ -661,11 +661,13 @@ public class LogIn extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(rootPane, "An Admin Is Already Signed In!");
                     } else if (rs.getInt("status") == 1) {
                         JOptionPane.showMessageDialog(rootPane, "An Account Is Already Signed In!");
+
                     } else {
                         UpdateStatus1(rs.getInt("isAdmin"));
                     }
                     break;
                 }
+                
             }
 
         } catch (Exception e) {
@@ -780,7 +782,6 @@ public class LogIn extends javax.swing.JFrame {
 
             while (rs.next()) {
                 if (rs.getInt(1) == 1) {
-                    JOptionPane.showMessageDialog(rootPane, "An Account Is Already Signed In!");
                     i = 1;
                     break;
                 } else {
@@ -790,7 +791,10 @@ public class LogIn extends javax.swing.JFrame {
 
             if (i == 0) {
                 login();
+            } else if (i == 1) {
+                checkAdmin();
             }
+
         } catch (Exception e) {
             System.out.println("Error checkStatus: " + e);
         }
