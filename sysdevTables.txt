@@ -1,0 +1,60 @@
+audit table
+
+CREATE TABLE `audit` (
+  `Time` datetime NOT NULL,
+  `User` varchar(255) NOT NULL,
+  `Admin` int(11) NOT NULL,
+  `Action` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+infologin table
+
+CREATE TABLE `infologin` (
+  `Username` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `isAdmin` int(11) NOT NULL,
+  `pChange` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Block` int(11) NOT NULL,
+  `Date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+infouser table
+
+CREATE TABLE `infouser` (
+  `username` varchar(255) NOT NULL,
+  `First_Name` varchar(255) DEFAULT NULL,
+  `Last_Name` varchar(255) DEFAULT NULL,
+  `Middle_Name` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+infostudent table
+
+CREATE TABLE `infostudent` (
+  `LRN` bigint(20) NOT NULL,
+  `GradeAndSection` varchar(255) DEFAULT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Birthdate` varchar(255) DEFAULT NULL,
+  `Birthplace` varchar(255) DEFAULT NULL,
+  `ContactNumber` bigint(20) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `Religion` varchar(255) DEFAULT NULL,
+  `Gender` varchar(255) DEFAULT NULL,
+  `FatherName` varchar(255) DEFAULT NULL,
+  `FatherOccupation` varchar(255) DEFAULT NULL,
+  `MotherName` varchar(255) DEFAULT NULL,
+  `MotherOccupation` varchar(255) DEFAULT NULL,
+  `GuardianName` varchar(255) DEFAULT NULL,
+  `GuardianOccupation` varchar(255) DEFAULT NULL,
+  `PersonToNotif` varchar(255) DEFAULT NULL,
+  `PersonContact` bigint(20) DEFAULT NULL,
+  `4Ps` int(11) DEFAULT NULL,
+  `WorkingStudent` int(11) DEFAULT NULL,
+  `NatureOfWork` varchar(255) DEFAULT NULL,
+  `EmployerName` varchar(255) DEFAULT NULL,
+  `EnterWorkAddress` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

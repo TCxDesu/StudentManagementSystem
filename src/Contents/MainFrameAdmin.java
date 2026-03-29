@@ -8,6 +8,7 @@ import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 
 /**
  *
@@ -96,6 +98,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         lblLogo1 = new javax.swing.JLabel();
         boxSort = new javax.swing.JComboBox<>();
         boxOrderWhat = new javax.swing.JComboBox<>();
+        btnDownload = new javax.swing.JButton();
         pnlRight_1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         lblLogo8 = new javax.swing.JLabel();
@@ -192,7 +195,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 txtSearchActionPerformed(evt);
             }
         });
-        pnlRight_4.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 35, 260, 30));
+        pnlRight_4.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 35, 210, 30));
 
         icSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/search.png"))); // NOI18N
         pnlRight_4.add(icSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 38, -1, -1));
@@ -291,7 +294,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 boxSortActionPerformed(evt);
             }
         });
-        pnlRight_4.add(boxSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 110, 40));
+        pnlRight_4.add(boxSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 110, 40));
 
         boxOrderWhat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Admin", "User" }));
         boxOrderWhat.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +302,15 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 boxOrderWhatActionPerformed(evt);
             }
         });
-        pnlRight_4.add(boxOrderWhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 110, 40));
+        pnlRight_4.add(boxOrderWhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 90, 40));
+
+        btnDownload.setText("DL");
+        btnDownload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDownloadActionPerformed(evt);
+            }
+        });
+        pnlRight_4.add(btnDownload, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 60, -1));
 
         pnlMain_2.add(pnlRight_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
@@ -334,6 +345,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlRight_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSave.setText("Save File");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         pnlRight_5.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 550, 140, -1));
 
         txtAuditSearch.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
@@ -908,6 +924,14 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        print(audits);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnDownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadActionPerformed
+        print(tblAccounts);
+    }//GEN-LAST:event_btnDownloadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -968,6 +992,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> boxSort;
     private javax.swing.JComboBox<String> boxSort1;
     private javax.swing.JLabel btnClose;
+    private javax.swing.JButton btnDownload;
     private javax.swing.JButton btnSave;
     private javax.swing.JMenuItem delete;
     private javax.swing.JLabel icSearch;
@@ -1534,6 +1559,13 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             pst.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error: " + e);
+        }
+    }
+    
+    private void print(JTable Tbl) {
+        try {
+            Tbl.print();
+        } catch (Exception e) {
         }
     }
 }

@@ -1821,7 +1821,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
             evt.consume();
         }
 
-        
+
     }//GEN-LAST:event_txtBKeyTyped
 
     private void txtCNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCNKeyTyped
@@ -2122,6 +2122,151 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     public void setPassword(String y) {
         password = y;
         System.out.println(password);
+    }
+
+    public void setUp() {
+        String sql = "select * from infostudent where LRN = ?";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, username);
+            pst.executeQuery();
+            ResultSet rs = pst.getResultSet();
+            if (rs.first()) {
+                if (!rs.getString("LRN").isEmpty()) {
+                    if (!rs.getString("GradeAndSection").isEmpty()) {
+                        if (!rs.getString("Name").isEmpty()) {
+                            if (!rs.getString("Birthdate").isEmpty()) {
+                                if (!rs.getString("Birthplace").isEmpty()) {
+                                    if (!rs.getString("ContactNumber").isEmpty()) {
+                                        if (!rs.getString("Address").isEmpty()) {
+                                            if (!rs.getString("Religion").isEmpty()) {
+                                                if (!rs.getString("Gender").isEmpty()) {
+                                                    if (!rs.getString("FatherName").isEmpty()) {
+                                                        if (!rs.getString("FatherOccupation").isEmpty()) {
+                                                            if (!rs.getString("MotherName").isEmpty()) {
+                                                                if (!rs.getString("MotherOccupation").isEmpty()) {
+                                                                    if (!rs.getString("GuardianName").isEmpty()) {
+                                                                        if (!rs.getString("GuardianOccupation").isEmpty()) {
+                                                                            if (!rs.getString("PersonToNotif").isEmpty()) {
+                                                                                if (!rs.getString("PersonContact").isEmpty()) {
+                                                                                    if (!rs.getString("4Ps").isEmpty()) {
+                                                                                        if (!rs.getString("WorkingStudent").isEmpty()) {
+                                                                                            if (!rs.getString("NatureOfWork").isEmpty()) {
+                                                                                                if (!rs.getString("EmployerName").isEmpty()) {
+                                                                                                    if (!rs.getString("EnterWorkAddress").isEmpty()) {
+                                                                                                        txtLRN.setText(rs.getString("LRN"));
+                                                                                                        txtGAS.setText(rs.getString("GradeAndSection"));
+                                                                                                        txtName.setText(rs.getString("Name"));
+                                                                                                        txtB.setText(rs.getString("Birthdate"));
+                                                                                                        txtBP.setText(rs.getString("Birthplace"));
+                                                                                                        txtCN.setText(rs.getString("ContactNumber"));
+                                                                                                        txtA.setText(rs.getString("Address"));
+                                                                                                        if (rs.getString("Gender").equals("Male")) {
+                                                                                                            rbtnMale.setSelected(true);
+                                                                                                        } else if (rs.getString("Gender").equals("Female")) {
+                                                                                                            rbtnFemale.setSelected(true);
+                                                                                                        }
+                                                                                                        txtFN.setText(rs.getString("FatherName"));
+                                                                                                        txtFO.setText(rs.getString("FatherOccupation"));
+                                                                                                        txtMN.setText(rs.getString("MotherName"));
+                                                                                                        txtMO.setText(rs.getString("MotherOccupation"));
+                                                                                                        txtGN.setText(rs.getString("GuardianName"));
+                                                                                                        txtGO.setText(rs.getString("GuardianOccupation"));
+                                                                                                        txtPE.setText(rs.getString("PersonToNotif"));
+                                                                                                        txtPECN.setText(rs.getString("PersonContact"));
+                                                                                                        if (rs.getInt("4Ps") == 0) {
+                                                                                                            rbtnYes.setSelected(true);
+                                                                                                        } else if (rs.getInt("4Ps") == 1) {
+                                                                                                            rbtnNo.setSelected(true);
+                                                                                                        }
+                                                                                                        if (rs.getInt("WorkingStudent") == 0) {
+                                                                                                            rbtnYes_1.setSelected(true);
+                                                                                                            txtNW.setText(rs.getString("NatureOfWork"));
+                                                                                                            txtE.setText(rs.getString("EmployerName"));
+                                                                                                            txtWA.setText(rs.getString("EnterWorkAddress"));
+                                                                                                            txtNW.setEnabled(true);
+                                                                                                            txtE.setEnabled(true);
+                                                                                                            txtWA.setEnabled(true);
+                                                                                                        } else if (rs.getInt("4Ps") == 1) {
+                                                                                                            rbtnNo_1.setSelected(true);
+                                                                                                            txtNW.setEnabled(false);
+                                                                                                            txtE.setEnabled(false);
+                                                                                                            txtWA.setEnabled(false);
+                                                                                                        }
+
+                                                                                                    } else {
+                                                                                                        txtWA.setText("Enter Work Address");
+                                                                                                    }
+                                                                                                } else {
+                                                                                                    txtE.setText("Enter Employer");
+                                                                                                }
+                                                                                            } else {
+                                                                                                txtNW.setText("Enter Nature of Work");
+                                                                                            }
+                                                                                        } else {
+                                                                                            rbtnYes_1.setSelected(false);
+                                                                                            rbtnNo_1.setSelected(false);
+                                                                                        }
+                                                                                    } else {
+                                                                                        rbtnYes.setSelected(false);
+                                                                                        rbtnNo.setSelected(false);
+                                                                                    }
+                                                                                } else {
+                                                                                    txtPECN.setText("Enter the Person's Contact Number");
+                                                                                }
+                                                                            } else {
+                                                                                txtPE.setText("Enter the Person to notify in case of emergency");
+                                                                            }
+                                                                        } else {
+                                                                            txtGO.setText("Enter Guardian's Occupation");
+                                                                        }
+                                                                    } else {
+                                                                        txtGN.setText("Enter Guardian's Name");
+                                                                    }
+                                                                } else {
+                                                                    txtMO.setText("Enter Mother's Occupation");
+                                                                }
+                                                            } else {
+                                                                txtMN.setText("Enter Mother's Name");
+                                                            }
+                                                        } else {
+                                                            txtFO.setText("Enter Father's Occupation");
+                                                        }
+                                                    } else {
+                                                        txtFN.setText("Enter Father's Name");
+                                                    }
+                                                } else {
+                                                    rbtnMale.setSelected(false);
+                                                    rbtnFemale.setSelected(false);
+                                                }
+                                            } else {
+                                                txtR.setText("Enter Religion");
+                                            }
+                                        } else {
+                                            txtA.setText("Enter Address");
+                                        }
+                                    } else {
+                                        txtCN.setText("Enter Contact Number");
+                                    }
+                                } else {
+                                    txtBP.setText("Enter Birthplace");
+                                }
+                            } else {
+                                txtB.setText("Enter Birthdate");
+                            }
+                        } else {
+                            txtName.setText("Enter Name");
+                        }
+
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+            }
+
+        } catch (Exception e) {
+
+        }
     }
 
     public void setInfo(String user, String p, String fn, String ln, String mn, String a, String b, String g) {

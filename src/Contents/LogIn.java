@@ -257,7 +257,7 @@ public class LogIn extends javax.swing.JFrame {
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
-        jLabel7.setText("Project Version: v1.1.2");
+        jLabel7.setText("Project Version: v1.1.3");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 327, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle9.png"))); // NOI18N
@@ -642,7 +642,7 @@ public void LogIn() {
                             int x = Integer.parseInt("aasdsafasd");
                         }
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+                        LogInStudent(username, password);
                     }
                 } else {
                     resetBlock();
@@ -877,10 +877,10 @@ public void LogIn() {
             ResultSet rizz = spout.getResultSet();
 
             if (rizz.first()) {
-                if(rizz.getInt("status") == 1 || rizz.getInt("status") == 2){
-                LogIn2(decrypt(username1), decrypt(password1));
-                }else{
-                setVisible(true);
+                if (rizz.getInt("status") == 1 || rizz.getInt("status") == 2) {
+                    LogIn2(decrypt(username1), decrypt(password1));
+                } else {
+                    setVisible(true);
                 }
             }
 
@@ -996,6 +996,39 @@ public void LogIn() {
                     resetBlock();
                     username2 = username1;
                     LogIn2(username1, password1);
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Password Must Not Be Blank");
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Username Must Not Be Blank");
+        }
+    }
+
+    private void LogInStudent(String username, String password) {
+
+        String sql = "select * from infostudent where LRN = ?";
+        if (username.trim().length() != 0) {
+            if (password.trim().length() != 0) {
+                try {
+                    PreparedStatement pst = con.prepareStatement(sql);
+                    pst.setString(1, username);
+                    pst.executeQuery();
+                    ResultSet rs = pst.getResultSet();
+                    if (rs.first()) {
+                        if(rs.getString("Name").equals(password)){
+                            JOptionPane.showMessageDialog(rootPane, "Student Account Logged In");
+                            UpdateInfoStudent uis = new UpdateInfoStudent();
+                            uis.setUsername(username);
+                            uis.setUp();
+                        }
+
+                    }else{
+                    JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+                    }
+
+                } catch (Exception e) {
+
                 }
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Password Must Not Be Blank");
