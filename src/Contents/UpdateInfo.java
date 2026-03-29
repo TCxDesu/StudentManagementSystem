@@ -635,7 +635,7 @@ public class UpdateInfo extends javax.swing.JFrame {
     public void UpdateInformation() { //dito aayusin
         try {
 
-            String sql = "update infouser set firstName = ?, lastName = ?, middleName = ?, age = ?, birthday = ?, gender = ? where username = ?";
+            String sql = "update infouser set First_Name = ?, Last_Name = ?, Middle_Name = ?, age = ?, birthday = ?, gender = ? where username = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, txtFN.getText());
             pst.setString(2, txtLN.getText());
@@ -686,7 +686,7 @@ public class UpdateInfo extends javax.swing.JFrame {
 
                 while (rs.next()) {
                     if (rs.getInt("status") == 1) {
-                        if (rs.getInt("pChange") == 2) {
+                        if (rs.getInt("pChange") == 1) {
                             UpdateStatus1();
                             UpdateInformation();
                             break;
@@ -795,8 +795,12 @@ public class UpdateInfo extends javax.swing.JFrame {
 //        flag = 0;
     }
 
-    public void getUsername(String x) {
-        jLabel2.setText(x);
+     public void setUsername(String x) {
+        username = x;
+        getUsername(x);
+    }
+    public String getUsername(String x) {
+        return x;
     }
 
     public void setPassword(String y) {

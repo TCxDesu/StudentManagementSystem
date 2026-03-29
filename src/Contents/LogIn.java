@@ -4,10 +4,24 @@
  */
 package Contents;
 
+import com.mysql.jdbc.Connection;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.security.Key;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -16,22 +30,23 @@ import javax.swing.ImageIcon;
 public class LogIn extends javax.swing.JFrame {
 //modal kurt modal ha
 
-    MethodsLogIn ML = new MethodsLogIn();
-    Methods M = new Methods();
     int flag;
     int x = 0;
-
+    Connection con;
+    final String ALGORITHM = "AES";
+    final String KEY = "1Hbfh667adfDEJ78";
     String username = "";
     String password = "";
+    String username2 = "";
 
     /**
      * Creates new form LogIn
      */
     public LogIn() {
         initComponents();
-        ML.sqlconnect();
-        ML.checkDay();
-        M.usernames();
+        sqlconnect();
+        checkDay();
+        LOGINtoUSER();
         txtUser.setFocusable(false);
         pwdPass.setFocusable(false);
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
@@ -233,7 +248,7 @@ public class LogIn extends javax.swing.JFrame {
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
-        jLabel7.setText("Project Version: v1.0.5.5");
+        jLabel7.setText("Project Version: v1.1.0");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 327, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle9.png"))); // NOI18N
@@ -345,10 +360,7 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_pwdPassMouseClicked
 
     private void btnLIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLIActionPerformed
-        ML.existing(txtUser.getText(), password, pwdPass.getText());
-        if (ML.choice() > 0) {
-            dispose();
-        }
+        LogIn();
     }//GEN-LAST:event_btnLIActionPerformed
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
@@ -362,37 +374,89 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseExited
 
     private void lblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSPMouseClicked
-        ML.showPass(lblSP,pwdPass);
+        if (flag == 0) {
+            flag = 1;
+            pwdPass.setEchoChar(((char) 0));
+            lblSP.setText("Hide Password");
+        } else {
+            flag = 0;
+            pwdPass.setEchoChar(('\u25cf'));
+            lblSP.setText("Show Password");
+        }
     }//GEN-LAST:event_lblSPMouseClicked
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
-        ML.loginKeyPress(evt, username, password, pwdPass.getText());
-        if (ML.choice() > 0) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LogIn();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ALT && x == 0) {
+            x++;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F1 && x == 1) {
+            x++;
+        }
+        if (x == 2) {
+            JOptionPane.showMessageDialog(rootPane, "Power User....");
+            new MainFrameAdmin().setVisible(true);
             dispose();
+            x = 0;
         }
     }//GEN-LAST:event_txtUserKeyPressed
 
     private void pwdPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPassKeyPressed
-        ML.loginKeyPress(evt, username, password, pwdPass.getText());
-        if (ML.choice() > 0) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LogIn();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ALT && x == 0) {
+            x++;
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F1 && x == 1) {
+            x++;
+        }
+        if (x == 2) {
+            JOptionPane.showMessageDialog(rootPane, "Power User....");
+            new MainFrameAdmin().setVisible(true);
             dispose();
+            x = 0;
         }
     }//GEN-LAST:event_pwdPassKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        ML.powerUser(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ALT && x == 0) {
+            x++;
+
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F1 && x == 1) {
+            x++;
+
+        }
+        if (x == 2) {
+            JOptionPane.showMessageDialog(rootPane, "Power User....");
+            new MainFrameAdmin().setVisible(true);
+            dispose();
+            x = 0;
+        }
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        ML.powerUserReleased(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ALT && x > 0) {
+            x--;
+
+        }
     }//GEN-LAST:event_formKeyReleased
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
-        ML.powerUserReleased(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ALT && x > 0) {
+            x--;
+
+        }
     }//GEN-LAST:event_txtUserKeyReleased
 
     private void pwdPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPassKeyReleased
-        ML.powerUserReleased(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ALT && x > 0) {
+            x--;
+
+        }
     }//GEN-LAST:event_pwdPassKeyReleased
 
     /**
@@ -425,7 +489,7 @@ public class LogIn extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MethodsLogIn.startUp();
+                new LogIn().setVisible(true);
             }
         });
     }
@@ -446,5 +510,266 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPasswordField pwdPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+public void LogIn() {
+        int i = 0;
+        String sql = "Select * from infologin where username = ?";
+        String sql2 = "Select * from infologin where username = ? and block <  ?";
+        String sql3 = "Select * from infologin where username = ? and password = ?";
 
+        if (username2.equals(username)) {
+            try {
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, username);
+                pst.executeQuery();
+                ResultSet rs = pst.getResultSet();
+                if (rs.first()) {
+                    try {
+                        PreparedStatement pst2 = con.prepareStatement(sql2);
+                        pst2.setString(1, username);
+                        pst2.setInt(2, 3);
+                        pst2.executeQuery();
+                        ResultSet rs2 = pst2.getResultSet();
+
+                        if (rs2.first()) {
+                            try {
+                                PreparedStatement pst3 = con.prepareStatement(sql3);
+                                pst3.setString(1, username);
+                                pst3.setString(2, encrypt(password));
+                                pst3.executeQuery();
+                                ResultSet rs3 = pst3.getResultSet();
+
+                                if (rs3.first()) {
+                                    if (rs3.getInt("isAdmin") == 1) {
+                                        if (rs3.getInt("status") != 2) {
+                                            statusUpdate(1);
+                                            JOptionPane.showMessageDialog(rootPane, "Welcome Admin");
+                                            MainFrameAdmin mfa = new MainFrameAdmin();
+                                            mfa.setVisible(true);
+                                            dispose();
+                                        } else {
+                                            JOptionPane.showMessageDialog(rootPane, "This Admin Account Is Already Logged In");
+                                        }
+
+                                    } else {
+                                        if (rs3.getInt("status") != 1) {
+                                            statusUpdate(2);
+                                            JOptionPane.showMessageDialog(null, "Successfully Logged In \n       Welcome " + username + "!");
+                                            resetBlock();
+                                            if (rs3.getInt("pChange") == 0) {
+                                                ChangePassword cp = new ChangePassword();
+                                                cp.setUsername(username);
+                                                cp.setVisible(true);
+                                                //                                            } else if (rs3.getInt("pChange") == 1) {
+                                                //                                                UpdateInfo ui = new UpdateInfo();
+                                                //                                                ui.setUsername(username);
+                                                //                                                ui.setVisible(true);
+                                                //                                            } 
+                                            } else {
+                                                MainFrameUser mfu = new MainFrameUser();
+                                                mfu.setVisible(true);
+                                            }
+                                            dispose();
+                                        } else {
+                                            JOptionPane.showMessageDialog(rootPane, "This User Account Is Already Logged In");
+                                        }
+
+                                    }
+                                } else {
+                                    i = rs2.getInt("block");
+                                    int x = Integer.parseInt("aasdsafasd");
+                                }
+                            } catch (Exception e) {
+                                addBlockCount(i + 1);
+                                if (i + 1 < 3) {
+                                    JOptionPane.showMessageDialog(rootPane, "Username and Password does not match");
+                                } else {
+                                    JOptionPane.showMessageDialog(rootPane, "Account Has Been Blocked");
+                                }
+                            }
+
+                        } else {
+
+                            int x = Integer.parseInt("aasdsafasd");
+                        }
+                    } catch (Exception e) {
+
+                        JOptionPane.showMessageDialog(rootPane, "Account Is Blocked");
+                    }
+
+                } else {
+                    int x = Integer.parseInt("aasdsafasd");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+            }
+        } else {
+            resetBlock();
+            username2 = username;
+            LogIn();
+        }
+    }
+
+    public void sqlconnect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql:///dbAccount", "root", "");
+
+        } catch (Exception e) {
+            System.out.println("Connection Error: " + e);
+        }
+    }
+
+    public Key generateKey() throws Exception {
+        Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
+        return key;
+    }
+
+    public String encrypt(String value) {
+        String b64value = "";
+        try {
+            Key key = generateKey();
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] encryptedByteValue = cipher.doFinal(value.getBytes("utf-8"));
+            b64value = new BASE64Encoder().encode(encryptedByteValue);
+        } catch (Exception e) {
+            System.err.println("Error in Encrypt: " + e);
+        }
+        return b64value;
+    }
+
+    public String decrypt(String value) {
+        String decryptedValue = "";
+        try {
+            Key key = generateKey();
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] decryptedValue64 = new BASE64Decoder().decodeBuffer(value);
+            byte[] decryptedByteValue = cipher.doFinal(decryptedValue64);
+            decryptedValue = new String(decryptedByteValue, "utf-8");
+        } catch (Exception e) {
+            System.err.println("Error in Decrypt: " + e);
+        }
+        return decryptedValue;
+    }
+
+    public void addBlockCount(int i) {
+
+        try {
+            String sql = "update infologin set block = ? where username = ?";
+            PreparedStatement pst;
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, i);
+            pst.setString(2, username);
+
+            pst.executeUpdate();
+            System.out.println("hi");
+        } catch (Exception e) {
+            System.out.println("Error in BlockCount: " + e);
+        }
+    }
+
+    public void resetBlock() {
+        try {
+            String sql = "update infologin set block = ? where block < ?";
+            PreparedStatement pst;
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, 0);
+            pst.setInt(2, 3);
+
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Error in resetBlock: " + e);
+        }
+    }
+
+    public void reBlock() {
+        try {
+            String sql = "update infologin set block = ? where block < ?";
+            PreparedStatement pst;
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, 0);
+            pst.setInt(2, 3);
+
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Error in resetBlock: " + e);
+        }
+    }
+
+    public void statusUpdate(int x) {
+
+        try {
+            if (x == 1) {
+                String sql = "update infologin set status = ? where username = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, 2);
+                pst.setString(2, username);
+                pst.executeUpdate();
+
+            } else {
+                String sql = "update infologin set status = ? where username = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, 1);
+                pst.setString(2, username);
+                pst.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error in statusUpdate: " + e);
+        }
+    }
+
+    public void checkDay() {
+        String sql = "select date from infologin";
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                if (!rs.getString(1).equals(ft.format(date))) {
+                    reBlock();
+                    updateDate(ft.format(date));
+                    System.out.println(rs.getString(1));
+                    JOptionPane.showMessageDialog(null, "All Blocks From Yesterday Has Been Reverted");
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error checkDay: " + e);
+        }
+    }
+
+    public void updateDate(String date) {
+        try {
+            String sql = "update infologin set date = ?";
+            PreparedStatement pst;
+            pst = con.prepareStatement(sql);
+            pst.setString(1, date);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error date:" + e);
+        }
+    }
+
+    public void LOGINtoUSER() {
+        String sql = "select username from infologin";
+        String sql2 = "insert into infouser values(?,null,null,null,null,null,null)";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery(sql);
+            while (rs.next()) {
+                PreparedStatement pst2 = con.prepareStatement(sql2);
+                pst2.setString(1, rs.getString("username"));
+                pst2.executeUpdate();
+            }
+        } catch (Exception e) {
+
+        }
+    }
 }

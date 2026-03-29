@@ -35,7 +35,7 @@ public class Methods {
         String password = encrypt(pass);
 
         String sql = "insert into infologin values(?,?,0,?,0,0,CURRENT_TIMESTAMP())";
-        String sql2 = "insert into infouser values(?,null,null,null,null,null,null)";
+        String sql2 = "insert into user values(?,null,null,null,null,null,null)";
         try {
             PreparedStatement pstt = con.prepareStatement(sql2);
             PreparedStatement pst = con.prepareStatement(sql);

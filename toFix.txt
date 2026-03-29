@@ -1,0 +1,8 @@
+Bugs Not Fixed Yet
+
+v1.0.1    - (Not Fixed) TextField And PasswordField Auto Clears 
+                        If A User Attempts To Log In And Fails
+v1.0.5.3  - (Not Fixed) Account That Is Logged In Or Is Being Used Can Be Deleted Or Blocked
+v1.0.5.5  - (Not Fixed) UpdateInfo not working properly (currently under maintenance)
+v1.1.0    - (Not Fixed) Logged In Account Won't Log In Properly 
+v1.1.0    - (Not Fixed) "Username and Password must not be blank" validation doesn't show up

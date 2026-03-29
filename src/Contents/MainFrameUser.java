@@ -612,19 +612,20 @@ public class MainFrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBMouseClicked
 
     private void btnUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUIActionPerformed
-        UpdateInfo ui = new UpdateInfo();
-        ui.setInfo(txtUser.getText(), password, txtFN.getText(), txtLN.getText(), txtMN.getText(), txtAge.getText(), txtBD.getText(), txtGen.getText());
-        ui.setVisible(true);
-        try {
-            sqlconnect();
-            String sqll = "update infologin set pChange = ? where username = ?";
-            PreparedStatement pst = con.prepareStatement(sqll);
-            pst.setInt(1, 2);
-            pst.setString(2, txtUser.getText());
-            pst.executeUpdate();
-        } catch (Exception e) {
-        }
-        setVisible(false);
+//        UpdateInfo ui = new UpdateInfo();
+//        ui.setInfo(txtUser.getText(), password, txtFN.getText(), txtLN.getText(), txtMN.getText(), txtAge.getText(), txtBD.getText(), txtGen.getText());
+//        ui.setVisible(true);
+//        try {
+//            sqlconnect();
+//            String sqll = "update infologin set pChange = ? where username = ?";
+//            PreparedStatement pst = con.prepareStatement(sqll);
+//            pst.setInt(1, 2);
+//            pst.setString(2, txtUser.getText());
+//            pst.executeUpdate();
+//        } catch (Exception e) {
+//        }
+//        setVisible(false);
+        JOptionPane.showMessageDialog(rootPane, "Cuurently under Maintenance");
     }//GEN-LAST:event_btnUIActionPerformed
 
     /**

@@ -1,4 +1,4 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -403,10 +403,12 @@ public class ChangePassword extends javax.swing.JFrame {
             pst.setInt(2, 1);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
-            UpdateInfo ui = new UpdateInfo();
-            ui.setPassword(newPass);
-            ui.getUsername(getUsername());
-            ui.setVisible(true);
+//            UpdateInfo ui = new UpdateInfo();
+//            ui.setPassword(newPass);
+//            ui.getUsername(getUsername());
+//            ui.setVisible(true);
+            MainFrameUser mfu = new MainFrameUser();
+            mfu.setVisible(true);
             dispose();
 
         } catch (Exception e) {
@@ -539,8 +541,7 @@ public class ChangePassword extends javax.swing.JFrame {
 //        lblH_2.setVisible(false);
 //        flag = 0;
     }
-
-    public void setUsername(String x) {
+public void setUsername(String x) {
         username = x;
     }
 
