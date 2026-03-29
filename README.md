@@ -31,12 +31,9 @@ v1.0.2
     - Added KeyEvent(Enter) For Password PasswordField
     - Added PowerUser Function (Alt + F1)
 
-v1.0.3a
+v1.0.3
     - Bug Fix
     - Added A Log Out Function (Only For The User LogIn)
-
-v1.0.3b
-    - Bug Fix
     - Added A Change Password Frame
     - Added A Prototype User Main Frame
     - Added A Prototype Admin Main Frame
@@ -47,12 +44,10 @@ v1.0.4
     - Added Function For Change Password Frame
     - Added Design For Admin Main Frame
 
-v1.0.5
+v1.0.5.1
     - Bug Fix
     - Updated Admin Frame Background
     - Changed Admin Log Out Button To Back Button(Return To LogIn)
-
-v1.0.5.1
     - Added Table In View Tab
     - Added A Table In Block Tab
     - Added A Table In Delete Tab
