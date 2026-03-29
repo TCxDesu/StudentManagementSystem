@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 public class ChangePassword extends javax.swing.JFrame {
 
     Connection con;
+    String username;
+    String password;
 
     /**
      * Creates new form MainFrame
@@ -42,30 +44,35 @@ public class ChangePassword extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         btnClose = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnClr = new javax.swing.JButton();
+        Confirm = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtConfirmPass = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtCPass = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(36, 56, 50));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(36, 56, 50));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo4.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 600));
-
-        jPanel2.setBackground(new java.awt.Color(249, 234, 208));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button-green.png"))); // NOI18N
+        btnClose.setForeground(new java.awt.Color(242, 242, 242));
+        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button.png"))); // NOI18N
+        btnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCloseMouseClicked(evt);
@@ -77,49 +84,298 @@ public class ChangePassword extends javax.swing.JFrame {
                 btnCloseMouseExited(evt);
             }
         });
-        jPanel2.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(572, 6, -1, -1));
+        jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, 30));
 
-        jLabel2.setText("Change Password");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 220));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mainScreenLogo.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel2.setBackground(new java.awt.Color(249, 234, 208));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Change Password");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        btnClr.setBackground(new java.awt.Color(249, 234, 208));
+        btnClr.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnClr.setForeground(new java.awt.Color(36, 56, 50));
+        btnClr.setText("Clear");
+        btnClr.setBorder(null);
+        btnClr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnClr.setFocusable(false);
+        btnClr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClrMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClrMouseExited(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 210, 140, 40));
+        btnClr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClrActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnClr, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 80, 40));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 0, 610, 600));
+        Confirm.setBackground(new java.awt.Color(249, 234, 208));
+        Confirm.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        Confirm.setForeground(new java.awt.Color(36, 56, 50));
+        Confirm.setText("Confirm");
+        Confirm.setBorder(null);
+        Confirm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Confirm.setFocusable(false);
+        Confirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ConfirmMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ConfirmMouseExited(evt);
+            }
+        });
+        Confirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 80, 40));
 
-        setSize(new java.awt.Dimension(800, 600));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 102));
+        jLabel6.setText("Show Password");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 110, -1));
+
+        txtConfirmPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtConfirmPass.setForeground(java.awt.Color.gray);
+        txtConfirmPass.setText("Confirm Change Password");
+        txtConfirmPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtConfirmPass.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtConfirmPass.setEchoChar((char)0);
+        txtConfirmPass.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtConfirmPassCaretUpdate(evt);
+            }
+        });
+        txtConfirmPass.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtConfirmPassFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtConfirmPassFocusLost(evt);
+            }
+        });
+        txtConfirmPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtConfirmPassMouseClicked(evt);
+            }
+        });
+        txtConfirmPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtConfirmPassKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtConfirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 270, -1));
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/lock.png"))); // NOI18N
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/lock.png"))); // NOI18N
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
+
+        txtCPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtCPass.setForeground(new java.awt.Color(255, 255, 255));
+        txtCPass.setText("Change Password");
+        txtCPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        txtCPass.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtCPassCaretUpdate(evt);
+            }
+        });
+        txtCPass.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCPassFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCPassFocusLost(evt);
+            }
+        });
+        txtCPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCPassMouseClicked(evt);
+            }
+        });
+        txtCPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCPassKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCPassKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtCPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
+
+        jLabel7.setText("Project Version: v1.0.3b");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle8.png"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo5.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 480, -1));
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/lock.png"))); // NOI18N
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 600, 580));
+
+        setSize(new java.awt.Dimension(479, 600));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
-        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/cross-button-green.png"));
-        btnClose.setIcon(imgIcon);
-    }//GEN-LAST:event_btnCloseMouseExited
+    private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
+        //kung di na maglalagay close button paalis nalang eto tysm
+        System.exit(0);
+    }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
         Icon imgIcon = new ImageIcon(getClass().getResource("/icons/cross-button-red.png"));
         btnClose.setIcon(imgIcon);
     }//GEN-LAST:event_btnCloseMouseEntered
 
-    private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_btnCloseMouseClicked
+    private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/cross-button.png"));
+        btnClose.setIcon(imgIcon);
+    }//GEN-LAST:event_btnCloseMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        changePassword();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnClrMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClrMouseEntered
+        Color customColor = new Color(119, 112, 99);
+        btnClr.setBackground(customColor);
+    }//GEN-LAST:event_btnClrMouseEntered
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnClrMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClrMouseExited
+        Color customColor = new Color(249, 234, 208);
+        btnClr.setBackground(customColor);
+    }//GEN-LAST:event_btnClrMouseExited
+
+    private void btnClrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClrActionPerformed
+        txtCPass.setText("Change Password");
+        txtConfirmPass.setText("Confirm Change Password");
+        txtCPass.setFocusable(false);
+        txtConfirmPass.setFocusable(false);
+        txtConfirmPass.setEchoChar((char) 0);
+        jLabel6.setText("Show Password");
+    }//GEN-LAST:event_btnClrActionPerformed
+
+    private void ConfirmMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmMouseEntered
+        Color customColor = new Color(119, 112, 99);
+        Confirm.setBackground(customColor);
+    }//GEN-LAST:event_ConfirmMouseEntered
+
+    private void ConfirmMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmMouseExited
+        Color customColor = new Color(249, 234, 208);
+        Confirm.setBackground(customColor);
+    }//GEN-LAST:event_ConfirmMouseExited
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void txtConfirmPassCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtConfirmPassCaretUpdate
+        password = txtConfirmPass.getText();
+    }//GEN-LAST:event_txtConfirmPassCaretUpdate
+
+    private void txtConfirmPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConfirmPassFocusGained
+        Color customColor = new Color(249, 234, 208);
+        txtConfirmPass.setText("");
+        txtConfirmPass.setText(password);
+        txtConfirmPass.setForeground(customColor);
+    }//GEN-LAST:event_txtConfirmPassFocusGained
+
+    private void txtConfirmPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConfirmPassFocusLost
+        txtCPass.setForeground(Color.GRAY);
+        if (password.trim().length() != 0 && !password.trim().equals("Confirm Change Password")) {
+            txtCPass.setText(username);
+        } else {
+            txtConfirmPass.setText("Confirm Change Password");
+            password = "";
+        }
+    }//GEN-LAST:event_txtConfirmPassFocusLost
+
+    private void txtConfirmPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConfirmPassMouseClicked
+        txtCPass.setFocusable(true);
+
+        txtConfirmPass.setFocusable(true);
+        txtConfirmPass.requestFocus();
+    }//GEN-LAST:event_txtConfirmPassMouseClicked
+
+    private void txtConfirmPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConfirmPassKeyReleased
+
+    }//GEN-LAST:event_txtConfirmPassKeyReleased
+
+    private void txtCPassCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCPassCaretUpdate
+        username = txtCPass.getText();
+    }//GEN-LAST:event_txtCPassCaretUpdate
+
+    private void txtCPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCPassFocusGained
+        Color customColor = new Color(249, 234, 208);
+        txtCPass.setText("");
+        txtCPass.setText(username);
+        txtCPass.setForeground(customColor);
+    }//GEN-LAST:event_txtCPassFocusGained
+
+    private void txtCPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCPassFocusLost
+        txtCPass.setForeground(Color.GRAY);
+        if (username.trim().length() != 0 && !username.trim().equals("Change Password")) {
+            txtCPass.setText(username);
+        } else {
+            txtCPass.setText("Change Password");
+            username = "";
+        }
+    }//GEN-LAST:event_txtCPassFocusLost
+
+    private void txtCPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCPassMouseClicked
+        txtCPass.setFocusable(true);
+        txtConfirmPass.setFocusable(true);
+        txtCPass.requestFocus();
+    }//GEN-LAST:event_txtCPassMouseClicked
+
+    private void txtCPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPassKeyPressed
+
+    }//GEN-LAST:event_txtCPassKeyPressed
+
+    private void txtCPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPassKeyReleased
+
+    }//GEN-LAST:event_txtCPassKeyReleased
+
+    private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
+        // TODO add your handling code here:
+        if (txtCPass.getText().isEmpty() && !txtCPass.equals("Change Password")) {
+            JOptionPane.showMessageDialog(rootPane, "Change Password can not be blank!");
+        } else if (txtConfirmPass.getText().isEmpty() && !txtConfirmPass.equals("Confirm Change Password")) {
+            JOptionPane.showMessageDialog(rootPane, "Confirm Change Password can not be blank!");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "tesd");
+        }
+    }//GEN-LAST:event_ConfirmActionPerformed
+
+    public void ChangePassword() {
+        Statement st = con.createStatement();
+        String sql = "select * from infologin";
+        ResultSet rs = st.executeQuery(sql);
+        try {
+            while (rs.next()) {
+
+            }
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -156,13 +412,21 @@ public class ChangePassword extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Confirm;
     private javax.swing.JLabel btnClose;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnClr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txtCPass;
+    private javax.swing.JPasswordField txtConfirmPass;
     // End of variables declaration//GEN-END:variables
 
     public void sqlconnect() {
@@ -174,27 +438,26 @@ public class ChangePassword extends javax.swing.JFrame {
             System.out.println("Connection Error: " + e);
         }
     }
-public void UpdateStatus1() {
 
+    public void UpdateStatus1() {
 
         try {
-            
-                String sql = "update infologin set pChange = ? where status = ?";
-                PreparedStatement pst = con.prepareStatement(sql);
-                pst.setInt(1, 1);
-                pst.setInt(2, 1);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(rootPane, "Password Changed!");
-                MainFrameUser mfu = new MainFrameUser();
-                mfu.setVisible(true);
-                dispose();
-            
+            String sql = "update infologin set pChange = ? where status = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, 1);
+            pst.setInt(2, 1);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(rootPane, "Password Changed!");
+            MainFrameUser mfu = new MainFrameUser();
+            mfu.setVisible(true);
+            dispose();
 
         } catch (Exception e) {
             System.out.println("Error in UpdateStatus1: " + e);
         }
     }
-public void changePassword() {
+
+    public void changePassword() {
         try {
             Statement st = con.createStatement();
             String sql = "select * from infologin";

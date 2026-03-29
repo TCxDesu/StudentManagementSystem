@@ -499,7 +499,8 @@ public class LogIn extends javax.swing.JFrame {
                     ResultSet rs = st.executeQuery(sql);
 
                     while (rs.next()) {
-                        if (rs.getInt("status") == 1) {
+                        if (
+                                rs.getInt("status") == 1) {
                             if (rs.getInt("pChange") == 0) {
                                 ChangePassword cp = new ChangePassword();
                                 cp.setVisible(true);
