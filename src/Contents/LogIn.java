@@ -35,8 +35,8 @@ public class LogIn extends javax.swing.JFrame {
 
     int flag;
     int x = 0;
-    String username;
-    String password;
+    String username = "";
+    String password = "";
     Connection con;
     final String ALGORITHM = "AES";
     final String KEY = "1Hbfh667adfDEJ78";
@@ -66,12 +66,12 @@ public class LogIn extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnClr = new javax.swing.JButton();
         btnLI = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblSP = new javax.swing.JLabel();
         pwdPass = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -95,9 +95,6 @@ public class LogIn extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(36, 56, 50));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo4.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         btnClose.setForeground(new java.awt.Color(242, 242, 242));
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button.png"))); // NOI18N
         btnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -112,7 +109,10 @@ public class LogIn extends javax.swing.JFrame {
                 btnCloseMouseExited(evt);
             }
         });
-        jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, 30));
+        jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, -1, 30));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo4.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 220));
 
@@ -163,14 +163,15 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel2.add(btnLI, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 80, 40));
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 102));
-        jLabel6.setText("Show Password");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblSP.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblSP.setForeground(new java.awt.Color(255, 255, 102));
+        lblSP.setText("Show Password");
+        lblSP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                lblSPMouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 110, -1));
+        jPanel2.add(lblSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 110, -1));
 
         pwdPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         pwdPass.setForeground(java.awt.Color.gray);
@@ -248,7 +249,7 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
-        jLabel7.setText("Project Version: v1.0.3b");
+        jLabel7.setText("Project Version: v1.0.5");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle8.png"))); // NOI18N
@@ -258,7 +259,7 @@ public class LogIn extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 480, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 600, 580));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, -1, 350));
 
         setSize(new java.awt.Dimension(480, 570));
         setLocationRelativeTo(null);
@@ -272,7 +273,7 @@ public class LogIn extends javax.swing.JFrame {
         txtUser.setFocusable(false);
         pwdPass.setFocusable(false);
         pwdPass.setEchoChar((char) 0);
-        jLabel6.setText("Show Password");
+        lblSP.setText("Show Password");
     }//GEN-LAST:event_btnClrActionPerformed
 
     private void btnClrMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClrMouseEntered
@@ -310,7 +311,7 @@ public class LogIn extends javax.swing.JFrame {
 
     private void txtUserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusLost
         txtUser.setForeground(Color.GRAY);
-        if (username.trim().length() != 0 && !username.trim().equals("Enter Username")) {
+        if (username.trim().length() != 0 && !username.equals("Enter Username")) {// may trim dito kanina
             txtUser.setText(username);
         } else {
             txtUser.setText("Enter Username");
@@ -375,9 +376,9 @@ public class LogIn extends javax.swing.JFrame {
         btnClose.setIcon(imgIcon);
     }//GEN-LAST:event_btnCloseMouseExited
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void lblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSPMouseClicked
         showPassword();
-    }//GEN-LAST:event_jLabel6MouseClicked
+    }//GEN-LAST:event_lblSPMouseClicked
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -393,7 +394,7 @@ public class LogIn extends javax.swing.JFrame {
         }
         if (x == 2) {
             JOptionPane.showMessageDialog(rootPane, "Power User....");
-            new PowerUser().setVisible(true);
+            new MainFrameAdmin().setVisible(true);
             dispose();
             x = 0;
         }
@@ -413,7 +414,7 @@ public class LogIn extends javax.swing.JFrame {
         }
         if (x == 2) {
             JOptionPane.showMessageDialog(rootPane, "Power User....");
-            new PowerUser().setVisible(true);
+            new MainFrameAdmin().setVisible(true);
             dispose();
             x = 0;
         }
@@ -431,7 +432,7 @@ public class LogIn extends javax.swing.JFrame {
         }
         if (x == 2) {
             JOptionPane.showMessageDialog(rootPane, "Power User....");
-            new PowerUser().setVisible(true);
+            new MainFrameAdmin().setVisible(true);
             dispose();
             x = 0;
         }
@@ -456,7 +457,6 @@ public class LogIn extends javax.swing.JFrame {
     private void pwdPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPassKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ALT && x > 0) {
             x--;
-
         }
     }//GEN-LAST:event_pwdPassKeyReleased
 
@@ -499,8 +499,7 @@ public class LogIn extends javax.swing.JFrame {
                     ResultSet rs = st.executeQuery(sql);
 
                     while (rs.next()) {
-                        if (
-                                rs.getInt("status") == 1) {
+                        if (rs.getInt("status") == 1) {
                             if (rs.getInt("pChange") == 0) {
                                 ChangePassword cp = new ChangePassword();
                                 cp.setVisible(true);
@@ -540,10 +539,10 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblSP;
     private javax.swing.JPasswordField pwdPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
@@ -803,13 +802,13 @@ public class LogIn extends javax.swing.JFrame {
 //                Icon ImgIcon = new ImageIcon(getClass().getResource("/Image/1667188461554126440-128.png"));
 //                lblEye.setIcon(ImgIcon);
             pwdPass.setEchoChar((char) 0);
-            jLabel6.setText("Hide Password");
+            lblSP.setText("Hide Password");
             flag = 1;
         } else if (flag == 1) {
 //                Icon ImgIcon = new ImageIcon(getClass().getResource("/Image/19318253741554126440-128.png"));
 //                lblEye.setIcon(ImgIcon);
             pwdPass.setEchoChar('\u25cf');
-            jLabel6.setText("Show Password");
+            lblSP.setText("Show Password");
             flag = 0;
         }
     }

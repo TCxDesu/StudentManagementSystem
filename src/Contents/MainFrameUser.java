@@ -21,6 +21,7 @@ public class MainFrameUser extends javax.swing.JFrame {
 
     Connection con;
     String username;
+
     /**
      * Creates new form MainFrame
      */
@@ -92,7 +93,7 @@ public class MainFrameUser extends javax.swing.JFrame {
         jLabel2.setText("User");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 0, 610, 600));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 610, 600));
 
         setSize(new java.awt.Dimension(800, 600));
         setLocationRelativeTo(null);
@@ -162,7 +163,7 @@ public class MainFrameUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 
-public void sqlconnect() {
+    public void sqlconnect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = (Connection) DriverManager.getConnection("jdbc:mysql:///dbAccount", "root", "");
@@ -171,13 +172,13 @@ public void sqlconnect() {
             System.out.println("Connection Error: " + e);
         }
     }
-    
-public void saveUsername(String x){
-username = x;
-//wala pa function to nag iisip pako kung ano mas magandang approach
-}
 
-public void LogOut() {
+    public void saveUsername(String x) {
+        username = x;
+//wala pa function to nag iisip pako kung ano mas magandang approach
+    }
+
+    public void LogOut() {
 
         String sql = "update infologin set status = ? where status = ?";
         try {
@@ -185,7 +186,7 @@ public void LogOut() {
             pst.setInt(1, 0);
             pst.setInt(2, 1);
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(rootPane,"Successfully Signed Out");
+            JOptionPane.showMessageDialog(rootPane, "Successfully Signed Out");
             LogIn li = new LogIn();
             li.setVisible(true);
             dispose();
