@@ -251,10 +251,10 @@ public class LogIn extends javax.swing.JFrame {
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
-        jLabel7.setText("Project Version: v1.0.5.2");
+        jLabel7.setText("Project Version: v1.0.5.4");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 327, 150, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle8.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle9.png"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo5.png"))); // NOI18N
@@ -593,9 +593,9 @@ public class LogIn extends javax.swing.JFrame {
         return decryptedValue;
     }
 
-    public void login(){
+    public void login() {
         int x = 0;
-        
+
         String password2 = pwdPass.getText();
 
         try {
@@ -883,11 +883,14 @@ public class LogIn extends javax.swing.JFrame {
                 if (username2.equals(rs.getString("username"))) {
                     if (rs.getInt("pChange") == 0) {
                         ChangePassword cp = new ChangePassword();
+                        cp.setUsername(username);
                         cp.setVisible(true);
                         dispose();
                         break;
                     } else {
                         MainFrameUser mfu = new MainFrameUser();
+                        mfu.setPassword(password);
+                        mfu.getUsername(username);
                         mfu.setVisible(true);
                         dispose();
                         break;

@@ -27,6 +27,8 @@ public class ChangePassword extends javax.swing.JFrame {
     Connection con;
     String newPass = "";
     String confirmNewPass;
+    String username = "";
+    String password = "";
 
     /**
      * Creates new form MainFrame
@@ -255,7 +257,7 @@ public class ChangePassword extends javax.swing.JFrame {
     }//GEN-LAST:event_pwdCCPKeyPressed
 
     private void pwdCPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdCPFocusGained
-        Color customColor = new Color(249,234,208);
+        Color customColor = new Color(249, 234, 208);
         pwdCP.setText("");
         pwdCP.setText(newPass);
         pwdCP.setForeground(customColor);
@@ -287,7 +289,7 @@ public class ChangePassword extends javax.swing.JFrame {
     }//GEN-LAST:event_pwdCCPMouseClicked
 
     private void pwdCCPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdCCPFocusGained
-        Color customColor = new Color(249,234,208);
+        Color customColor = new Color(249, 234, 208);
         pwdCCP.setText("");
         pwdCCP.setText(confirmNewPass);
         pwdCCP.setForeground(customColor);
@@ -408,6 +410,8 @@ public class ChangePassword extends javax.swing.JFrame {
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
             MainFrameUser mfu = new MainFrameUser();
+            mfu.setPassword(newPass);
+            mfu.getUsername(getUsername());
             mfu.setVisible(true);
             dispose();
 
@@ -470,8 +474,7 @@ public class ChangePassword extends javax.swing.JFrame {
                 } else {
                     c = 1;
                 }
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Confirm new password must not be blank!");
                 pcp = "";
                 pccp = "";
@@ -541,6 +544,14 @@ public class ChangePassword extends javax.swing.JFrame {
 //        lblS_2.setVisible(true);
 //        lblH_2.setVisible(false);
 //        flag = 0;
+    }
+
+    public void setUsername(String x) {
+        username = x;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
 }
