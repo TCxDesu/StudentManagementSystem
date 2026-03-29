@@ -47,7 +47,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     SetTable st;
     String user = "";
     String pass = "";
-
+    String order = "Ascending";
+    String hoarder = "isAdmin < 3";
+    String eggs = "Admin < 3";
+    String sqlSearch = "";
+    String sqlSearchAudit = "";
     /**
      * Creates new form MainFrame
      */
@@ -107,6 +111,8 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblLogo9 = new javax.swing.JLabel();
+        boxSort1 = new javax.swing.JComboBox<>();
+        boxOrderWhat1 = new javax.swing.JComboBox<>();
         pnlRight_6 = new javax.swing.JPanel();
         lblLogo2 = new javax.swing.JLabel();
         lblB = new javax.swing.JLabel();
@@ -179,6 +185,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtSearchCaretUpdate(evt);
+            }
+        });
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
             }
         });
         pnlRight_4.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 35, 260, 30));
@@ -275,9 +286,19 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlRight_4.add(lblLogo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
 
         boxSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascending", "Descending" }));
+        boxSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxSortActionPerformed(evt);
+            }
+        });
         pnlRight_4.add(boxSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 110, 40));
 
-        boxOrderWhat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Username", "First Name", "Last Name", "Middle Name", "Age", "Birthday", "Gender" }));
+        boxOrderWhat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Admin", "User" }));
+        boxOrderWhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxOrderWhatActionPerformed(evt);
+            }
+        });
         pnlRight_4.add(boxOrderWhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 110, 40));
 
         pnlMain_2.add(pnlRight_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
@@ -318,7 +339,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         txtAuditSearch.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtAuditSearch.setForeground(new java.awt.Color(255, 255, 255));
         txtAuditSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        pnlRight_5.add(txtAuditSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 35, 490, 30));
+        pnlRight_5.add(txtAuditSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 35, 260, 30));
 
         scrollP_2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -361,6 +382,22 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         lblLogo9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
         pnlRight_5.add(lblLogo9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 610, 610));
 
+        boxSort1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ascending", "Descending" }));
+        boxSort1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxSort1ActionPerformed(evt);
+            }
+        });
+        pnlRight_5.add(boxSort1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 110, 40));
+
+        boxOrderWhat1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Admin", "User" }));
+        boxOrderWhat1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxOrderWhat1ActionPerformed(evt);
+            }
+        });
+        pnlRight_5.add(boxOrderWhat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 110, 40));
+
         pnlMain_2.add(pnlRight_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_6.setBackground(new java.awt.Color(197, 186, 165));
@@ -392,7 +429,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         });
         pnlMain_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameB_new.png"))); // NOI18N
         pnlMain_1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
@@ -822,6 +859,55 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_auditsKeyReleased
 
+    private void boxSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxSortActionPerformed
+        String s = boxSort.getSelectedItem() + "";
+        order = s;
+        filter(s);
+
+    }//GEN-LAST:event_boxSortActionPerformed
+
+    private void boxOrderWhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOrderWhatActionPerformed
+        hoarder = boxOrderWhat.getSelectedItem() + "";
+
+        switch (hoarder) {
+            case "Admin":
+                hoarder = "isAdmin = 1";
+                break;
+            case "User":
+                hoarder = "isAdmin = 0";
+                break;
+            default:
+                hoarder = "isAdmin < 3";
+        }
+        filter(order);
+    }//GEN-LAST:event_boxOrderWhatActionPerformed
+
+    private void boxSort1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxSort1ActionPerformed
+        String s = boxSort1.getSelectedItem() + "";
+        order = s;
+        filterAudit(order,eggs);
+    }//GEN-LAST:event_boxSort1ActionPerformed
+
+    private void boxOrderWhat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOrderWhat1ActionPerformed
+        String x = boxOrderWhat1.getSelectedItem() + "";
+
+        switch (x) {
+            case "Admin":
+                eggs = "Admin = 1";
+                break;
+            case "User":
+                eggs = "Admin = 0";
+                break;
+            default:
+                eggs = "Admin < 3";
+        }
+        filterAudit(order,eggs);
+    }//GEN-LAST:event_boxOrderWhat1ActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -878,7 +964,9 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JTable audits;
     private javax.swing.JMenuItem blocks;
     private javax.swing.JComboBox<String> boxOrderWhat;
+    private javax.swing.JComboBox<String> boxOrderWhat1;
     private javax.swing.JComboBox<String> boxSort;
+    private javax.swing.JComboBox<String> boxSort1;
     private javax.swing.JLabel btnClose;
     private javax.swing.JButton btnSave;
     private javax.swing.JMenuItem delete;
@@ -935,6 +1023,32 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
+    public void filter(String s) {
+        if (s.equals("Ascending")) {
+            String sql = "select * from infologin where " + hoarder + " order by username asc";
+            st = new SetTable(tblAccounts);
+            st.addCol();
+            st.addRowSearch(sql);
+        } else {
+            String sql2 = "select * from infologin where " + hoarder + " order by username desc";
+            st = new SetTable(tblAccounts);
+            st.addCol();
+            st.addRowSearch(sql2);
+        }
+    }
+
+    public void filterAudit(String s, String hoard) {
+        if (s.equals("Ascending")) {
+            String sql = "select * from audit where " + hoard + " order by time asc";
+            st = new SetTable(audits);
+            st.setTableAuditFiltered(sql);
+        } else {
+            String sql2 = "select * from audit where " + hoard + " order by time desc";
+            st = new SetTable(audits);
+            st.setTableAuditFiltered(sql2);
+        }
+    }
+    
     public void sqlconnect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -959,10 +1073,10 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             pst.setInt(1, 0);
             pst.setInt(2, 2);
             pst.executeUpdate();
-            if(jLabel2.getText().equals("Admin")){
-            JOptionPane.showMessageDialog(rootPane, "Returning to log in");
-            }else{
-            JOptionPane.showMessageDialog(rootPane, "Successfully Logged Out");
+            if (jLabel2.getText().equals("Admin")) {
+                JOptionPane.showMessageDialog(rootPane, "Returning to log in");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Successfully Logged Out");
             }
             LogIn li = new LogIn();
             li.setVisible(true);
@@ -1255,7 +1369,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                     pst.setString(2, username);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Unblocked");
-                    audit(jLabel2.getText(),username, 3);
+                    audit(jLabel2.getText(), username, 3);
                 } catch (Exception e) {
                     System.out.println("Error in updateBlock case 0: " + e);
                 }
@@ -1269,7 +1383,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                     pst.setString(2, username);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Blocked");
-                    audit(jLabel2.getText(),username, 2);
+                    audit(jLabel2.getText(), username, 2);
                 } catch (Exception e) {
                     System.out.println("Error in updateBlock case 3: " + e);
                 }
@@ -1306,7 +1420,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                             pst.setString(1, username);
                             pst.executeUpdate();
                             JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Deleted");
-                            audit(jLabel2.getText(),username, 1);
+                            audit(jLabel2.getText(), username, 1);
 
                         } catch (Exception e) {
                             System.out.println("Error in updateBlock case 0: " + e);
@@ -1391,7 +1505,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
 
     }
 
-    public void audit(String adminname,String username, int x) {
+    public void audit(String adminname, String username, int x) {
         String format = "yyyy-MM-dd hh:mm:ss";
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -1408,13 +1522,13 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             }
             switch (x) {
                 case 1:
-                    pst.setString(3, "Deleted "+username+"'s Account");
+                    pst.setString(3, "Deleted " + username + "'s Account");
                     break;
                 case 2:
-                    pst.setString(3, "Blocked "+username+"'s Account");
+                    pst.setString(3, "Blocked " + username + "'s Account");
                     break;
-                case 3:   
-                    pst.setString(3, "Unblocked "+username+"'s Account");
+                case 3:
+                    pst.setString(3, "Unblocked " + username + "'s Account");
                     break;
             }
             pst.executeUpdate();

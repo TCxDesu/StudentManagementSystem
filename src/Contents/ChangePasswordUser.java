@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -81,7 +83,7 @@ public class ChangePasswordUser extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cPassTop.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cPassTop_new.png"))); // NOI18N
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button.png"))); // NOI18N
@@ -484,7 +486,7 @@ public class ChangePasswordUser extends javax.swing.JFrame {
             pst.setString(2, username);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
-           
+            audit(username, 0);
             dispose();
 
         } catch (Exception e) {
@@ -641,4 +643,22 @@ public class ChangePasswordUser extends javax.swing.JFrame {
         System.out.println(p);
     }
 
+     public void audit(String username, int i) {
+        String format = "yyyy-MM-dd hh:mm:ss";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        System.out.println(sdf.format(date));
+        String sql = "insert into audit values(?,?,?,?)";
+
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, sdf.format(date));
+            pst.setString(2, username);
+            pst.setInt(3, i);
+            pst.setString(4, "Changed Password");
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
 }

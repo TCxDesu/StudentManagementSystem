@@ -11,6 +11,8 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -350,7 +352,7 @@ public class MainFrameUser extends javax.swing.JFrame {
         });
         pnlMain_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameB_new.png"))); // NOI18N
         pnlMain_1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
@@ -611,6 +613,7 @@ public class MainFrameUser extends javax.swing.JFrame {
 
     private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
         LogOut(jLabel2.getText());
+
     }//GEN-LAST:event_lblBMouseClicked
 
     private void btnUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUIActionPerformed
@@ -622,25 +625,25 @@ public class MainFrameUser extends javax.swing.JFrame {
         String Age = txtAge.getText();
         String birthDay = txtBD.getText();
         String gender = txtGen.getText();
-        if(firstName.trim().length() == 0){
-        firstName = "Enter First Name";
+        if (firstName.trim().length() == 0) {
+            firstName = "Enter First Name";
         }
-        if(lastName.trim().length() == 0){
-        lastName = "Enter Last Name";
+        if (lastName.trim().length() == 0) {
+            lastName = "Enter Last Name";
         }
-        if(middleName.trim().length() == 0){
-        middleName = "Enter Middle Name";
+        if (middleName.trim().length() == 0) {
+            middleName = "Enter Middle Name";
         }
-        if(Age.trim().length() == 0){
-        Age = "Age";
+        if (Age.trim().length() == 0) {
+            Age = "Age";
         }
-        if(birthDay.trim().length() == 0){
-        Date date = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        birthDay = ft.format(date);
+        if (birthDay.trim().length() == 0) {
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+            birthDay = ft.format(date);
         }
-        if(gender.trim().length() == 0){
-        gender = "";
+        if (gender.trim().length() == 0) {
+            gender = "";
         }
         ui.setInfo(username1, password, firstName, lastName, middleName, Age, birthDay, gender);
         ui.setVisible(true);
@@ -654,7 +657,6 @@ public class MainFrameUser extends javax.swing.JFrame {
         } catch (Exception e) {
         }
         setVisible(false);
-        JOptionPane.showMessageDialog(rootPane, "Cuurently under Maintenance");
     }//GEN-LAST:event_btnUIActionPerformed
 
     /**
@@ -1000,23 +1002,24 @@ public class MainFrameUser extends javax.swing.JFrame {
         Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
         return key;
     }
-    
+
     public void audit(String username) {
         String format = "yyyy-MM-dd hh:mm:s";
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         System.out.println(sdf.format(date));
-        String sql = "insert into audit values(?,?,?)";
+        String sql = "insert into audit values(?,?,?,?)";
 
         try {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, sdf.format(date));
             pst.setString(2, username);
-            pst.setString(3, "User Logged Out");
+            pst.setInt(3, 0);
+            pst.setString(4, "User Logged Out");
             pst.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
     }
-    
+
 }

@@ -8,14 +8,22 @@ package Contents;
 import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.security.Key;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -24,6 +32,7 @@ import javax.swing.JOptionPane;
 public class ChangePassword extends javax.swing.JFrame {
 
     int flag;
+    String username1 = "", password1 = "";
     Connection con;
     String newPass = "";
     String confirmNewPass;
@@ -77,7 +86,7 @@ public class ChangePassword extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cPassTop.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cPassTop_new.png"))); // NOI18N
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button.png"))); // NOI18N
@@ -392,36 +401,25 @@ public class ChangePassword extends javax.swing.JFrame {
         }
     }
 
-    public void UpdatePassword(int x) {
+    public void UpdatePassword(int x, int stat) {
         try {
 
-            String sql = "update infologin set password = ? where status = ?";
+            String sql = "update infologin set password = ? where username = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             MethodsLogIn li = new MethodsLogIn();
             String c = li.encrypt(pwdCCP.getText());
             pst.setString(1, c);
-            switch(x){
-                case 1:
-                    pst.setInt(2, 1);
-                    break;
-                case 2:
-                    pst.setInt(2, 2);
-                    break;
-            }
-            
+            pst.setString(2, username1);
+
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
 //            UpdateInfo ui = new UpdateInfo();
 //            ui.setPassword(newPass);
 //            ui.getUsername(getUsername());
 //            ui.setVisible(true);
-            if(x == 2){
-            MainFrameAdmin mfa = new MainFrameAdmin();
-            mfa.setVisible(true);
-            }else{
+            audit(username1, stat);
             MainFrameUser mfu = new MainFrameUser();
             mfu.setVisible(true);
-            }
             dispose();
 
         } catch (Exception e) {
@@ -433,17 +431,10 @@ public class ChangePassword extends javax.swing.JFrame {
 
         try {
 
-            String sql = "update infologin set pChange = ? where status = ?";
+            String sql = "update infologin set pChange = ? where username = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, 2);
-            switch(x){
-                case 1:
-                    pst.setInt(2, 1);
-                    break;
-                case 2:
-                    pst.setInt(2, 2);
-                    break;
-            }
+            pst.setString(2, username1);
             pst.executeUpdate();
 //            JOptionPane.showMessageDialog(rootPane, "Password Changed!");
 //            MainFrameUser mfu = new MainFrameUser();
@@ -460,20 +451,20 @@ public class ChangePassword extends javax.swing.JFrame {
         if (c == 1) {
             try {
                 Statement st = con.createStatement();
-                String sql = "select * from infologin";
+                String sql = "select * from infologin where username = '" + username1 + "'";
                 ResultSet rs = st.executeQuery(sql);
 
                 while (rs.next()) {
                     if (rs.getInt("status") == 1) {
                         if (rs.getInt("pChange") == 0) {
                             UpdateStatus1(1);
-                            UpdatePassword(1);
+                            UpdatePassword(1, 0);
                             break;
                         }
-                    } else if (rs.getInt("status") == 2){
+                    } else if (rs.getInt("status") == 2) {
                         if (rs.getInt("pChange") == 0) {
                             UpdateStatus1(2);
-                            UpdatePassword(2);
+                            UpdatePassword(2, 1);
                             break;
                         }
 
@@ -569,6 +560,39 @@ public class ChangePassword extends javax.swing.JFrame {
 //        flag = 0;
     }
 
+    public void checkLogIn() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("single_sign.txt"));
+            username1 = reader.readLine();
+            password1 = reader.readLine();
+        } catch (Exception e) {
+            setVisible(true);
+        }
+    }
+
+    final String ALGORITHM = "AES";
+    final String KEY = "1Hbfh667adfDEJ78";
+
+    public String decrypt(String value) {
+        String decryptedValue = "";
+        try {
+            Key key = generateKey();
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] decryptedValue64 = new BASE64Decoder().decodeBuffer(value);
+            byte[] decryptedByteValue = cipher.doFinal(decryptedValue64);
+            decryptedValue = new String(decryptedByteValue, "utf-8");
+        } catch (Exception e) {
+            System.err.println("Error in Decrypt: " + e);
+        }
+        return decryptedValue;
+    }
+
+    public Key generateKey() throws Exception {
+        Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
+        return key;
+    }
+
     public void setUsername(String x) {
         username = x;
     }
@@ -577,4 +601,22 @@ public class ChangePassword extends javax.swing.JFrame {
         return username;
     }
 
+    public void audit(String username, int i) {
+        String format = "yyyy-MM-dd hh:mm:ss";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        System.out.println(sdf.format(date));
+        String sql = "insert into audit values(?,?,?,?)";
+
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, sdf.format(date));
+            pst.setString(2, username);
+            pst.setInt(3, i);
+            pst.setString(4, "Changed Password (Initial LogIn)");
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
 }

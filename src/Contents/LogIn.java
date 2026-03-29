@@ -7,6 +7,12 @@ package Contents;
 import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
@@ -38,6 +45,7 @@ public class LogIn extends javax.swing.JFrame {
     String username = "";
     String password = "";
     String username2 = "";
+    File file = new File("single_sign.txt");
 
     /**
      * Creates new form LogIn
@@ -47,6 +55,7 @@ public class LogIn extends javax.swing.JFrame {
         sqlconnect();
         checkDay();
         LOGINtoUSER();
+        checkLogIn();
         txtUser.setFocusable(false);
         pwdPass.setFocusable(false);
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
@@ -109,8 +118,8 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, -1, 30));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo4.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/login_new.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 220));
 
@@ -248,7 +257,7 @@ public class LogIn extends javax.swing.JFrame {
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
-        jLabel7.setText("Project Version: v1.1.1");
+        jLabel7.setText("Project Version: v1.1.2");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 327, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle9.png"))); // NOI18N
@@ -490,7 +499,7 @@ public class LogIn extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LogIn().setVisible(true);
+                new LogIn();
             }
         });
     }
@@ -512,6 +521,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 public void LogIn() {
+        int x2 = 0;
         int i = 0;
         String sql = "Select * from infologin where username = ?";
         String sql2 = "Select * from infologin where username = ? and block <  ?";
@@ -562,7 +572,9 @@ public void LogIn() {
                                                         MainFrameAdmin mfa = new MainFrameAdmin();
                                                         mfa.setVisible(true);
                                                     }
-                                                    audit(username, x);
+                                                    teemo(username, password);
+
+                                                    audit(username, x, 1);
                                                     dispose();
                                                 } else {
                                                     JOptionPane.showMessageDialog(rootPane, "This Admin Account Is Already Logged In");
@@ -587,7 +599,8 @@ public void LogIn() {
                                                         MainFrameUser mfu = new MainFrameUser();
                                                         mfu.setVisible(true);
                                                     }
-                                                    audit(username, x);
+                                                    teemo(username, password);
+                                                    audit(username, x, 0);
                                                     dispose();
                                                 } else {
                                                     JOptionPane.showMessageDialog(rootPane, "This User Account Is Already Logged In");
@@ -604,7 +617,15 @@ public void LogIn() {
                                             JOptionPane.showMessageDialog(rootPane, "Username and Password does not match");
                                         } else {
                                             JOptionPane.showMessageDialog(rootPane, "Account Has Been Blocked");
-                                            audit(username, i+1);
+                                            String sql4 = "select * from infologin where username = ?";
+                                            PreparedStatement spout = con.prepareStatement(sql4);
+                                            spout.setString(1, username);
+                                            spout.executeQuery();
+                                            ResultSet rizz = spout.getResultSet();
+
+                                            if (rizz.first()) {
+                                                audit(username, 3, rizz.getInt("isAdmin"));
+                                            }
                                         }
                                     }
 
@@ -800,31 +821,187 @@ public void LogIn() {
         }
     }
 
-    public void audit(String username, int x) {
+    public void audit(String username, int x, int i) {
         String format = "yyyy-MM-dd hh:mm:ss";
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         System.out.println(sdf.format(date));
-        String sql = "insert into audit values(?,?,?)";
+        String sql = "insert into audit values(?,?,?,?)";
 
         try {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, sdf.format(date));
             pst.setString(2, username);
+            pst.setInt(3, i);
             switch (x) {
                 case 1:
-                    pst.setString(3, "Logged In As A User");
+                    pst.setString(4, "Logged In As A User");
                     break;
                 case 2:
-                    pst.setString(3, "Logged In As An Admin");
+                    pst.setString(4, "Logged In As An Admin");
                     break;
                 case 3:
-                    pst.setString(3, "Account Has Been Blocked");
+                    pst.setString(4, "Account Has Been Blocked");
                     break;
             }
             pst.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error: " + e);
+        }
+    }
+
+    public void teemo(String username, String password) {
+
+        try {
+            FileWriter fw = new FileWriter("single_sign.txt");
+            fw.write(encrypt(username) + "\n");
+            fw.write(encrypt(password));
+            fw.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void checkLogIn() {
+        String username1 = "", password1 = "";
+        try {
+
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            username1 = reader.readLine();
+            password1 = reader.readLine();
+
+            String sql = "select * from infologin where username = ?";
+            PreparedStatement spout = con.prepareStatement(sql);
+            spout.setString(1, decrypt(username1));
+            spout.executeQuery();
+            ResultSet rizz = spout.getResultSet();
+
+            if (rizz.first()) {
+                if(rizz.getInt("status") == 1 || rizz.getInt("status") == 2){
+                LogIn2(decrypt(username1), decrypt(password1));
+                }else{
+                setVisible(true);
+                }
+            }
+
+        } catch (Exception e) {
+            setVisible(true);
+        }
+    }
+
+    public void LogIn2(String username1, String password1) {
+        int i = 0;
+        String sql = "Select * from infologin where username = ?";
+        String sql2 = "Select * from infologin where username = ? and block <  ?";
+        String sql3 = "Select * from infologin where username = ? and password = ?";
+
+        if (username1.trim().length() != 0) {
+            if (password1.trim().length() != 0) {
+                if (username2.equals(username1)) {
+                    try {
+                        PreparedStatement pst = con.prepareStatement(sql);
+                        pst.setString(1, username1);
+                        pst.executeQuery();
+                        ResultSet rs = pst.getResultSet();
+                        if (rs.first()) {
+                            try {
+                                PreparedStatement pst2 = con.prepareStatement(sql2);
+                                pst2.setString(1, username1);
+                                pst2.setInt(2, 3);
+                                pst2.executeQuery();
+                                ResultSet rs2 = pst2.getResultSet();
+
+                                if (rs2.first()) {
+                                    int x = 0;
+                                    try {
+                                        PreparedStatement pst3 = con.prepareStatement(sql3);
+                                        pst3.setString(1, username1);
+                                        pst3.setString(2, encrypt(password1));
+                                        pst3.executeQuery();
+                                        ResultSet rs3 = pst3.getResultSet();
+
+                                        if (rs3.first()) {
+                                            if (rs3.getInt("isAdmin") == 1) {
+
+                                                statusUpdate(1);
+
+                                                x = 2;
+                                                if (rs3.getInt("pChange") == 0) {
+                                                    ChangePassword cp = new ChangePassword();
+                                                    cp.setUsername(username1);
+                                                    cp.setVisible(true);
+
+                                                    //                                            } else if (rs3.getInt("pChange") == 1) {
+                                                    //                                                UpdateInfo ui = new UpdateInfo();
+                                                    //                                                ui.setUsername(username);
+                                                    //                                                ui.setVisible(true);
+                                                    //                                            } 
+                                                } else {
+                                                    MainFrameAdmin mfa = new MainFrameAdmin();
+                                                    mfa.setVisible(true);
+                                                }
+                                                teemo(username1, password1);
+                                                dispose();
+
+                                            } else {
+
+                                                statusUpdate(2);
+
+                                                x = 1;
+                                                resetBlock();
+                                                if (rs3.getInt("pChange") == 0) {
+                                                    ChangePassword cp = new ChangePassword();
+                                                    cp.setUsername(username1);
+                                                    cp.setVisible(true);
+                                                    //                                            } else if (rs3.getInt("pChange") == 1) {
+                                                    //                                                UpdateInfo ui = new UpdateInfo();
+                                                    //                                                ui.setUsername(username);
+                                                    //                                                ui.setVisible(true);
+                                                    //                                            } 
+                                                } else {
+                                                    MainFrameUser mfu = new MainFrameUser();
+                                                    mfu.setVisible(true);
+                                                }
+                                                teemo(username1, password1);
+                                                dispose();
+
+                                            }
+                                        }
+                                    } catch (Exception e) {
+                                        addBlockCount(i + 1);
+                                        if (i + 1 < 3) {
+                                            JOptionPane.showMessageDialog(rootPane, "Username and Password does not match");
+                                        } else {
+                                            JOptionPane.showMessageDialog(rootPane, "Account Has Been Blocked");
+                                        }
+                                    }
+
+                                } else {
+
+                                    int x = Integer.parseInt("aasdsafasd");
+                                }
+                            } catch (Exception e) {
+
+                                JOptionPane.showMessageDialog(rootPane, "Account Is Blocked");
+                            }
+
+                        } else {
+                            int x = Integer.parseInt("aasdsafasd");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                        JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+                    }
+                } else {
+                    resetBlock();
+                    username2 = username1;
+                    LogIn2(username1, password1);
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Password Must Not Be Blank");
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Username Must Not Be Blank");
         }
     }
 }
