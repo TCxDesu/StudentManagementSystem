@@ -156,14 +156,14 @@ RECORD LOG
 
 SAMPLE TABLE ON MY DATABASE
 - as of(v1.0.0 -> v1.0.3a)
-- 
-+----------+--------------------------+---------+--------+-------+------------+
-| Username | Password                 | isAdmin | status | block | Date       |
-+----------+--------------------------+---------+--------+-------+------------+
-| user1    | lrZNofhNfwtCCupoVU9eJw== |       1 |      0 |     0 | 2023-03-06 |
-| user2    | gDzNC/97HsLYVxeya6hRvQ== |       0 |      0 |     0 | 2023-03-06 |
-| user3    | D2U06T4KBLxCkYFEbHwnqw== |       0 |      0 |     0 | 2023-03-06 |
-+----------+--------------------------+---------+--------+-------+------------+
+-
+- +----------+--------------------------+---------+--------+-------+------------+
+- | Username | Password                 | isAdmin | status | block | Date       |
+- +----------+--------------------------+---------+--------+-------+------------+
+- | user1    | lrZNofhNfwtCCupoVU9eJw== |       1 |      0 |     0 | 2023-03-06 |
+- | user2    | gDzNC/97HsLYVxeya6hRvQ== |       0 |      0 |     0 | 2023-03-06 |
+- | user3    | D2U06T4KBLxCkYFEbHwnqw== |       0 |      0 |     0 | 2023-03-06 |
+- +----------+--------------------------+---------+--------+-------+------------+
 
 - as of(v1.0.3b)
 - 
@@ -177,39 +177,38 @@ SAMPLE TABLE ON MY DATABASE
 - as of(v1.0.4 -> current)
 
 - infologin table
-- 
-+----------+--------------------------+---------+---------+--------+-------+------------+
-| Username | Password                 | pChange | isAdmin | status | block | Date       |
-+----------+--------------------------+---------+---------+--------+-------+-----------+
-| admin    | PGytuvRI/Jmicfl8uOgxqQ== |       0 |       1 |      0 |     0 | 2023-03-16 |
-| user1    | lrZNofhNfwtCCupoVU9eJw== |       0 |       1 |      0 |     0 | 2023-03-16 |
-| user2    | lrZNofhNfwtCCupoVU9eJw== |       1 |       0 |      0 |     0 | 2023-03-16 |
-| user3    | lrZNofhNfwtCCupoVU9eJw== |       1 |       0 |      0 |     0 | 2023-03-16 |
-| user4    | lrZNofhNfwtCCupoVU9eJw== |       0 |       0 |      0 |     3 | 2023-03-16 |
-+----------+--------------------------+---------+---------+--------+-------+-----------+
+- +----------+--------------------------+---------+---------+--------+-------+------------+
+- | Username | Password                 | pChange | isAdmin | status | block | Date       |
+- +----------+--------------------------+---------+---------+--------+-------+-----------+
+- | admin    | PGytuvRI/Jmicfl8uOgxqQ== |       0 |       1 |      0 |     0 | 2023-03-16 |
+- | user1    | lrZNofhNfwtCCupoVU9eJw== |       0 |       1 |      0 |     0 | 2023-03-16 |
+- | user2    | lrZNofhNfwtCCupoVU9eJw== |       1 |       0 |      0 |     0 | 2023-03-16 |
+- | user3    | lrZNofhNfwtCCupoVU9eJw== |       1 |       0 |      0 |     0 | 2023-03-16 |
+- | user4    | lrZNofhNfwtCCupoVU9eJw== |       0 |       0 |      0 |     3 | 2023-03-16 |
+- +----------+--------------------------+---------+---------+--------+-------+-----------+
 
 - infouser table
-- 
-+----------+-----------+----------+------------+------+----------+--------+
-| username | firstName | lastName | middleName | age  | birthday | gender |
-+----------+-----------+----------+------------+------+----------+--------+
-| admin1   | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
-| user1    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
-| user2    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
-| user3    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
-+----------+-----------+----------+------------+------+----------+--------+
+-
+- +----------+-----------+----------+------------+------+----------+--------+
+- | username | firstName | lastName | middleName | age  | birthday | gender |
+- +----------+-----------+----------+------------+------+----------+--------+
+- | admin1   | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
+- | user1    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
+- | user2    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
+- | user3    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
+- +----------+-----------+----------+------------+------+----------+--------+
 
 - audit table
-- 
-+---------------------+--------+------+--------------------------+
-| Time                | User   |Admin | Action                   |
-+---------------------+--------+------+--------------------------+
-| 2023-05-15 07:16:48 | user2  |  0   | Logged In As A User      |
-| 2023-05-15 07:19:21 | user2  |  0   | User Logged Out          |
-| 2023-05-15 07:31:13 | admin1 |  1   | Logged In As An Admin    |
-| 2023-05-16 01:54:17 | admin1 |  1   | Blocked An Account       |
-| 2023-05-16 01:54:41 | admin1 |  1   | Unblocked An Account     |
-| 2023-05-16 01:56:00 | admin1 |  1   | Deleted An Account       |
-+---------------------+--------+------+--------------------------+
+-
+- +---------------------+--------+------+--------------------------+
+- | Time                | User   |Admin | Action                   |
+- +---------------------+--------+------+--------------------------+
+- | 2023-05-15 07:16:48 | user2  |  0   | Logged In As A User      |
+- | 2023-05-15 07:19:21 | user2  |  0   | User Logged Out          |
+- | 2023-05-15 07:31:13 | admin1 |  1   | Logged In As An Admin    |
+- | 2023-05-16 01:54:17 | admin1 |  1   | Blocked An Account       |
+- | 2023-05-16 01:54:41 | admin1 |  1   | Unblocked An Account     |
+- | 2023-05-16 01:56:00 | admin1 |  1   | Deleted An Account       |
+- +---------------------+--------+------+--------------------------+
 
 creating table is on another sysdevTables.txt file
