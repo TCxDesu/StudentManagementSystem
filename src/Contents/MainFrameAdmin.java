@@ -18,12 +18,12 @@ import javax.swing.JOptionPane;
  * @author kurtt
  */
 public class MainFrameAdmin extends javax.swing.JFrame {
-
     int flag = 0;
     Connection con;
     String username;
     Color c = new Color(0, 0, 0, 1);
     Color customColor = new Color(36, 56, 50);
+    SetTable st;
 
     /**
      * Creates new form MainFrame
@@ -31,7 +31,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     public MainFrameAdmin() {
         initComponents();
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-        pnlLeft_1.setBackground(c);
+//        pnlLeft_1.setBackground(c);
         pnlLeft_2.setBackground(c);
         pnlLeft_3.setBackground(c);
         pnlLeft_4.setBackground(c);
@@ -39,14 +39,17 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_6.setBackground(c);
         pnlLeft_7.setBackground(c);
         pnlLeft_8.setBackground(c);
-        pnlRight_1.setVisible(false);
+        pnlRight_1.setVisible(true);
         pnlRight_2.setVisible(false);
         pnlRight_3.setVisible(false);
         pnlRight_4.setVisible(false);
         pnlRight_5.setVisible(false);
         pnlRight_6.setVisible(false);
         pnlRight_7.setVisible(false);
-        pnlRight_8.setVisible(false);    }
+        pnlRight_8.setVisible(false);
+        Changer(1);
+        tblAdd.setEnabled(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,17 +63,27 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlMain_2 = new javax.swing.JPanel();
         btnClose = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        lblLogo = new javax.swing.JLabel();
+        lblB = new javax.swing.JLabel();
         pnlRight_1 = new javax.swing.JPanel();
+        lblLogo8 = new javax.swing.JLabel();
         pnlRight_2 = new javax.swing.JPanel();
+        lblLogo7 = new javax.swing.JLabel();
         pnlRight_3 = new javax.swing.JPanel();
+        lblLogo6 = new javax.swing.JLabel();
         pnlRight_4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAdd = new javax.swing.JTable();
+        lblLogo1 = new javax.swing.JLabel();
         pnlRight_5 = new javax.swing.JPanel();
+        lblLogo9 = new javax.swing.JLabel();
         pnlRight_6 = new javax.swing.JPanel();
+        lblLogo5 = new javax.swing.JLabel();
         pnlRight_7 = new javax.swing.JPanel();
+        lblLogo3 = new javax.swing.JLabel();
         pnlRight_8 = new javax.swing.JPanel();
+        lblLogo2 = new javax.swing.JLabel();
         pnlMain_1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         pnlLeft_8 = new javax.swing.JPanel();
@@ -89,7 +102,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         lblR_2 = new javax.swing.JLabel();
         pnlLeft_1 = new javax.swing.JPanel();
         lblR_1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -115,47 +127,92 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         jLabel2.setText("Admin");
         pnlMain_2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, -1, -1));
 
-        jLabel4.setText("Back");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblB.setText("Back");
+        lblB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                lblBMouseClicked(evt);
             }
         });
-        pnlMain_2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
-
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
-        pnlMain_2.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+        pnlMain_2.add(lblB, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
 
         pnlRight_1.setBackground(new java.awt.Color(249, 234, 208));
         pnlRight_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_1.add(lblLogo8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
 
         pnlRight_2.setBackground(new java.awt.Color(255, 255, 255));
         pnlRight_2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_2.add(lblLogo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_3.setBackground(new java.awt.Color(249, 234, 208));
         pnlRight_3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_3.add(lblLogo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_4.setBackground(new java.awt.Color(255, 255, 255));
         pnlRight_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        tblAdd.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        tblAdd.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblAdd);
+
+        pnlRight_4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 560, 440));
+
+        lblLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_4.add(lblLogo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_5.setBackground(new java.awt.Color(249, 234, 208));
         pnlRight_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_5.add(lblLogo9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_6.setBackground(new java.awt.Color(255, 255, 255));
         pnlRight_6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_6.add(lblLogo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_7.setBackground(new java.awt.Color(249, 234, 208));
         pnlRight_7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_7.add(lblLogo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         pnlRight_8.setBackground(new java.awt.Color(255, 255, 255));
         pnlRight_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_8.add(lblLogo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
         pnlMain_2.add(pnlRight_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         getContentPane().add(pnlMain_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 600, 600));
@@ -163,8 +220,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlMain_1.setBackground(new java.awt.Color(36, 56, 50));
         pnlMain_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
+        pnlMain_1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
-        pnlMain_1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, -1));
+        pnlMain_1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
         pnlMain_1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 435, -1, -1));
@@ -172,7 +232,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_8.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_8.setForeground(new java.awt.Color(249, 234, 208));
+        lblR_8.setForeground(new java.awt.Color(255, 255, 255));
         lblR_8.setText("ABOUT");
         lblR_8.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -194,8 +254,8 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_7.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_7.setForeground(new java.awt.Color(249, 234, 208));
-        lblR_7.setText("DELETE");
+        lblR_7.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_7.setText("BLOCK");
         lblR_7.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 lblR_7FocusGained(evt);
@@ -216,8 +276,8 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_6.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_6.setForeground(new java.awt.Color(249, 234, 208));
-        lblR_6.setText("UPDATE");
+        lblR_6.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_6.setText("DELETE");
         lblR_6.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 lblR_6FocusGained(evt);
@@ -238,7 +298,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_5.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_5.setForeground(new java.awt.Color(249, 234, 208));
+        lblR_5.setForeground(new java.awt.Color(255, 255, 255));
         lblR_5.setText("ADD");
         lblR_5.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -260,8 +320,8 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_4.setForeground(new java.awt.Color(249, 234, 208));
-        lblR_4.setText("ABOUT");
+        lblR_4.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_4.setText("VIEW");
         lblR_4.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 lblR_4FocusGained(evt);
@@ -277,12 +337,12 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         });
         pnlLeft_4.add(lblR_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-        pnlMain_1.add(pnlLeft_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 180, 40));
+        pnlMain_1.add(pnlLeft_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 180, 40));
 
         pnlLeft_3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_3.setForeground(new java.awt.Color(249, 234, 208));
+        lblR_3.setForeground(new java.awt.Color(255, 255, 255));
         lblR_3.setText("CONTACT");
         lblR_3.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -304,7 +364,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_2.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_2.setForeground(new java.awt.Color(249, 234, 208));
+        lblR_2.setForeground(new java.awt.Color(255, 255, 255));
         lblR_2.setText("SERVICES");
         lblR_2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -326,7 +386,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblR_1.setForeground(new java.awt.Color(249, 234, 208));
+        lblR_1.setForeground(new java.awt.Color(255, 255, 255));
         lblR_1.setText("HOME");
         lblR_1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -344,9 +404,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_1.add(lblR_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
         pnlMain_1.add(pnlLeft_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 40));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
-        pnlMain_1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
 
         getContentPane().add(pnlMain_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 600));
 
@@ -368,9 +425,9 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         Closer();
     }//GEN-LAST:event_btnCloseMouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
         LogOut();
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_lblBMouseClicked
 
     private void lblR_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblR_1MouseClicked
         flag = 1;
@@ -394,114 +451,48 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         flag = 4;
         lblR_4.requestFocus();
         pnlRight_4.setVisible(true);
+        st = new SetTable(tblAdd);
+        st.addCol();
+        st.addRow();
+        
     }//GEN-LAST:event_lblR_4MouseClicked
 
     private void lblR_1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_1FocusGained
-        pnlLeft_1.setBackground(Color.GRAY);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
+        Changer(flag);
         
     }//GEN-LAST:event_lblR_1FocusGained
 
     private void lblR_1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_1FocusLost
-        
+
     }//GEN-LAST:event_lblR_1FocusLost
 
     private void lblR_2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_2FocusGained
-        pnlLeft_2.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
+        Changer(flag);
     }//GEN-LAST:event_lblR_2FocusGained
 
     private void lblR_2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_2FocusLost
-       
+
     }//GEN-LAST:event_lblR_2FocusLost
 
     private void lblR_3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_3FocusGained
-        pnlLeft_3.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
-        
+        Changer(flag);
+
     }//GEN-LAST:event_lblR_3FocusGained
 
     private void lblR_3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_3FocusLost
-        
+
     }//GEN-LAST:event_lblR_3FocusLost
 
     private void lblR_4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_4FocusGained
-        pnlLeft_4.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
+        Changer(flag);
     }//GEN-LAST:event_lblR_4FocusGained
 
     private void lblR_4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_4FocusLost
-        
+
     }//GEN-LAST:event_lblR_4FocusLost
 
     private void lblR_5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_5FocusGained
-        pnlLeft_5.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
+        Changer(flag);
     }//GEN-LAST:event_lblR_5FocusGained
 
     private void lblR_5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_5FocusLost
@@ -515,21 +506,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblR_5MouseClicked
 
     private void lblR_6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_6FocusGained
-        pnlLeft_6.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
+        Changer(flag);
     }//GEN-LAST:event_lblR_6FocusGained
 
     private void lblR_6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_6FocusLost
@@ -543,21 +520,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblR_6MouseClicked
 
     private void lblR_7FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_7FocusGained
-        pnlLeft_7.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_8.setBackground(customColor);
-        pnlRight_8.setVisible(false);
+        Changer(flag);
     }//GEN-LAST:event_lblR_7FocusGained
 
     private void lblR_7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_7FocusLost
@@ -571,25 +534,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblR_7MouseClicked
 
     private void lblR_8FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_8FocusGained
-        pnlLeft_8.setBackground(Color.GRAY);
-        pnlLeft_1.setBackground(customColor);
-        pnlRight_1.setVisible(false);
-        pnlLeft_3.setBackground(customColor);
-        pnlRight_3.setVisible(false);
-        pnlLeft_2.setBackground(customColor);
-        pnlRight_2.setVisible(false);
-        pnlLeft_4.setBackground(customColor);
-        pnlRight_4.setVisible(false);
-        pnlLeft_5.setBackground(customColor);
-        pnlRight_5.setVisible(false);
-        pnlLeft_6.setBackground(customColor);
-        pnlRight_6.setVisible(false);
-        pnlLeft_7.setBackground(customColor);
-        pnlRight_7.setVisible(false);
+        Changer(flag);
     }//GEN-LAST:event_lblR_8FocusGained
 
     private void lblR_8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_8FocusLost
-        
+
     }//GEN-LAST:event_lblR_8FocusLost
 
     private void lblR_8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblR_8MouseClicked
@@ -636,22 +585,23 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         });
     }
 
-    public void select() {
-        
-    }
-
-    public void deselect() {
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel lblLogo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblB;
+    private javax.swing.JLabel lblLogo1;
+    private javax.swing.JLabel lblLogo2;
+    private javax.swing.JLabel lblLogo3;
+    private javax.swing.JLabel lblLogo5;
+    private javax.swing.JLabel lblLogo6;
+    private javax.swing.JLabel lblLogo7;
+    private javax.swing.JLabel lblLogo8;
+    private javax.swing.JLabel lblLogo9;
     private javax.swing.JLabel lblR_1;
     private javax.swing.JLabel lblR_2;
     private javax.swing.JLabel lblR_3;
@@ -678,6 +628,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel pnlRight_6;
     private javax.swing.JPanel pnlRight_7;
     private javax.swing.JPanel pnlRight_8;
+    private javax.swing.JTable tblAdd;
     // End of variables declaration//GEN-END:variables
 
     public void sqlconnect() {
@@ -704,7 +655,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             pst.setInt(1, 0);
             pst.setInt(2, 2);
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(rootPane, "Returning to Log In....");
+            JOptionPane.showMessageDialog(rootPane, "Returning to log in");
             LogIn li = new LogIn();
             li.setVisible(true);
             dispose();
@@ -712,7 +663,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             System.out.println("Error us2: " + e);
         }
     }
-    
+
     public void Closer() {
 
         String sql = "update infologin set status = ? where status = ?";
@@ -725,6 +676,150 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             System.exit(0);
         } catch (Exception e) {
             System.exit(0);
+        }
+    }
+
+    public void Changer(int a) {
+        switch (a) {
+            case 1:
+                pnlLeft_1.setBackground(Color.GRAY);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 2:
+                pnlLeft_2.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 3:
+                pnlLeft_3.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 4:
+                pnlLeft_4.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 5:
+                pnlLeft_5.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 6:
+                pnlLeft_6.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 7:
+                pnlLeft_7.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_8.setBackground(customColor);
+                pnlRight_8.setVisible(false);
+                break;
+            case 8:
+                pnlLeft_8.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                pnlLeft_6.setBackground(customColor);
+                pnlRight_6.setVisible(false);
+                pnlLeft_7.setBackground(customColor);
+                pnlRight_7.setVisible(false);
+                break;
+            default:
+                break;
+
         }
     }
 }
