@@ -31,7 +31,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     int flag;
     Connection con;
-    String LRN = "", GAS = "", Name = "", BirthD = "", BirthP = "", CN = "", Address = "", Religion = "", gender = "";
+    String LRN = "", s = "", Name = "", BirthD = "", BirthP = "", CN = "", Address = "", Religion = "", gender = "";
     String fn = "", fo = "", mn = "", mo = "", gn = "", go = "", pe = "", pecn = "";
     String nw = "", e = "", wa = "", rec = "", work = "", l;
     String username = "";
@@ -53,17 +53,18 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
      */
     public UpdateInfoStudent() {
         initComponents();
+        setUp();
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
         txtLRN.setFocusable(false);
-        txtGAS.setFocusable(false);
         txtName.setFocusable(false);
         txtBP.setFocusable(false);
         txtA.setFocusable(false);
         txtB.setFocusable(false);
         txtCN.setFocusable(false);
         txtR.setFocusable(false);
+        txtS.setFocusable(false);
         txtLRN.setBackground(new java.awt.Color(0, 0, 0, 1));
-        txtGAS.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtS.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtName.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtBP.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtCN.setBackground(new java.awt.Color(0, 0, 0, 1));
@@ -114,19 +115,24 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
         pnlOne = new javax.swing.JPanel();
-        rbtnFemale = new radio_button.RadioButtonCustom();
-        rbtnMale = new radio_button.RadioButtonCustom();
+        cmbStrand = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        cmbTrack = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        cmbGL = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        cmbSY = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        txtS = new javax.swing.JTextField();
         txtA = new javax.swing.JTextField();
         txtBP = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
-        txtGAS = new javax.swing.JTextField();
         txtLRN = new javax.swing.JTextField();
         txtB = new javax.swing.JTextField();
         txtCN = new javax.swing.JTextField();
         txtR = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         pnlTwo = new javax.swing.JPanel();
         txtPE = new javax.swing.JTextField();
@@ -137,10 +143,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         txtMO = new javax.swing.JTextField();
         txtGO = new javax.swing.JTextField();
         txtPECN = new javax.swing.JTextField();
-        txtNext1 = new javax.swing.JLabel();
-        txtPrev1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         pnlThree = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -148,15 +151,8 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         txtWA = new javax.swing.JTextField();
         txtNW = new javax.swing.JTextField();
         txtE = new javax.swing.JTextField();
-        txtNext2 = new javax.swing.JLabel();
-        txtPrev2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        rbtnYes = new radio_button.RadioButtonCustom();
-        rbtnNo = new radio_button.RadioButtonCustom();
-        rbtnYes_1 = new radio_button.RadioButtonCustom();
-        rbtnNo_1 = new radio_button.RadioButtonCustom();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -171,7 +167,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtNextMouseClicked(evt);
             }
         });
-        getContentPane().add(txtNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 350, -1, -1));
+        getContentPane().add(txtNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 410, -1, -1));
 
         txtPrev.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtPrev.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,7 +177,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtPrevMouseClicked(evt);
             }
         });
-        getContentPane().add(txtPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 350, -1, -1));
+        getContentPane().add(txtPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 410, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(36, 56, 50));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -209,30 +205,72 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         pnlOne.setBackground(new java.awt.Color(249, 234, 208));
         pnlOne.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        rbtnFemale.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnFemale.setForeground(java.awt.Color.gray);
-        rbtnFemale.setText("Female");
-        rbtnFemale.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnFemale.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnFemaleItemStateChanged(evt);
-            }
-        });
-        pnlOne.add(rbtnFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 175, -1, -1));
+        cmbStrand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "STEM (Science, Technology, Engineering, and Mathemics)", "ABM (Accountancy, Business and Management)", "HUMMS (Humanities and Social Science)", "AAD (Arts and Design)", "TVL  (Technical-Vocational-Livelihood)" }));
+        pnlOne.add(cmbStrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, 250, -1));
 
-        rbtnMale.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnMale.setForeground(java.awt.Color.gray);
-        rbtnMale.setText("Male");
-        rbtnMale.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnMale.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnMaleItemStateChanged(evt);
+        jLabel17.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Strand:");
+        pnlOne.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 105, -1, -1));
+
+        cmbTrack.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AFA (Agricultural-Fishery Arts)", "HE (Home Economics)", "IA (Industrial Arts)", "ICT (Information and Communication Technology)" }));
+        pnlOne.add(cmbTrack, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 180, -1));
+
+        jLabel16.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Track:");
+        pnlOne.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 70, -1, -1));
+
+        cmbGL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12" }));
+        pnlOne.add(cmbGL, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 100, -1));
+
+        jLabel15.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Grade Level:");
+        pnlOne.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+
+        cmbSY.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016 - 2017", "2017 - 2018", "2018 - 2019", "2019 - 2020", "2020 - 2021", "2021 - 2022", "2022 - 2023" }));
+        pnlOne.add(cmbSY, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 35, 100, -1));
+
+        jLabel14.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("School Year:");
+        pnlOne.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 35, -1, -1));
+
+        txtS.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtS.setForeground(new java.awt.Color(255, 255, 255));
+        txtS.setText("Enter Section (e.g. A)");
+        txtS.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtS.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSCaretUpdate(evt);
             }
         });
-        pnlOne.add(rbtnMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 175, -1, -1));
+        txtS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSFocusLost(evt);
+            }
+        });
+        txtS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSMouseClicked(evt);
+            }
+        });
+        txtS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSKeyTyped(evt);
+            }
+        });
+        pnlOne.add(txtS, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 105, 280, -1));
 
         txtA.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtA.setForeground(java.awt.Color.gray);
+        txtA.setForeground(new java.awt.Color(255, 255, 255));
         txtA.setText("Enter Address");
         txtA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtA.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -259,10 +297,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtAKeyPressed(evt);
             }
         });
-        pnlOne.add(txtA, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 680, -1));
+        pnlOne.add(txtA, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 680, -1));
 
         txtBP.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtBP.setForeground(java.awt.Color.gray);
+        txtBP.setForeground(new java.awt.Color(255, 255, 255));
         txtBP.setText("Enter Birthplace");
         txtBP.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtBP.addCaretListener(new javax.swing.event.CaretListener() {
@@ -288,10 +326,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtBPKeyPressed(evt);
             }
         });
-        pnlOne.add(txtBP, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 105, 350, -1));
+        pnlOne.add(txtBP, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 175, 350, -1));
 
         txtName.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtName.setForeground(java.awt.Color.gray);
+        txtName.setForeground(new java.awt.Color(255, 255, 255));
         txtName.setText("Enter Name");
         txtName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtName.addCaretListener(new javax.swing.event.CaretListener() {
@@ -317,39 +355,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtNameKeyPressed(evt);
             }
         });
-        pnlOne.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 350, -1));
-
-        txtGAS.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtGAS.setForeground(java.awt.Color.gray);
-        txtGAS.setText("Enter Grade and Section");
-        txtGAS.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        txtGAS.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtGASCaretUpdate(evt);
-            }
-        });
-        txtGAS.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtGASFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtGASFocusLost(evt);
-            }
-        });
-        txtGAS.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtGASMouseClicked(evt);
-            }
-        });
-        txtGAS.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtGASKeyPressed(evt);
-            }
-        });
-        pnlOne.add(txtGAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 35, 280, -1));
+        pnlOne.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 350, -1));
 
         txtLRN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtLRN.setForeground(java.awt.Color.gray);
+        txtLRN.setForeground(new java.awt.Color(255, 255, 255));
         txtLRN.setText("Enter LRN");
         txtLRN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtLRN.addCaretListener(new javax.swing.event.CaretListener() {
@@ -381,7 +390,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         pnlOne.add(txtLRN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 35, 350, -1));
 
         txtB.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtB.setForeground(java.awt.Color.gray);
+        txtB.setForeground(new java.awt.Color(255, 255, 255));
         txtB.setText("Enter Birthdate");
         txtB.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtB.addCaretListener(new javax.swing.event.CaretListener() {
@@ -410,10 +419,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtBKeyTyped(evt);
             }
         });
-        pnlOne.add(txtB, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 280, -1));
+        pnlOne.add(txtB, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 280, -1));
 
         txtCN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtCN.setForeground(java.awt.Color.gray);
+        txtCN.setForeground(new java.awt.Color(255, 255, 255));
         txtCN.setText("Enter Contact Number");
         txtCN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtCN.addCaretListener(new javax.swing.event.CaretListener() {
@@ -442,10 +451,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtCNKeyTyped(evt);
             }
         });
-        pnlOne.add(txtCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 105, 280, -1));
+        pnlOne.add(txtCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 175, 280, -1));
 
         txtR.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtR.setForeground(java.awt.Color.gray);
+        txtR.setForeground(new java.awt.Color(255, 255, 255));
         txtR.setText("Enter Religion");
         txtR.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtR.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -472,27 +481,25 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtRKeyPressed(evt);
             }
         });
-        pnlOne.add(txtR, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 175, 310, -1));
+        pnlOne.add(txtR, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 245, 310, -1));
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Sex:");
-        pnlOne.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 175, -1, -1));
+        pnlOne.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 245, -1, -1));
         pnlOne.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 248, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
-        pnlOne.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, -2, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/updateInfoStudent.png"))); // NOI18N
+        pnlOne.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
-        pnlOne.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
-
-        getContentPane().add(pnlOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 740, 290));
+        getContentPane().add(pnlOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 740, 340));
 
         pnlTwo.setBackground(new java.awt.Color(249, 234, 208));
+        pnlTwo.setForeground(new java.awt.Color(255, 255, 255));
         pnlTwo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtPE.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtPE.setForeground(java.awt.Color.gray);
+        txtPE.setForeground(new java.awt.Color(255, 255, 255));
         txtPE.setText("Enter the Person to notify in case of emergency");
         txtPE.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtPE.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -514,15 +521,20 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtPEMouseClicked(evt);
             }
         });
+        txtPE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPEActionPerformed(evt);
+            }
+        });
         txtPE.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPEKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 350, -1));
+        pnlTwo.add(txtPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 350, -1));
 
         txtGN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtGN.setForeground(java.awt.Color.gray);
+        txtGN.setForeground(new java.awt.Color(255, 255, 255));
         txtGN.setText("Enter Guardian's Name");
         txtGN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtGN.addCaretListener(new javax.swing.event.CaretListener() {
@@ -548,10 +560,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtGNKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtGN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 125, 350, -1));
+        pnlTwo.add(txtGN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 165, 350, -1));
 
         txtMN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtMN.setForeground(java.awt.Color.gray);
+        txtMN.setForeground(new java.awt.Color(255, 255, 255));
         txtMN.setText("Enter Mother's Name");
         txtMN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtMN.addCaretListener(new javax.swing.event.CaretListener() {
@@ -577,10 +589,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtMNKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtMN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 350, -1));
+        pnlTwo.add(txtMN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 350, -1));
 
         txtFO.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtFO.setForeground(java.awt.Color.gray);
+        txtFO.setForeground(new java.awt.Color(255, 255, 255));
         txtFO.setText("Enter Father's Occupation");
         txtFO.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtFO.addCaretListener(new javax.swing.event.CaretListener() {
@@ -606,10 +618,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtFOKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtFO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 55, 280, -1));
+        pnlTwo.add(txtFO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 95, 280, -1));
 
         txtFN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtFN.setForeground(java.awt.Color.gray);
+        txtFN.setForeground(new java.awt.Color(255, 255, 255));
         txtFN.setText("Enter Father's Name");
         txtFN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtFN.addCaretListener(new javax.swing.event.CaretListener() {
@@ -635,10 +647,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtFNKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtFN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 55, 350, -1));
+        pnlTwo.add(txtFN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 95, 350, -1));
 
         txtMO.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtMO.setForeground(java.awt.Color.gray);
+        txtMO.setForeground(new java.awt.Color(255, 255, 255));
         txtMO.setText("Enter Mother's Occupation");
         txtMO.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtMO.addCaretListener(new javax.swing.event.CaretListener() {
@@ -664,10 +676,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtMOKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtMO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 280, -1));
+        pnlTwo.add(txtMO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 280, -1));
 
         txtGO.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtGO.setForeground(java.awt.Color.gray);
+        txtGO.setForeground(new java.awt.Color(255, 255, 255));
         txtGO.setText("Enter Guardian's Occupation");
         txtGO.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtGO.addCaretListener(new javax.swing.event.CaretListener() {
@@ -693,10 +705,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtGOKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtGO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 125, 280, -1));
+        pnlTwo.add(txtGO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 165, 280, -1));
 
         txtPECN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtPECN.setForeground(java.awt.Color.gray);
+        txtPECN.setForeground(new java.awt.Color(255, 255, 255));
         txtPECN.setText("Enter the Person's Contact Number");
         txtPECN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtPECN.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -723,28 +735,17 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
                 txtPECNKeyPressed(evt);
             }
         });
-        pnlTwo.add(txtPECN, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 280, -1));
-
-        txtNext1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtNext1.setForeground(new java.awt.Color(255, 255, 255));
-        txtNext1.setText("Next");
-        pnlTwo.add(txtNext1, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 240, -1, -1));
-
-        txtPrev1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtPrev1.setForeground(new java.awt.Color(255, 255, 255));
-        txtPrev1.setText("Previous");
-        pnlTwo.add(txtPrev1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 240, -1, -1));
+        pnlTwo.add(txtPECN, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, 280, -1));
         pnlTwo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 248, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
-        pnlTwo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, -2, -1, -1));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/updateInfoStudent.png"))); // NOI18N
         pnlTwo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
 
-        getContentPane().add(pnlTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 740, 290));
+        getContentPane().add(pnlTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 740, 340));
 
         pnlThree.setBackground(new java.awt.Color(249, 234, 208));
+        pnlThree.setForeground(new java.awt.Color(255, 255, 255));
         pnlThree.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
@@ -766,7 +767,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         pnlThree.add(btnUI, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 190, 40));
 
         txtWA.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtWA.setForeground(java.awt.Color.gray);
+        txtWA.setForeground(new java.awt.Color(255, 255, 255));
         txtWA.setText("Enter Work Address");
         txtWA.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtWA.addCaretListener(new javax.swing.event.CaretListener() {
@@ -795,7 +796,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         pnlThree.add(txtWA, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 155, 680, -1));
 
         txtNW.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtNW.setForeground(java.awt.Color.gray);
+        txtNW.setForeground(new java.awt.Color(255, 255, 255));
         txtNW.setText("Enter Nature of Work");
         txtNW.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtNW.addCaretListener(new javax.swing.event.CaretListener() {
@@ -824,7 +825,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         pnlThree.add(txtNW, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 310, -1));
 
         txtE.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtE.setForeground(java.awt.Color.gray);
+        txtE.setForeground(new java.awt.Color(255, 255, 255));
         txtE.setText("Enter Employer");
         txtE.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtE.addCaretListener(new javax.swing.event.CaretListener() {
@@ -851,16 +852,6 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
             }
         });
         pnlThree.add(txtE, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 300, -1));
-
-        txtNext2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtNext2.setForeground(new java.awt.Color(255, 255, 255));
-        txtNext2.setText("Next");
-        pnlThree.add(txtNext2, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 240, -1, -1));
-
-        txtPrev2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtPrev2.setForeground(new java.awt.Color(255, 255, 255));
-        txtPrev2.setText("Previous");
-        pnlThree.add(txtPrev2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 240, -1, -1));
         pnlThree.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 248, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
@@ -868,59 +859,12 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         jLabel12.setText("Working Student:");
         pnlThree.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 85, -1, -1));
 
-        rbtnYes.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnYes.setForeground(java.awt.Color.gray);
-        rbtnYes.setText("Yes");
-        rbtnYes.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnYes.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnYesItemStateChanged(evt);
-            }
-        });
-        pnlThree.add(rbtnYes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 85, -1, -1));
-
-        rbtnNo.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnNo.setForeground(java.awt.Color.gray);
-        rbtnNo.setText("No");
-        rbtnNo.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnNo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnNoItemStateChanged(evt);
-            }
-        });
-        pnlThree.add(rbtnNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 85, -1, -1));
-
-        rbtnYes_1.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnYes_1.setForeground(java.awt.Color.gray);
-        rbtnYes_1.setText("Yes");
-        rbtnYes_1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnYes_1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnYes_1ItemStateChanged(evt);
-            }
-        });
-        pnlThree.add(rbtnYes_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 85, -1, -1));
-
-        rbtnNo_1.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnNo_1.setForeground(java.awt.Color.gray);
-        rbtnNo_1.setText("No");
-        rbtnNo_1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnNo_1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnNo_1ItemStateChanged(evt);
-            }
-        });
-        pnlThree.add(rbtnNo_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(665, 85, -1, -1));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
-        pnlThree.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, -2, -1, -1));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/updateInfoStudent.png"))); // NOI18N
         pnlThree.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
 
-        getContentPane().add(pnlThree, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 740, 290));
+        getContentPane().add(pnlThree, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 740, 340));
 
-        setSize(new java.awt.Dimension(740, 400));
+        setSize(new java.awt.Dimension(740, 450));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -941,46 +885,6 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     private void btnUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUIActionPerformed
         UpdateInformation();
     }//GEN-LAST:event_btnUIActionPerformed
-
-    private void txtGASCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtGASCaretUpdate
-        GAS = txtGAS.getText();
-    }//GEN-LAST:event_txtGASCaretUpdate
-
-    private void txtGASFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGASFocusGained
-        Color customColor = new Color(249, 234, 208);
-        if (txtGAS.getText().equals("Enter Grade and Section")) {
-            txtGAS.setText("");
-        } else {
-            txtGAS.setText(GAS);
-        }
-        txtGAS.setForeground(customColor);
-    }//GEN-LAST:event_txtGASFocusGained
-
-    private void txtGASFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGASFocusLost
-        txtGAS.setForeground(Color.GRAY);
-        if (GAS.trim().length() != 0 && !GAS.equals("Enter Grade and Section")) {// may trim dito kanina
-            txtGAS.setText(GAS);
-        } else {
-            txtGAS.setText("Enter Grade and Section");
-            GAS = "";
-        }
-    }//GEN-LAST:event_txtGASFocusLost
-
-    private void txtGASKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGASKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGASKeyPressed
-
-    private void txtGASMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGASMouseClicked
-        txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
-        txtName.setFocusable(true);
-        txtBP.setFocusable(true);
-        txtCN.setFocusable(true);
-        txtA.setFocusable(true);
-        txtB.setFocusable(true);
-        txtR.setFocusable(true);
-        txtGAS.requestFocus();
-    }//GEN-LAST:event_txtGASMouseClicked
 
     private void txtNameCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNameCaretUpdate
         Name = txtName.getText();
@@ -1008,7 +912,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNameMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
+        txtS.setFocusable(true);
         txtName.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
@@ -1048,8 +952,8 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtBPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBPMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
         txtName.setFocusable(true);
+        txtS.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
         txtA.setFocusable(true);
@@ -1112,8 +1016,8 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtLRNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLRNMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
         txtName.setFocusable(true);
+        txtS.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
         txtA.setFocusable(true);
@@ -1152,8 +1056,8 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
         txtName.setFocusable(true);
+        txtS.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
         txtA.setFocusable(true);
@@ -1192,8 +1096,8 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtCNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCNMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
         txtName.setFocusable(true);
+        txtS.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
         txtA.setFocusable(true);
@@ -1570,7 +1474,6 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
         txtName.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
@@ -1610,7 +1513,6 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     private void txtAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAMouseClicked
         txtLRN.setFocusable(true);
-        txtGAS.setFocusable(true);
         txtName.setFocusable(true);
         txtBP.setFocusable(true);
         txtCN.setFocusable(true);
@@ -1831,6 +1733,54 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCNKeyTyped
 
+    private void txtSCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSCaretUpdate
+        s = txtS.getText();
+    }//GEN-LAST:event_txtSCaretUpdate
+
+    private void txtSFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSFocusGained
+        Color customColor = new Color(249, 234, 208);
+        if (txtS.getText().equals("Enter Section (e.g. A)")) {
+            txtS.setText("");
+        } else {
+            txtS.setText(s);
+        }
+        txtS.setForeground(customColor);
+    }//GEN-LAST:event_txtSFocusGained
+
+    private void txtSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSFocusLost
+        txtS.setForeground(Color.GRAY);
+        if (s.trim().length() != 0 && !s.equals("Enter Section (e.g. A)")) {// may trim dito kanina
+            txtS.setText(s);
+        } else {
+            txtS.setText("Enter Section (e.g. A)");
+            s = "";
+        }
+    }//GEN-LAST:event_txtSFocusLost
+
+    private void txtSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSMouseClicked
+        txtLRN.setFocusable(true);
+        txtName.setFocusable(true);
+        txtS.setFocusable(true);
+        txtBP.setFocusable(true);
+        txtCN.setFocusable(true);
+        txtA.setFocusable(true);
+        txtB.setFocusable(true);
+        txtR.setFocusable(true);
+        txtS.requestFocus();
+    }//GEN-LAST:event_txtSMouseClicked
+
+    private void txtSKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSKeyPressed
+
+    private void txtSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSKeyTyped
+
+    private void txtPEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPEActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1884,32 +1834,31 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;
     private javax.swing.JButton btnUI;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> cmbGL;
+    private javax.swing.JComboBox<String> cmbSY;
+    private javax.swing.JComboBox<String> cmbStrand;
+    private javax.swing.JComboBox<String> cmbTrack;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JPanel pnlOne;
     private javax.swing.JPanel pnlThree;
     private javax.swing.JPanel pnlTwo;
-    private radio_button.RadioButtonCustom rbtnFemale;
     private javax.swing.ButtonGroup rbtnG;
     private javax.swing.ButtonGroup rbtnG_1;
     private javax.swing.ButtonGroup rbtnG_2;
-    private radio_button.RadioButtonCustom rbtnMale;
-    private radio_button.RadioButtonCustom rbtnNo;
-    private radio_button.RadioButtonCustom rbtnNo_1;
-    private radio_button.RadioButtonCustom rbtnYes;
-    private radio_button.RadioButtonCustom rbtnYes_1;
     private javax.swing.JTextField txtA;
     private javax.swing.JTextField txtB;
     private javax.swing.JTextField txtBP;
@@ -1917,7 +1866,6 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     private javax.swing.JTextField txtE;
     private javax.swing.JTextField txtFN;
     private javax.swing.JTextField txtFO;
-    private javax.swing.JTextField txtGAS;
     private javax.swing.JTextField txtGN;
     private javax.swing.JTextField txtGO;
     private javax.swing.JTextField txtLRN;
@@ -1926,14 +1874,11 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     private javax.swing.JTextField txtNW;
     private javax.swing.JTextField txtName;
     private javax.swing.JLabel txtNext;
-    private javax.swing.JLabel txtNext1;
-    private javax.swing.JLabel txtNext2;
     private javax.swing.JTextField txtPE;
     private javax.swing.JTextField txtPECN;
     private javax.swing.JLabel txtPrev;
-    private javax.swing.JLabel txtPrev1;
-    private javax.swing.JLabel txtPrev2;
     private javax.swing.JTextField txtR;
+    private javax.swing.JTextField txtS;
     private javax.swing.JTextField txtWA;
     // End of variables declaration//GEN-END:variables
 
@@ -1948,20 +1893,152 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     }
 
     public void UpdateInformation() { //dito aayusin
+        sqlconnect();
+        String lrn = txtLRN.getText();
+        if(lrn.equals("Enter LRN")){
+        lrn = null;
+        }
+        String sy = cmbSY.getSelectedItem() + "";
+        int gl = Integer.parseInt(cmbGL.getSelectedItem() + "");
+        String track = cmbTrack.getSelectedItem() + "";
+        String strand = cmbStrand.getSelectedItem() + "";
+        String sec = txtS.getText();
+        if(sec.equals("Enter Section (e.g. A)")){
+        sec = null;
+        }
+        String name = txtName.getText();
+        if(name.equals("Enter Name")){
+        name = null;
+        }
+        String bdate = txtB.getText();
+        if(bdate.equals("Enter Birthdate")){
+        bdate = null;
+        }
+        String bplace = txtBP.getText();
+        if(bplace.equals("Enter Birthplace")){
+        bplace = null;
+        }
+        String cont = txtCN.getText();
+        if(cont.equals("Enter Contact Number")){
+        cont = null;
+        }
+        String add = txtA.getText();
+        if(add.equals("Enter Address")){
+        add = null;
+        }
+        String rel = txtR.getText();
+        if(rel.equals("Enter Religion")){
+        rel = null;
+        }
+        String sex = "";
+        if(rbtnMale.isSelected()){
+        sex = "Male";
+        }else if(rbtnFemale.isSelected()){
+        sex = "Female";
+        }else{
+        sex = null;
+        }
+        String dad = txtFN.getText();
+        if(dad.equals("Enter Father's Name")){
+        dad = null;
+        }
+        
+        String dadO = txtFO.getText();
+        if(dadO.equals("Enter Father's Occupation")){
+        dadO = null;
+        }
+        String mom = txtMN.getText();
+        if(mom.equals("Enter Mother's Name")){
+        mom = null;
+        }
+        String momO = txtMO.getText();
+        if(momO.equals("Enter Mother's Occupation")){
+        momO = null;
+        }
+        String gua = txtGN.getText();
+        if(gua.equals("Enter Guardian's Name")){
+        gua = null;
+        }
+        String guaO = txtGO.getText();
+        if(guaO.equals("Enter Guardian's Occupation")){
+        guaO = null;
+        }
+        String per = txtPE.getText();
+        if(per.equals("Enter the Person to notify in case of emergency")){
+        per = null;
+        }
+        String perC = txtPECN.getText();
+        if(perC.equals("Enter the Person's Contact Number")){
+        perC = null;
+        }
+        String pppp = "";
+        if(rbtnYes.isSelected()){
+        pppp = "0";
+        }else if(rbtnNo.isSelected()){
+        pppp = "1";
+        }else{
+        pppp = null;
+        }
+        String work = "";
+        String nature = "";
+        String emp = "";
+        String workadd = "";
+        if(rbtnYes_1.isSelected()){
+        work = "0";
+        nature = txtNW.getText();
+        emp = txtE.getText();
+        workadd = txtWA.getText();
+        }else if(rbtnNo_1.isSelected()){
+        work = "1";
+        nature = null;
+        emp = null;
+        workadd = null;
+        }else{
+        work = null;
+        nature = null;
+        emp = null;
+        workadd = null;
+        }
+        
         try {
 
-            String sql = "update infouser set First_Name = ?, Last_Name = ?, Middle_Name = ?, age = ?, birthday = ?, gender = ? where username = ?";
+            String sql = "update infostudent set LRN = ?, SchoolYear = ?, GradeLevel = ?, Strand = ?, Section = ?, "
+                    + "Track = ?, Name = ?, Birthdate = ?, Birthplace = ?, ContactNumber = ?, Address = ?, "
+                    + "Religion = ?, Gender = ?, FatherName = ?, FatherOccupation = ?, MotherName = ?, "
+                    + "MotherOccupation = ?, GuardianName = ?, GuardianOccupation = ?, PersonToNotif = ?, "
+                    + "PersonContact = ?, 4Ps = ?, WorkingStudent = ?, NatureOfWork = ?, EmployerName = ?, "
+                    + "EnterWorkAddress = ? where username = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, txtGAS.getText());
-            pst.setString(2, txtName.getText());
-            pst.setString(3, txtBP.getText());
-            pst.setInt(4, ageU);
-            pst.setString(5, txtB.getText());
-            pst.setString(6, gender);
-            pst.setString(7, jLabel2.getText());
+            pst.setString(1, lrn);
+            pst.setString(2, sy);
+            pst.setInt(3, gl);
+            pst.setString(4, strand);
+            pst.setString(5, sec);
+            pst.setString(6, track);
+            pst.setString(7, name);
+            pst.setString(8, bdate);
+            pst.setString(9, bplace);
+            pst.setString(10, cont);
+            pst.setString(11, add);
+            pst.setString(12, rel);
+            pst.setString(13, sex);
+            pst.setString(14, dad);
+            pst.setString(15, dadO);
+            pst.setString(16, mom);
+            pst.setString(17, momO);
+            pst.setString(18, gua);
+            pst.setString(19, guaO);
+            pst.setString(20, per);
+            pst.setString(21, perC);
+            pst.setString(22, pppp);
+            pst.setString(23, work);
+            pst.setString(24, nature);
+            pst.setString(25, emp);
+            pst.setString(26, workadd);
+            pst.setString(27, getUsername());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Personal Information Updated!");
-            MainFrameUser mfu = new MainFrameUser();
+            MainFrameStudent mfu = new MainFrameStudent();
             mfu.setPassword(password);
             mfu.getUsername(jLabel2.getText());
             mfu.setVisible(true);
@@ -2019,7 +2096,7 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 //
 
     public int check() {
-        String fn = txtGAS.getText();
+//        String fn = txtGAS.getText();
         String ln = txtName.getText();
         String mn = txtBP.getText();
         int c = 0;
@@ -2112,11 +2189,10 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
 
     public void setUsername(String x) {
         username = x;
-        getUsername(x);
     }
 
-    public String getUsername(String x) {
-        return x;
+    public String getUsername() {
+        return username;
     }
 
     public void setPassword(String y) {
@@ -2131,138 +2207,137 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
             pst.setString(1, username);
             pst.executeQuery();
             ResultSet rs = pst.getResultSet();
-            if (rs.first()) {
-                if (!rs.getString("LRN").isEmpty()) {
-                    if (!rs.getString("GradeAndSection").isEmpty()) {
-                        if (!rs.getString("Name").isEmpty()) {
-                            if (!rs.getString("Birthdate").isEmpty()) {
-                                if (!rs.getString("Birthplace").isEmpty()) {
-                                    if (!rs.getString("ContactNumber").isEmpty()) {
-                                        if (!rs.getString("Address").isEmpty()) {
-                                            if (!rs.getString("Religion").isEmpty()) {
-                                                if (!rs.getString("Gender").isEmpty()) {
-                                                    if (!rs.getString("FatherName").isEmpty()) {
-                                                        if (!rs.getString("FatherOccupation").isEmpty()) {
-                                                            if (!rs.getString("MotherName").isEmpty()) {
-                                                                if (!rs.getString("MotherOccupation").isEmpty()) {
-                                                                    if (!rs.getString("GuardianName").isEmpty()) {
-                                                                        if (!rs.getString("GuardianOccupation").isEmpty()) {
-                                                                            if (!rs.getString("PersonToNotif").isEmpty()) {
-                                                                                if (!rs.getString("PersonContact").isEmpty()) {
-                                                                                    if (!rs.getString("4Ps").isEmpty()) {
-                                                                                        if (!rs.getString("WorkingStudent").isEmpty()) {
-                                                                                            if (!rs.getString("NatureOfWork").isEmpty()) {
-                                                                                                if (!rs.getString("EmployerName").isEmpty()) {
-                                                                                                    if (!rs.getString("EnterWorkAddress").isEmpty()) {
-                                                                                                        txtLRN.setText(rs.getString("LRN"));
-                                                                                                        txtGAS.setText(rs.getString("GradeAndSection"));
-                                                                                                        txtName.setText(rs.getString("Name"));
-                                                                                                        txtB.setText(rs.getString("Birthdate"));
-                                                                                                        txtBP.setText(rs.getString("Birthplace"));
-                                                                                                        txtCN.setText(rs.getString("ContactNumber"));
-                                                                                                        txtA.setText(rs.getString("Address"));
-                                                                                                        if (rs.getString("Gender").equals("Male")) {
-                                                                                                            rbtnMale.setSelected(true);
-                                                                                                        } else if (rs.getString("Gender").equals("Female")) {
-                                                                                                            rbtnFemale.setSelected(true);
-                                                                                                        }
-                                                                                                        txtFN.setText(rs.getString("FatherName"));
-                                                                                                        txtFO.setText(rs.getString("FatherOccupation"));
-                                                                                                        txtMN.setText(rs.getString("MotherName"));
-                                                                                                        txtMO.setText(rs.getString("MotherOccupation"));
-                                                                                                        txtGN.setText(rs.getString("GuardianName"));
-                                                                                                        txtGO.setText(rs.getString("GuardianOccupation"));
-                                                                                                        txtPE.setText(rs.getString("PersonToNotif"));
-                                                                                                        txtPECN.setText(rs.getString("PersonContact"));
-                                                                                                        if (rs.getInt("4Ps") == 0) {
-                                                                                                            rbtnYes.setSelected(true);
-                                                                                                        } else if (rs.getInt("4Ps") == 1) {
-                                                                                                            rbtnNo.setSelected(true);
-                                                                                                        }
-                                                                                                        if (rs.getInt("WorkingStudent") == 0) {
-                                                                                                            rbtnYes_1.setSelected(true);
-                                                                                                            txtNW.setText(rs.getString("NatureOfWork"));
-                                                                                                            txtE.setText(rs.getString("EmployerName"));
-                                                                                                            txtWA.setText(rs.getString("EnterWorkAddress"));
-                                                                                                            txtNW.setEnabled(true);
-                                                                                                            txtE.setEnabled(true);
-                                                                                                            txtWA.setEnabled(true);
-                                                                                                        } else if (rs.getInt("4Ps") == 1) {
-                                                                                                            rbtnNo_1.setSelected(true);
-                                                                                                            txtNW.setEnabled(false);
-                                                                                                            txtE.setEnabled(false);
-                                                                                                            txtWA.setEnabled(false);
-                                                                                                        }
-
-                                                                                                    } else {
-                                                                                                        txtWA.setText("Enter Work Address");
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    txtE.setText("Enter Employer");
-                                                                                                }
-                                                                                            } else {
-                                                                                                txtNW.setText("Enter Nature of Work");
-                                                                                            }
-                                                                                        } else {
-                                                                                            rbtnYes_1.setSelected(false);
-                                                                                            rbtnNo_1.setSelected(false);
-                                                                                        }
-                                                                                    } else {
-                                                                                        rbtnYes.setSelected(false);
-                                                                                        rbtnNo.setSelected(false);
-                                                                                    }
-                                                                                } else {
-                                                                                    txtPECN.setText("Enter the Person's Contact Number");
-                                                                                }
-                                                                            } else {
-                                                                                txtPE.setText("Enter the Person to notify in case of emergency");
-                                                                            }
-                                                                        } else {
-                                                                            txtGO.setText("Enter Guardian's Occupation");
-                                                                        }
-                                                                    } else {
-                                                                        txtGN.setText("Enter Guardian's Name");
-                                                                    }
-                                                                } else {
-                                                                    txtMO.setText("Enter Mother's Occupation");
-                                                                }
-                                                            } else {
-                                                                txtMN.setText("Enter Mother's Name");
-                                                            }
-                                                        } else {
-                                                            txtFO.setText("Enter Father's Occupation");
-                                                        }
-                                                    } else {
-                                                        txtFN.setText("Enter Father's Name");
-                                                    }
-                                                } else {
-                                                    rbtnMale.setSelected(false);
-                                                    rbtnFemale.setSelected(false);
-                                                }
-                                            } else {
-                                                txtR.setText("Enter Religion");
-                                            }
-                                        } else {
-                                            txtA.setText("Enter Address");
-                                        }
-                                    } else {
-                                        txtCN.setText("Enter Contact Number");
-                                    }
-                                } else {
-                                    txtBP.setText("Enter Birthplace");
-                                }
-                            } else {
-                                txtB.setText("Enter Birthdate");
-                            }
-                        } else {
-                            txtName.setText("Enter Name");
-                        }
-
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Username does not exist");
-            }
+//            if (rs.first()) {
+//                if (!rs.getString("LRN").isEmpty()) {
+//                    if (!rs.getString("GradeAndSection").isEmpty()) {
+//                        if (!rs.getString("Name").isEmpty()) {
+//                            if (!rs.getString("Birthdate").isEmpty()) {
+//                                if (!rs.getString("Birthplace").isEmpty()) {
+//                                    if (!rs.getString("ContactNumber").isEmpty()) {
+//                                        if (!rs.getString("Address").isEmpty()) {
+//                                            if (!rs.getString("Religion").isEmpty()) {
+//                                                if (!rs.getString("Gender").isEmpty()) {
+//                                                    if (!rs.getString("FatherName").isEmpty()) {
+//                                                        if (!rs.getString("FatherOccupation").isEmpty()) {
+//                                                            if (!rs.getString("MotherName").isEmpty()) {
+//                                                                if (!rs.getString("MotherOccupation").isEmpty()) {
+//                                                                    if (!rs.getString("GuardianName").isEmpty()) {
+//                                                                        if (!rs.getString("GuardianOccupation").isEmpty()) {
+//                                                                            if (!rs.getString("PersonToNotif").isEmpty()) {
+//                                                                                if (!rs.getString("PersonContact").isEmpty()) {
+//                                                                                    if (!rs.getString("4Ps").isEmpty()) {
+//                                                                                        if (!rs.getString("WorkingStudent").isEmpty()) {
+//                                                                                            if (!rs.getString("NatureOfWork").isEmpty()) {
+//                                                                                                if (!rs.getString("EmployerName").isEmpty()) {
+//                                                                                                    if (!rs.getString("EnterWorkAddress").isEmpty()) {
+//                                                                                                        txtLRN.setText(rs.getString("LRN"));
+//                                                                                                        txtName.setText(rs.getString("Name"));
+//                                                                                                        txtB.setText(rs.getString("Birthdate"));
+//                                                                                                        txtBP.setText(rs.getString("Birthplace"));
+//                                                                                                        txtCN.setText(rs.getString("ContactNumber"));
+//                                                                                                        txtA.setText(rs.getString("Address"));
+//                                                                                                        if (rs.getString("Gender").equals("Male")) {
+//                                                                                                            rbtnMale.setSelected(true);
+//                                                                                                        } else if (rs.getString("Gender").equals("Female")) {
+//                                                                                                            rbtnFemale.setSelected(true);
+//                                                                                                        }
+//                                                                                                        txtFN.setText(rs.getString("FatherName"));
+//                                                                                                        txtFO.setText(rs.getString("FatherOccupation"));
+//                                                                                                        txtMN.setText(rs.getString("MotherName"));
+//                                                                                                        txtMO.setText(rs.getString("MotherOccupation"));
+//                                                                                                        txtGN.setText(rs.getString("GuardianName"));
+//                                                                                                        txtGO.setText(rs.getString("GuardianOccupation"));
+//                                                                                                        txtPE.setText(rs.getString("PersonToNotif"));
+//                                                                                                        txtPECN.setText(rs.getString("PersonContact"));
+//                                                                                                        if (rs.getInt("4Ps") == 0) {
+//                                                                                                            rbtnYes.setSelected(true);
+//                                                                                                        } else if (rs.getInt("4Ps") == 1) {
+//                                                                                                            rbtnNo.setSelected(true);
+//                                                                                                        }
+//                                                                                                        if (rs.getInt("WorkingStudent") == 0) {
+//                                                                                                            rbtnYes_1.setSelected(true);
+//                                                                                                            txtNW.setText(rs.getString("NatureOfWork"));
+//                                                                                                            txtE.setText(rs.getString("EmployerName"));
+//                                                                                                            txtWA.setText(rs.getString("EnterWorkAddress"));
+//                                                                                                            txtNW.setEnabled(true);
+//                                                                                                            txtE.setEnabled(true);
+//                                                                                                            txtWA.setEnabled(true);
+//                                                                                                        } else if (rs.getInt("4Ps") == 1) {
+//                                                                                                            rbtnNo_1.setSelected(true);
+//                                                                                                            txtNW.setEnabled(false);
+//                                                                                                            txtE.setEnabled(false);
+//                                                                                                            txtWA.setEnabled(false);
+//                                                                                                        }
+//
+//                                                                                                    } else {
+//                                                                                                        txtWA.setText("Enter Work Address");
+//                                                                                                    }
+//                                                                                                } else {
+//                                                                                                    txtE.setText("Enter Employer");
+//                                                                                                }
+//                                                                                            } else {
+//                                                                                                txtNW.setText("Enter Nature of Work");
+//                                                                                            }
+//                                                                                        } else {
+//                                                                                            rbtnYes_1.setSelected(false);
+//                                                                                            rbtnNo_1.setSelected(false);
+//                                                                                        }
+//                                                                                    } else {
+//                                                                                        rbtnYes.setSelected(false);
+//                                                                                        rbtnNo.setSelected(false);
+//                                                                                    }
+//                                                                                } else {
+//                                                                                    txtPECN.setText("Enter the Person's Contact Number");
+//                                                                                }
+//                                                                            } else {
+//                                                                                txtPE.setText("Enter the Person to notify in case of emergency");
+//                                                                            }
+//                                                                        } else {
+//                                                                            txtGO.setText("Enter Guardian's Occupation");
+//                                                                        }
+//                                                                    } else {
+//                                                                        txtGN.setText("Enter Guardian's Name");
+//                                                                    }
+//                                                                } else {
+//                                                                    txtMO.setText("Enter Mother's Occupation");
+//                                                                }
+//                                                            } else {
+//                                                                txtMN.setText("Enter Mother's Name");
+//                                                            }
+//                                                        } else {
+//                                                            txtFO.setText("Enter Father's Occupation");
+//                                                        }
+//                                                    } else {
+//                                                        txtFN.setText("Enter Father's Name");
+//                                                    }
+//                                                } else {
+//                                                    rbtnMale.setSelected(false);
+//                                                    rbtnFemale.setSelected(false);
+//                                                }
+//                                            } else {
+//                                                txtR.setText("Enter Religion");
+//                                            }
+//                                        } else {
+//                                            txtA.setText("Enter Address");
+//                                        }
+//                                    } else {
+//                                        txtCN.setText("Enter Contact Number");
+//                                    }
+//                                } else {
+//                                    txtBP.setText("Enter Birthplace");
+//                                }
+//                            } else {
+//                                txtB.setText("Enter Birthdate");
+//                            }
+//                        } else {
+//                            txtName.setText("Enter Name");
+//                        }
+//
+//                    }
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+//            }
 
         } catch (Exception e) {
 
@@ -2270,7 +2345,6 @@ public class UpdateInfoStudent extends javax.swing.JFrame {
     }
 
     public void setInfo(String user, String p, String fn, String ln, String mn, String a, String b, String g) {
-        txtGAS.setText(fn);
         txtName.setText(ln);
         txtBP.setText(mn);
         txtA.setText(a);

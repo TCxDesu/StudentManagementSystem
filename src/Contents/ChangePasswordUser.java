@@ -61,9 +61,7 @@ public class ChangePasswordUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        btnClose = new javax.swing.JLabel();
+        lblBack = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnCP = new javax.swing.JButton();
         pwdCCP = new javax.swing.JPasswordField();
@@ -74,33 +72,23 @@ public class ChangePasswordUser extends javax.swing.JFrame {
         lblS_2 = new javax.swing.JLabel();
         lblH_2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        btnClose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(36, 56, 50));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cPassTop_new.png"))); // NOI18N
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button.png"))); // NOI18N
-        btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblBack.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblBack.setForeground(new java.awt.Color(255, 255, 255));
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/back_new.png"))); // NOI18N
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCloseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCloseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCloseMouseExited(evt);
+                lblBackMouseClicked(evt);
             }
         });
-        jPanel3.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 0, -1, 30));
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 80));
+        getContentPane().add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(249, 234, 208));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -252,6 +240,29 @@ public class ChangePasswordUser extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 370, 210));
+
+        jPanel3.setBackground(new java.awt.Color(36, 56, 50));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cPassTop_new.png"))); // NOI18N
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/cross-button.png"))); // NOI18N
+        btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCloseMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCloseMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCloseMouseExited(evt);
+            }
+        });
+        jPanel3.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 0, -1, 30));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 80));
 
         setSize(new java.awt.Dimension(370, 285));
         setLocationRelativeTo(null);
@@ -407,6 +418,11 @@ public class ChangePasswordUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pwdOPKeyPressed
 
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+        new MainFrameStudent().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lblBackMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -456,6 +472,7 @@ public class ChangePasswordUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblH_1;
     private javax.swing.JLabel lblH_2;
     private javax.swing.JLabel lblS_1;
@@ -487,6 +504,8 @@ public class ChangePasswordUser extends javax.swing.JFrame {
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
             audit(username, 0);
+            MainFrameStudent mfu = new MainFrameStudent();
+            mfu.setVisible(true);
             dispose();
 
         } catch (Exception e) {

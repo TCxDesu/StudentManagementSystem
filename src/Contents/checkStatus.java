@@ -61,7 +61,7 @@ public class checkStatus {
             LogIn li = new LogIn();
             li.setVisible(true);
         } else {
-            MainFrameUser mf = new MainFrameUser();
+            MainFrameStudent mf = new MainFrameStudent();
             mf.setVisible(true);
         }
     }

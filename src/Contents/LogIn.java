@@ -55,7 +55,6 @@ public class LogIn extends javax.swing.JFrame {
         sqlconnect();
         checkDay();
         LOGINtoUSER();
-        checkLogIn();
         txtUser.setFocusable(false);
         pwdPass.setFocusable(false);
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
@@ -216,12 +215,12 @@ public class LogIn extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/lock.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/key_new.png"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user_new.png"))); // NOI18N
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
 
         txtUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
@@ -265,7 +264,7 @@ public class LogIn extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/logo5.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 480, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, -1, 350));
 
@@ -499,7 +498,7 @@ public class LogIn extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LogIn();
+                new LogIn().setVisible(true);
             }
         });
     }
@@ -572,7 +571,6 @@ public void LogIn() {
                                                         MainFrameAdmin mfa = new MainFrameAdmin();
                                                         mfa.setVisible(true);
                                                     }
-                                                    teemo(username, password);
 
                                                     audit(username, x, 1);
                                                     dispose();
@@ -580,7 +578,7 @@ public void LogIn() {
                                                     JOptionPane.showMessageDialog(rootPane, "This Admin Account Is Already Logged In");
                                                 }
 
-                                            } else {
+                                            } else if (rs.getInt("isAdmin") == 0) {
                                                 if (rs3.getInt("status") != 1) {
                                                     statusUpdate(2);
                                                     JOptionPane.showMessageDialog(null, "Successfully Logged In \n       Welcome " + username + "!");
@@ -599,13 +597,40 @@ public void LogIn() {
                                                         MainFrameUser mfu = new MainFrameUser();
                                                         mfu.setVisible(true);
                                                     }
-                                                    teemo(username, password);
+
                                                     audit(username, x, 0);
                                                     dispose();
                                                 } else {
                                                     JOptionPane.showMessageDialog(rootPane, "This User Account Is Already Logged In");
                                                 }
 
+                                            } else {
+                                                if (rs3.getInt("status") != 1) {
+                                                    statusUpdate(3);
+                                                    JOptionPane.showMessageDialog(null, "Successfully Logged In \n       Welcome " + username + "!");
+                                                    x = 1;
+                                                    resetBlock();
+                                                    if (rs3.getInt("pChange") == 0) {
+                                                        ChangePassword cp = new ChangePassword();
+                                                        cp.setUsername(username);
+                                                        cp.setVisible(true);
+                                                        //                                            } else if (rs3.getInt("pChange") == 1) {
+                                                        //                                                UpdateInfo ui = new UpdateInfo();
+                                                        //                                                ui.setUsername(username);
+                                                        //                                                ui.setVisible(true);
+                                                        //                                            } 
+                                                    } else {
+
+                                                        MainFrameStudent mfs = new MainFrameStudent();
+                                                        mfs.getUsername(username);
+                                                        mfs.setVisible(true);
+                                                    }
+
+                                                    audit(username, x, 2);
+                                                    dispose();
+                                                } else {
+                                                    JOptionPane.showMessageDialog(rootPane, "This Student Account Is Already Logged In");
+                                                }
                                             }
                                         } else {
                                             i = rs2.getInt("block");
@@ -757,10 +782,16 @@ public void LogIn() {
                 pst.setString(2, username);
                 pst.executeUpdate();
 
-            } else {
+            } else if (x == 2) {
                 String sql = "update infologin set status = ? where username = ?";
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setInt(1, 1);
+                pst.setString(2, username);
+                pst.executeUpdate();
+            } else {
+                String sql = "update infologin set status = ? where username = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, 3);
                 pst.setString(2, username);
                 pst.executeUpdate();
             }
@@ -850,161 +881,6 @@ public void LogIn() {
         }
     }
 
-    public void teemo(String username, String password) {
-
-        try {
-            FileWriter fw = new FileWriter("single_sign.txt");
-            fw.write(encrypt(username) + "\n");
-            fw.write(encrypt(password));
-            fw.close();
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void checkLogIn() {
-        String username1 = "", password1 = "";
-        try {
-
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            username1 = reader.readLine();
-            password1 = reader.readLine();
-
-            String sql = "select * from infologin where username = ?";
-            PreparedStatement spout = con.prepareStatement(sql);
-            spout.setString(1, decrypt(username1));
-            spout.executeQuery();
-            ResultSet rizz = spout.getResultSet();
-
-            if (rizz.first()) {
-                if (rizz.getInt("status") == 1 || rizz.getInt("status") == 2) {
-                    LogIn2(decrypt(username1), decrypt(password1));
-                } else {
-                    setVisible(true);
-                }
-            }
-
-        } catch (Exception e) {
-            setVisible(true);
-        }
-    }
-
-    public void LogIn2(String username1, String password1) {
-        int i = 0;
-        String sql = "Select * from infologin where username = ?";
-        String sql2 = "Select * from infologin where username = ? and block <  ?";
-        String sql3 = "Select * from infologin where username = ? and password = ?";
-
-        if (username1.trim().length() != 0) {
-            if (password1.trim().length() != 0) {
-                if (username2.equals(username1)) {
-                    try {
-                        PreparedStatement pst = con.prepareStatement(sql);
-                        pst.setString(1, username1);
-                        pst.executeQuery();
-                        ResultSet rs = pst.getResultSet();
-                        if (rs.first()) {
-                            try {
-                                PreparedStatement pst2 = con.prepareStatement(sql2);
-                                pst2.setString(1, username1);
-                                pst2.setInt(2, 3);
-                                pst2.executeQuery();
-                                ResultSet rs2 = pst2.getResultSet();
-
-                                if (rs2.first()) {
-                                    int x = 0;
-                                    try {
-                                        PreparedStatement pst3 = con.prepareStatement(sql3);
-                                        pst3.setString(1, username1);
-                                        pst3.setString(2, encrypt(password1));
-                                        pst3.executeQuery();
-                                        ResultSet rs3 = pst3.getResultSet();
-
-                                        if (rs3.first()) {
-                                            if (rs3.getInt("isAdmin") == 1) {
-
-                                                statusUpdate(1);
-
-                                                x = 2;
-                                                if (rs3.getInt("pChange") == 0) {
-                                                    ChangePassword cp = new ChangePassword();
-                                                    cp.setUsername(username1);
-                                                    cp.setVisible(true);
-
-                                                    //                                            } else if (rs3.getInt("pChange") == 1) {
-                                                    //                                                UpdateInfo ui = new UpdateInfo();
-                                                    //                                                ui.setUsername(username);
-                                                    //                                                ui.setVisible(true);
-                                                    //                                            } 
-                                                } else {
-                                                    MainFrameAdmin mfa = new MainFrameAdmin();
-                                                    mfa.setVisible(true);
-                                                }
-                                                teemo(username1, password1);
-                                                dispose();
-
-                                            } else {
-
-                                                statusUpdate(2);
-
-                                                x = 1;
-                                                resetBlock();
-                                                if (rs3.getInt("pChange") == 0) {
-                                                    ChangePassword cp = new ChangePassword();
-                                                    cp.setUsername(username1);
-                                                    cp.setVisible(true);
-                                                    //                                            } else if (rs3.getInt("pChange") == 1) {
-                                                    //                                                UpdateInfo ui = new UpdateInfo();
-                                                    //                                                ui.setUsername(username);
-                                                    //                                                ui.setVisible(true);
-                                                    //                                            } 
-                                                } else {
-                                                    MainFrameUser mfu = new MainFrameUser();
-                                                    mfu.setVisible(true);
-                                                }
-                                                teemo(username1, password1);
-                                                dispose();
-
-                                            }
-                                        }
-                                    } catch (Exception e) {
-                                        addBlockCount(i + 1);
-                                        if (i + 1 < 3) {
-                                            JOptionPane.showMessageDialog(rootPane, "Username and Password does not match");
-                                        } else {
-                                            JOptionPane.showMessageDialog(rootPane, "Account Has Been Blocked");
-                                        }
-                                    }
-
-                                } else {
-
-                                    int x = Integer.parseInt("aasdsafasd");
-                                }
-                            } catch (Exception e) {
-
-                                JOptionPane.showMessageDialog(rootPane, "Account Is Blocked");
-                            }
-
-                        } else {
-                            int x = Integer.parseInt("aasdsafasd");
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                        JOptionPane.showMessageDialog(rootPane, "Username does not exist");
-                    }
-                } else {
-                    resetBlock();
-                    username2 = username1;
-                    LogIn2(username1, password1);
-                }
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Password Must Not Be Blank");
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Username Must Not Be Blank");
-        }
-    }
-
     private void LogInStudent(String username, String password) {
 
         String sql = "select * from infostudent where LRN = ?";
@@ -1016,15 +892,15 @@ public void LogIn() {
                     pst.executeQuery();
                     ResultSet rs = pst.getResultSet();
                     if (rs.first()) {
-                        if(rs.getString("Name").equals(password)){
+                        if (rs.getString("Name").equals(password)) {
                             JOptionPane.showMessageDialog(rootPane, "Student Account Logged In");
                             UpdateInfoStudent uis = new UpdateInfoStudent();
                             uis.setUsername(username);
                             uis.setUp();
                         }
 
-                    }else{
-                    JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Username does not exist");
                     }
 
                 } catch (Exception e) {

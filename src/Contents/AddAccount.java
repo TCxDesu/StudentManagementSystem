@@ -48,16 +48,21 @@ public class AddAccount extends javax.swing.JFrame {
         pnlOne = new javax.swing.JPanel();
         btnClose = new javax.swing.JLabel();
         lblBack = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         pnlTwo = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        btnAdd = new javax.swing.JButton();
-        txtUser = new javax.swing.JTextField();
-        pwdPass = new javax.swing.JPasswordField();
-        lblAdmin = new javax.swing.JLabel();
-        lblA = new javax.swing.JLabel();
-        lblU = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblStudent = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
+        lblAdmin = new javax.swing.JLabel();
+        txtUser = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        lblS = new javax.swing.JLabel();
+        lblU = new javax.swing.JLabel();
+        lblA = new javax.swing.JLabel();
+        pwdPass = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -83,13 +88,22 @@ public class AddAccount extends javax.swing.JFrame {
 
         lblBack.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         lblBack.setForeground(new java.awt.Color(255, 255, 255));
-        lblBack.setText("Back");
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/back_new.png"))); // NOI18N
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblBackMouseExited(evt);
+            }
         });
-        pnlOne.add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        pnlOne.add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/top_new.png"))); // NOI18N
+        pnlOne.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(pnlOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 90));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
@@ -97,19 +111,50 @@ public class AddAccount extends javax.swing.JFrame {
         pnlTwo.setBackground(new java.awt.Color(249, 234, 208));
         pnlTwo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(36, 56, 50));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/smallLine.png"))); // NOI18N
+        pnlTwo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 17, -1, -1));
 
-        btnAdd.setBackground(new java.awt.Color(249, 234, 208));
-        btnAdd.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        btnAdd.setForeground(new java.awt.Color(36, 56, 60));
-        btnAdd.setText("Add Account");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/smallLine.png"))); // NOI18N
+        pnlTwo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 17, -1, -1));
+
+        lblStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user_new.png"))); // NOI18N
+        lblStudent.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblStudentFocusGained(evt);
             }
         });
-        jPanel1.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 150, 40));
+        lblStudent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblStudentMouseClicked(evt);
+            }
+        });
+        pnlTwo.add(lblStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 17, -1, -1));
+
+        lblUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user_new.png"))); // NOI18N
+        lblUser.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblUserFocusGained(evt);
+            }
+        });
+        lblUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblUserMouseClicked(evt);
+            }
+        });
+        pnlTwo.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 17, -1, -1));
+
+        lblAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user_new.png"))); // NOI18N
+        lblAdmin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblAdminFocusGained(evt);
+            }
+        });
+        lblAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAdminMouseClicked(evt);
+            }
+        });
+        pnlTwo.add(lblAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 17, -1, -1));
 
         txtUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtUser.setForeground(java.awt.Color.gray);
@@ -138,7 +183,33 @@ public class AddAccount extends javax.swing.JFrame {
                 txtUserKeyPressed(evt);
             }
         });
-        jPanel1.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 330, 30));
+        pnlTwo.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 330, 30));
+
+        btnAdd.setBackground(new java.awt.Color(249, 234, 208));
+        btnAdd.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(36, 56, 60));
+        btnAdd.setText("Add Account");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        pnlTwo.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 150, 40));
+
+        lblS.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        lblS.setForeground(new java.awt.Color(255, 255, 255));
+        lblS.setText("Student");
+        pnlTwo.add(lblS, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
+
+        lblU.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        lblU.setForeground(new java.awt.Color(255, 255, 255));
+        lblU.setText("User");
+        pnlTwo.add(lblU, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 20, -1, -1));
+
+        lblA.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        lblA.setForeground(new java.awt.Color(255, 255, 255));
+        lblA.setText("Admin");
+        pnlTwo.add(lblA, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
         pwdPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         pwdPass.setForeground(java.awt.Color.gray);
@@ -168,45 +239,10 @@ public class AddAccount extends javax.swing.JFrame {
                 pwdPassKeyPressed(evt);
             }
         });
-        jPanel1.add(pwdPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 330, 30));
+        pnlTwo.add(pwdPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 330, 30));
 
-        lblAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/admin_1.png"))); // NOI18N
-        lblAdmin.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                lblAdminFocusGained(evt);
-            }
-        });
-        lblAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblAdminMouseClicked(evt);
-            }
-        });
-        jPanel1.add(lblAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 17, -1, -1));
-
-        lblA.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        lblA.setForeground(new java.awt.Color(255, 255, 255));
-        lblA.setText("Admin");
-        jPanel1.add(lblA, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
-
-        lblU.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        lblU.setForeground(new java.awt.Color(255, 255, 255));
-        lblU.setText("User");
-        jPanel1.add(lblU, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
-
-        lblUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user_1.png"))); // NOI18N
-        lblUser.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                lblUserFocusGained(evt);
-            }
-        });
-        lblUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblUserMouseClicked(evt);
-            }
-        });
-        jPanel1.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 17, -1, -1));
-
-        pnlTwo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 15, 430, 220));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle_new.png"))); // NOI18N
+        pnlTwo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -5, -1, -1));
 
         getContentPane().add(pnlTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 430, 260));
 
@@ -291,25 +327,27 @@ public class AddAccount extends javax.swing.JFrame {
 
     private void lblAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminMouseClicked
         lblAdmin.requestFocus();
-        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_1.png"));
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
         lblUser.setIcon(imgIcon);
+        lblStudent.setIcon(imgIcon);
         check(1);
     }//GEN-LAST:event_lblAdminMouseClicked
 
     private void lblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUserMouseClicked
         lblUser.requestFocus();
-        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/admin_1.png"));
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
         lblAdmin.setIcon(imgIcon);
+        lblStudent.setIcon(imgIcon);
         check(0);
     }//GEN-LAST:event_lblUserMouseClicked
 
     private void lblUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblUserFocusGained
-        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_2.png"));
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_filled.png"));
         lblUser.setIcon(imgIcon);
     }//GEN-LAST:event_lblUserFocusGained
 
     private void lblAdminFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblAdminFocusGained
-        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/admin_2.png"));
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_filled.png"));
         lblAdmin.setIcon(imgIcon);
     }//GEN-LAST:event_lblAdminFocusGained
 
@@ -329,6 +367,29 @@ public class AddAccount extends javax.swing.JFrame {
             adder();
         }
     }//GEN-LAST:event_pwdPassKeyPressed
+
+    private void lblStudentFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblStudentFocusGained
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_filled.png"));
+        lblStudent.setIcon(imgIcon);
+    }//GEN-LAST:event_lblStudentFocusGained
+
+    private void lblStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblStudentMouseClicked
+        lblStudent.requestFocus();
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
+        lblUser.setIcon(imgIcon);
+        lblAdmin.setIcon(imgIcon);
+        check(2);
+    }//GEN-LAST:event_lblStudentMouseClicked
+
+    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/back_red.png"));
+        lblBack.setIcon(imgIcon);
+    }//GEN-LAST:event_lblBackMouseEntered
+
+    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
+        Icon imgIcon = new ImageIcon(getClass().getResource("/icons/back_new.png"));
+        lblBack.setIcon(imgIcon);
+    }//GEN-LAST:event_lblBackMouseExited
 
     /**
      * @param args the command line arguments
@@ -370,10 +431,15 @@ public class AddAccount extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JLabel btnClose;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblAdmin;
     private javax.swing.JLabel lblBack;
+    private javax.swing.JLabel lblS;
+    private javax.swing.JLabel lblStudent;
     private javax.swing.JLabel lblU;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlOne;
@@ -386,9 +452,9 @@ public class AddAccount extends javax.swing.JFrame {
         int a = new Methods().checker(txtUser.getText(), pwdPass.getText(), f);
         if (a == 1) {
             new Methods().adder(txtUser.getText(), pwdPass.getText(), f);
-            Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_1.png"));
+            Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
             lblUser.setIcon(imgIcon);
-            Icon imgIcon2 = new ImageIcon(getClass().getResource("/icons/admin_1.png"));
+            Icon imgIcon2 = new ImageIcon(getClass().getResource("/icons/user_new.png"));
             lblAdmin.setIcon(imgIcon2);
             txtUser.setText("Enter Username");
             pwdPass.setText("Enter Password");
@@ -398,24 +464,37 @@ public class AddAccount extends javax.swing.JFrame {
             pwdPass.setFocusable(false);
             a = 0;
         } else {
-            Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_1.png"));
+            Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
             lblUser.setIcon(imgIcon);
-            Icon imgIcon2 = new ImageIcon(getClass().getResource("/icons/admin_1.png"));
+            Icon imgIcon2 = new ImageIcon(getClass().getResource("/icons/user_new.png"));
             lblAdmin.setIcon(imgIcon2);
         }
         f = -1;
     }
 
     public void check(int c) {
-        if (c == 1) {
+        if (c == 2) {
             if (a == 0) {
                 a = 1;
-                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/admin_2.png"));
+                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_filled.png"));
+                lblStudent.setIcon(imgIcon);
+                f = 2;
+                System.out.println(f);
+            } else if (a == 1) {
+                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
+                lblStudent.setIcon(imgIcon);
+                a = 0;
+                f = -1;
+            }
+        } else if (c == 1) {
+            if (a == 0) {
+                a = 1;
+                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_filled.png"));
                 lblAdmin.setIcon(imgIcon);
                 f = 1;
                 System.out.println(f);
             } else if (a == 1) {
-                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/admin_1.png"));
+                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
                 lblAdmin.setIcon(imgIcon);
                 a = 0;
                 f = -1;
@@ -423,12 +502,12 @@ public class AddAccount extends javax.swing.JFrame {
         } else if (c == 0) {
             if (a == 0) {
                 a = 1;
-                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_2.png"));
+                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_filled.png"));
                 lblUser.setIcon(imgIcon);
                 f = 0;
                 System.out.println(f);
             } else if (a == 1) {
-                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_1.png"));
+                Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_new.png"));
                 lblUser.setIcon(imgIcon);
                 a = 0;
                 f = -1;

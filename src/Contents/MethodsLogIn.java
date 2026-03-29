@@ -54,7 +54,7 @@ public class MethodsLogIn {
                         i = 0;
                         break;
                     } else {
-                        MainFrameUser mf = new MainFrameUser();
+                        MainFrameStudent mf = new MainFrameStudent();
                         mf.setVisible(true);
                         new LogIn().setVisible(false);
                         i = 0;
@@ -396,7 +396,7 @@ public class MethodsLogIn {
                     } else {
                         LogIn li = new LogIn();
                         li.dispose();
-                        MainFrameUser mfu = new MainFrameUser();
+                        MainFrameStudent mfu = new MainFrameStudent();
                         mfu.setPassword(password);
                         mfu.getUsername(username);
                         mfu.setVisible(true);

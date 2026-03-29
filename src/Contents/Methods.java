@@ -33,9 +33,14 @@ public class Methods {
         sqlconnect();
         String username = user;
         String password = encrypt(pass);
-
-        String sql = "insert into infologin values(?,?,0,?,0,0,CURRENT_TIMESTAMP())";
-        String sql2 = "insert into user values(?,null,null,null,null,null,null)";
+String sql2;
+        if(f != 2){
+        sql2 = "insert into infouser values(?,null,null,null,null,null,null)";
+        }else{
+        sql2 = "insert into infostudent(username) values(?)";
+        }
+        String sql = "insert into infologin values(?,?,?,0,0,0,CURRENT_TIMESTAMP())";
+        
         try {
             PreparedStatement pstt = con.prepareStatement(sql2);
             PreparedStatement pst = con.prepareStatement(sql);
@@ -48,6 +53,7 @@ public class Methods {
             pstt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Added!");
         } catch (Exception e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Account Already Exist!");
         }
     }
@@ -87,6 +93,7 @@ public class Methods {
         switch (f) {
             case 0:
             case 1:
+            case 2:
                 if (user.trim().length() != 0 && !user.equals("Enter Username")) {
                     if (pass.trim().length() != 0 && !pass.equals("Enter Password")) {
                         a = 1;

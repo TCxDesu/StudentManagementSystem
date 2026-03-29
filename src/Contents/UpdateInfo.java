@@ -95,16 +95,12 @@ public class UpdateInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dateChooser = new com.raven.datechooser.DateChooser();
         rbtnG = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnUI = new javax.swing.JButton();
-        rbtnOthers = new radio_button.RadioButtonCustom();
-        rbtnFemale = new radio_button.RadioButtonCustom();
-        rbtnMale = new radio_button.RadioButtonCustom();
         txtB = new javax.swing.JTextField();
         txtA = new javax.swing.JTextField();
         txtMN = new javax.swing.JTextField();
@@ -112,10 +108,9 @@ public class UpdateInfo extends javax.swing.JFrame {
         txtFN = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-
-        dateChooser.setForeground(new java.awt.Color(36, 56, 50));
-        dateChooser.setDateFormat("yyyy-MM-dd");
-        dateChooser.setTextRefernce(txtB);
+        rbtnMale = new radio_button.RadioButtonCustom();
+        rbtnFemale = new radio_button.RadioButtonCustom();
+        rbtnOthers = new radio_button.RadioButtonCustom();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -159,39 +154,6 @@ public class UpdateInfo extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnUI, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 190, 40));
-
-        rbtnOthers.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnOthers.setForeground(java.awt.Color.gray);
-        rbtnOthers.setText("Others");
-        rbtnOthers.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnOthers.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnOthersItemStateChanged(evt);
-            }
-        });
-        jPanel2.add(rbtnOthers, new org.netbeans.lib.awtextra.AbsoluteConstraints(271, 175, -1, -1));
-
-        rbtnFemale.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnFemale.setForeground(java.awt.Color.gray);
-        rbtnFemale.setText("Female");
-        rbtnFemale.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnFemale.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnFemaleItemStateChanged(evt);
-            }
-        });
-        jPanel2.add(rbtnFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 175, -1, -1));
-
-        rbtnMale.setBackground(new java.awt.Color(36, 56, 50));
-        rbtnMale.setForeground(java.awt.Color.gray);
-        rbtnMale.setText("Male");
-        rbtnMale.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        rbtnMale.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtnMaleItemStateChanged(evt);
-            }
-        });
-        jPanel2.add(rbtnMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 175, -1, -1));
 
         txtB.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtB.setForeground(java.awt.Color.gray);
@@ -346,6 +308,39 @@ public class UpdateInfo extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/bottompart_3.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
+
+        rbtnMale.setBackground(new java.awt.Color(36, 56, 50));
+        rbtnMale.setForeground(java.awt.Color.gray);
+        rbtnMale.setText("Male");
+        rbtnMale.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        rbtnMale.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbtnMaleItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(rbtnMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 175, -1, -1));
+
+        rbtnFemale.setBackground(new java.awt.Color(36, 56, 50));
+        rbtnFemale.setForeground(java.awt.Color.gray);
+        rbtnFemale.setText("Female");
+        rbtnFemale.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        rbtnFemale.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbtnFemaleItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(rbtnFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 175, -1, -1));
+
+        rbtnOthers.setBackground(new java.awt.Color(36, 56, 50));
+        rbtnOthers.setForeground(java.awt.Color.gray);
+        rbtnOthers.setText("Others");
+        rbtnOthers.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        rbtnOthers.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbtnOthersItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(rbtnOthers, new org.netbeans.lib.awtextra.AbsoluteConstraints(271, 175, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 370, 290));
 
@@ -615,7 +610,6 @@ public class UpdateInfo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;
     private javax.swing.JButton btnUI;
-    private com.raven.datechooser.DateChooser dateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
@@ -657,7 +651,7 @@ public class UpdateInfo extends javax.swing.JFrame {
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Personal Information Updated!");
             audit(jLabel2.getText(), 0);
-            MainFrameUser mfu = new MainFrameUser();
+            MainFrameStudent mfu = new MainFrameStudent();
             mfu.setPassword(password);
             mfu.getUsername(jLabel2.getText());
             mfu.setVisible(true);

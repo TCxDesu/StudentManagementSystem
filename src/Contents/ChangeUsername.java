@@ -59,6 +59,7 @@ public class ChangeUsername extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblBack = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
@@ -75,6 +76,16 @@ public class ChangeUsername extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblBack.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblBack.setForeground(new java.awt.Color(255, 255, 255));
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/back_new.png"))); // NOI18N
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(36, 56, 50));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -302,6 +313,11 @@ public class ChangeUsername extends javax.swing.JFrame {
         txtOU.requestFocus();
     }//GEN-LAST:event_txtOUMouseClicked
 
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+        new MainFrameStudent().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lblBackMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -359,6 +375,7 @@ public class ChangeUsername extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblH_1;
     private javax.swing.JLabel lblH_2;
     private javax.swing.JLabel lblS_1;
@@ -393,14 +410,15 @@ public class ChangeUsername extends javax.swing.JFrame {
             pstt.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Username Changed!");
             audit(newUser,txtOU.getText(),0);
-            MainFrameUser mfu = new MainFrameUser();
+            MainFrameStudent mfu = new MainFrameStudent();
             mfu.setPassword(password);
             mfu.getUsername(newUser);
             mfu.setVisible(true);
             dispose();
 
         } catch (Exception e) {
-            System.out.println("Error in UpdateStatus1: " + e);
+//            System.out.println("Error in UpdateStatus1: " + e);
+            JOptionPane.showMessageDialog(rootPane, "Username already exist!");
         }
     }
 

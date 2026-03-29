@@ -32,7 +32,6 @@ import sun.misc.BASE64Decoder;
 public class ChangePassword extends javax.swing.JFrame {
 
     int flag;
-    String username1 = "", password1 = "";
     Connection con;
     String newPass = "";
     String confirmNewPass;
@@ -409,7 +408,7 @@ public class ChangePassword extends javax.swing.JFrame {
             MethodsLogIn li = new MethodsLogIn();
             String c = li.encrypt(pwdCCP.getText());
             pst.setString(1, c);
-            pst.setString(2, username1);
+            pst.setString(2, username);
 
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
@@ -417,8 +416,8 @@ public class ChangePassword extends javax.swing.JFrame {
 //            ui.setPassword(newPass);
 //            ui.getUsername(getUsername());
 //            ui.setVisible(true);
-            audit(username1, stat);
-            MainFrameUser mfu = new MainFrameUser();
+            audit(username, stat);
+            MainFrameStudent mfu = new MainFrameStudent();
             mfu.setVisible(true);
             dispose();
 
@@ -434,7 +433,7 @@ public class ChangePassword extends javax.swing.JFrame {
             String sql = "update infologin set pChange = ? where username = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, 2);
-            pst.setString(2, username1);
+            pst.setString(2, username);
             pst.executeUpdate();
 //            JOptionPane.showMessageDialog(rootPane, "Password Changed!");
 //            MainFrameUser mfu = new MainFrameUser();
@@ -448,10 +447,11 @@ public class ChangePassword extends javax.swing.JFrame {
 
     public void changePassword() {
         int c = check();
+        
         if (c == 1) {
             try {
                 Statement st = con.createStatement();
-                String sql = "select * from infologin where username = '" + username1 + "'";
+                String sql = "select * from infologin where username = '" + username + "'";
                 ResultSet rs = st.executeQuery(sql);
 
                 while (rs.next()) {
@@ -473,6 +473,8 @@ public class ChangePassword extends javax.swing.JFrame {
             } catch (Exception e) {
                 System.out.println("Error in changePassword: " + e);
             }
+        }else{
+            System.out.println("null");
         }
     }
 
@@ -558,16 +560,6 @@ public class ChangePassword extends javax.swing.JFrame {
 //        lblS_2.setVisible(true);
 //        lblH_2.setVisible(false);
 //        flag = 0;
-    }
-
-    public void checkLogIn() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("single_sign.txt"));
-            username1 = reader.readLine();
-            password1 = reader.readLine();
-        } catch (Exception e) {
-            setVisible(true);
-        }
     }
 
     final String ALGORITHM = "AES";

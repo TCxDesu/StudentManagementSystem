@@ -280,4 +280,29 @@ public class SetTable {
             System.out.println("error:" + e);
         }
     }
+    
+    public void setTableStudent(String sql) {
+        
+        mod.addColumn("Name");
+        mod.addColumn("Grade and Section");
+        mod.addColumn("School Year");
+        
+        if (tbl.getRowCount() > 0) {
+            mod.setRowCount(0);
+        }
+        try {
+            int x;
+            Statement st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Vector v = new Vector();
+                v.add(rs.getString("Name"));
+                v.add(rs.getString("GradeLevel") + " " + rs.getString("Strand") + " - "+ rs.getString("Section"));
+                v.add(rs.getString("SchoolYear"));
+                mod.addRow(v);
+            }
+        } catch (Exception e) {
+            System.out.println("error:" + e);
+        }
+    }
 }
