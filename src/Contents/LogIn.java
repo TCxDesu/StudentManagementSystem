@@ -36,6 +36,7 @@ public class LogIn extends javax.swing.JFrame {
     int flag;
     int x = 0;
     String username = "";
+    String username2 = "";
     String password = "";
     Connection con;
     final String ALGORITHM = "AES";
@@ -249,8 +250,9 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, -1));
 
+        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jLabel7.setText("Project Version: v1.0.5.2");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 327, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/middle8.png"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -591,9 +593,9 @@ public class LogIn extends javax.swing.JFrame {
         return decryptedValue;
     }
 
-    public void login() {
+    public void login(){
         int x = 0;
-        String username2 = txtUser.getText();
+        
         String password2 = pwdPass.getText();
 
         try {
@@ -601,47 +603,54 @@ public class LogIn extends javax.swing.JFrame {
             String sql = "select * from infologin";
             ResultSet rs = st.executeQuery(sql);
 
-            if (username2.trim().length() != 0 && !username2.equals("Enter Username")) {
+            if (username.equals(username2)) {
+                if (username2.trim().length() != 0 && !username2.equals("Enter Username")) {
 
-                if (password2.trim().length() != 0 && !password2.equals("Enter Password")) {
-                    while (rs.next()) {
+                    if (password2.trim().length() != 0 && !password2.equals("Enter Password")) {
 
-                        if (username2.equals(rs.getString("username")) && password2.equals(decrypt(rs.getString("password")))) {
+                        while (rs.next()) {
+                            if (username2.equals(rs.getString("username")) && password2.equals(decrypt(rs.getString("password")))) {
 
-                            if (rs.getInt("block") == 3) {
+                                if (rs.getInt("block") == 3) {
+                                    blockable();
+                                    x = 0;
+                                    break;
+                                } else {
+                                    checkAdmin();
+                                    txtUser.setFocusable(false);
+                                    pwdPass.setFocusable(false);
+                                    x = 0;
+                                    resetBlock();
+                                    break;
+                                }
+                            } else if (username2.equals(rs.getString("username")) && !password.equals(decrypt(rs.getString("password")))) {
+                                x = 0;
                                 blockable();
-                                x = 0;
                                 break;
-                            } else {
-                                checkAdmin();
-                                txtUser.setFocusable(false);
-                                pwdPass.setFocusable(false);
-                                x = 0;
-                                resetBlock();
-                                break;
-                            }
-                        } else if (username2.equals(rs.getString("username")) && !password.equals(decrypt(rs.getString("password")))) {
-                            x = 0;
-                            blockable();
-                            break;
 
-                        } else {
-                            x = 1;
+                            } else {
+                                x = 1;
+                            }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Password must not be blank!");
+                        password = "";
+                        username = "";
                     }
                 } else {
-                    JOptionPane.showMessageDialog(rootPane, "Password must not be blank!");
-                    password = "";
+                    JOptionPane.showMessageDialog(rootPane, "Username must not be blank!");
                     username = "";
                 }
+
+                if (x == 1) {
+                    JOptionPane.showMessageDialog(rootPane, "Username does not exist");
+                }
             } else {
-                JOptionPane.showMessageDialog(rootPane, "Username must not be blank!");
-                username = "";
+                resetBlock();
+                username2 = txtUser.getText();
+                login();
             }
 
-            if (x == 1) {
-                JOptionPane.showMessageDialog(rootPane, "Username does not exist");
-            }
         } catch (Exception e) {
             System.out.println("Error in Login: " + e);
         }
@@ -667,7 +676,7 @@ public class LogIn extends javax.swing.JFrame {
                     }
                     break;
                 }
-                
+
             }
 
         } catch (Exception e) {

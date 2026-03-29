@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -100,6 +101,7 @@ public class SetTable {
                 mod.addRow(v);
             }
         } catch (Exception e) {
+            System.out.println("error:" + e);
         }
     }
 
@@ -115,11 +117,41 @@ public class SetTable {
             while (rs.next()) {
                 Vector v = new Vector();
                 v.add(rs.getString("username"));
+                
                 mod.addRow(v);
             }
         } catch (Exception e) {
         }
+        
     }
+    
+    public void addRowSearch(String sql) {
+        if (tbl.getRowCount() > 0) {
+            mod.setRowCount(0);
+        }
+        try {
+            int x;
+            Statement st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Vector v = new Vector();
+                v.add(rs.getString("username"));
+                switch (rs.getInt("block")) {
+                    case 3:
+                        v.add("DISABLED");
+                        break;
+                    default:
+                        v.add("ENABLED");
+                        break;
+
+                }
+                mod.addRow(v);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: "+ e);
+        }
+    }
+        
 
     public void sqlConnect() {
         try {
@@ -179,5 +211,8 @@ public class SetTable {
             return this;
         }
 
+    }
+    public void fixTable(JScrollPane scroll) {
+        scroll.setVerticalScrollBar(new ScrollBarCustom());
     }
 }

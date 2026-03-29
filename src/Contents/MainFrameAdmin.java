@@ -10,10 +10,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -26,6 +29,9 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     int flag2 = 0;
     int f = 2;
     int x = 0;
+    int y = -1;
+    int z = 0;
+    int j = 0;
 
     Connection con;
     String username;
@@ -55,9 +61,9 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         popBlock = new javax.swing.JPopupMenu();
-        blocks = new javax.swing.JMenuItem();
         popDelete = new javax.swing.JPopupMenu();
-        blocks1 = new javax.swing.JMenuItem();
+        delete = new javax.swing.JMenuItem();
+        blocks = new javax.swing.JMenuItem();
         pnlMain_2 = new javax.swing.JPanel();
         btnClose = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -69,7 +75,8 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlRight_3 = new javax.swing.JPanel();
         lblLogo6 = new javax.swing.JLabel();
         pnlRight_4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        txtSearch = new javax.swing.JTextField();
+        scrollP_1 = new javax.swing.JScrollPane();
         tblView = new javax.swing.JTable();
         lblLogo1 = new javax.swing.JLabel();
         pnlRight_5 = new javax.swing.JPanel();
@@ -82,14 +89,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         txtUser = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         lblLogo9 = new javax.swing.JLabel();
-        pnlRight_6 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblDel = new javax.swing.JTable();
-        lblLogo5 = new javax.swing.JLabel();
-        pnlRight_7 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblBlock = new javax.swing.JTable();
-        lblLogo3 = new javax.swing.JLabel();
         pnlRight_8 = new javax.swing.JPanel();
         lblLogo2 = new javax.swing.JLabel();
         pnlMain_1 = new javax.swing.JPanel();
@@ -98,10 +97,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         pnlLeft_8 = new javax.swing.JPanel();
         lblR_8 = new javax.swing.JLabel();
-        pnlLeft_7 = new javax.swing.JPanel();
-        lblR_7 = new javax.swing.JLabel();
-        pnlLeft_6 = new javax.swing.JPanel();
-        lblR_6 = new javax.swing.JLabel();
         pnlLeft_5 = new javax.swing.JPanel();
         lblR_5 = new javax.swing.JLabel();
         pnlLeft_4 = new javax.swing.JPanel();
@@ -113,24 +108,29 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_1 = new javax.swing.JPanel();
         lblR_1 = new javax.swing.JLabel();
 
+        delete.setText("...");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+        popDelete.add(delete);
+
         blocks.setText("...");
         blocks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blocksActionPerformed(evt);
             }
         });
-        popBlock.add(blocks);
-
-        blocks1.setText("...");
-        blocks1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                blocks1ActionPerformed(evt);
-            }
-        });
-        popDelete.add(blocks1);
+        popDelete.add(blocks);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                formMouseWheelMoved(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlMain_2.setBackground(new java.awt.Color(249, 234, 208));
@@ -188,8 +188,16 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlRight_4.setBackground(new java.awt.Color(197, 186, 165));
         pnlRight_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        txtSearch.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearchCaretUpdate(evt);
+            }
+        });
+        pnlRight_4.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 500, 30));
+
+        scrollP_1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         tblView.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         tblView.setModel(new javax.swing.table.DefaultTableModel(
@@ -200,7 +208,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
 
             }
         ));
-        tblView.setFocusable(false);
         tblView.setSelectionBackground(java.awt.Color.gray);
         tblView.setShowHorizontalLines(true);
         tblView.setShowVerticalLines(true);
@@ -208,10 +215,21 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblViewMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblViewMouseReleased(evt);
+            }
         });
-        jScrollPane1.setViewportView(tblView);
+        tblView.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblViewKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblViewKeyReleased(evt);
+            }
+        });
+        scrollP_1.setViewportView(tblView);
 
-        pnlRight_4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 560, 440));
+        pnlRight_4.add(scrollP_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 560, 440));
 
         lblLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
         pnlRight_4.add(lblLogo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
@@ -231,7 +249,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
-        pnlRight_5.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, 170, 50));
+        pnlRight_5.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 380, 170, 50));
 
         lblUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/user_1.png"))); // NOI18N
         lblUser.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -247,12 +265,12 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 lblUserMouseClicked(evt);
             }
         });
-        pnlRight_5.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 20, -1));
+        pnlRight_5.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 200, 20, -1));
 
         lblU.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         lblU.setForeground(new java.awt.Color(255, 255, 255));
         lblU.setText("User");
-        pnlRight_5.add(lblU, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, -1, -1));
+        pnlRight_5.add(lblU, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 200, -1, -1));
 
         lblAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/admin_1.png"))); // NOI18N
         lblAdmin.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -268,17 +286,17 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 lblAdminMouseClicked(evt);
             }
         });
-        pnlRight_5.add(lblAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
+        pnlRight_5.add(lblAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 200, -1, -1));
 
         lblA.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         lblA.setForeground(new java.awt.Color(255, 255, 255));
         lblA.setText("Admin");
-        pnlRight_5.add(lblA, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, -1, -1));
+        pnlRight_5.add(lblA, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 200, -1, -1));
 
         pwdPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         pwdPass.setForeground(java.awt.Color.gray);
         pwdPass.setText("Enter Password");
-        pwdPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        pwdPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         pwdPass.setEchoChar((char)0);
         pwdPass.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -298,12 +316,17 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pwdPassMouseClicked(evt);
             }
         });
-        pnlRight_5.add(pwdPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 340, 30));
+        pwdPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pwdPassKeyPressed(evt);
+            }
+        });
+        pnlRight_5.add(pwdPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 320, 340, 30));
 
         txtUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtUser.setForeground(java.awt.Color.gray);
         txtUser.setText("Enter Username");
-        txtUser.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        txtUser.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtUser.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtUserCaretUpdate(evt);
@@ -327,7 +350,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 txtUserKeyPressed(evt);
             }
         });
-        pnlRight_5.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 340, 30));
+        pnlRight_5.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 260, 340, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/panelmiddle_1.png"))); // NOI18N
         pnlRight_5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, -1));
@@ -337,292 +360,174 @@ public class MainFrameAdmin extends javax.swing.JFrame {
 
         pnlMain_2.add(pnlRight_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
-        pnlRight_6.setBackground(new java.awt.Color(197, 186, 165));
-        pnlRight_6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlRight_8.setBackground(new java.awt.Color(197, 186, 165));
+        pnlRight_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        lblLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_8.add(lblLogo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
 
-        tblDel.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        tblDel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        pnlMain_2.add(pnlRight_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
-            },
-            new String [] {
+        getContentPane().add(pnlMain_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 600, 600));
 
-            }
-        ));
-        tblDel.setSelectionBackground(java.awt.Color.gray);
-        tblDel.setShowHorizontalLines(true);
-        tblDel.setShowVerticalLines(true);
-        tblDel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDelMouseClicked(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblDelMouseReleased(evt);
+        pnlMain_1.setBackground(new java.awt.Color(36, 56, 50));
+        pnlMain_1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                pnlMain_1MouseWheelMoved(evt);
             }
         });
-        jScrollPane3.setViewportView(tblDel);
+        pnlMain_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlRight_6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 560, 440));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
+        pnlMain_1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
 
-        lblLogo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
-        pnlRight_6.add(lblLogo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
+        pnlMain_1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, -1));
 
-        pnlMain_2.add(pnlRight_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
+        pnlMain_1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 435, -1, -1));
 
-        pnlRight_7.setBackground(new java.awt.Color(249, 234, 208));
-        pnlRight_7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlLeft_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        tblBlock.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        tblBlock.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
+        lblR_8.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_8.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_8.setText("ABOUT");
+        lblR_8.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_8FocusGained(evt);
             }
-        )
-        {
-            public boolean isCellEditable(int row, int column) {
-                return false;
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_8FocusLost(evt);
             }
-        }
-    );
-    tblBlock.setSelectionBackground(java.awt.Color.gray);
-    tblBlock.setShowHorizontalLines(true);
-    tblBlock.setShowVerticalLines(true);
-    tblBlock.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            tblBlockMouseClicked(evt);
-        }
-        public void mouseReleased(java.awt.event.MouseEvent evt) {
-            tblBlockMouseReleased(evt);
-        }
-    });
-    tblBlock.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyPressed(java.awt.event.KeyEvent evt) {
-            tblBlockKeyPressed(evt);
-        }
-        public void keyReleased(java.awt.event.KeyEvent evt) {
-            tblBlockKeyReleased(evt);
-        }
-    });
-    jScrollPane2.setViewportView(tblBlock);
+        });
+        lblR_8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_8MouseClicked(evt);
+            }
+        });
+        pnlLeft_8.add(lblR_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-    pnlRight_7.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 560, 440));
+        pnlMain_1.add(pnlLeft_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
 
-    lblLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
-    pnlRight_7.add(lblLogo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+        pnlLeft_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    pnlMain_2.add(pnlRight_7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
+        lblR_5.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_5.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_5.setText("ADD");
+        lblR_5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_5FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_5FocusLost(evt);
+            }
+        });
+        lblR_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_5MouseClicked(evt);
+            }
+        });
+        pnlLeft_5.add(lblR_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-    pnlRight_8.setBackground(new java.awt.Color(197, 186, 165));
-    pnlRight_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlMain_1.add(pnlLeft_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 180, 40));
 
-    lblLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
-    pnlRight_8.add(lblLogo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+        pnlLeft_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    pnlMain_2.add(pnlRight_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
+        lblR_4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_4.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_4.setText("ACCOUNTS");
+        lblR_4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_4FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_4FocusLost(evt);
+            }
+        });
+        lblR_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_4MouseClicked(evt);
+            }
+        });
+        pnlLeft_4.add(lblR_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-    getContentPane().add(pnlMain_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 600, 600));
+        pnlMain_1.add(pnlLeft_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 180, 40));
 
-    pnlMain_1.setBackground(new java.awt.Color(36, 56, 50));
-    pnlMain_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlLeft_3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/mainFrameBPart.6.png"))); // NOI18N
-    pnlMain_1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+        lblR_3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_3.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_3.setText("CONTACT");
+        lblR_3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_3FocusLost(evt);
+            }
+        });
+        lblR_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_3MouseClicked(evt);
+            }
+        });
+        pnlLeft_3.add(lblR_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-    jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
-    pnlMain_1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, -1));
+        pnlMain_1.add(pnlLeft_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 180, 40));
 
-    jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
-    pnlMain_1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 435, -1, -1));
+        pnlLeft_2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    pnlLeft_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lblR_2.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_2.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_2.setText("SERVICES");
+        lblR_2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_2FocusLost(evt);
+            }
+        });
+        lblR_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_2MouseClicked(evt);
+            }
+        });
+        pnlLeft_2.add(lblR_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-    lblR_8.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_8.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_8.setText("ABOUT");
-    lblR_8.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_8FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_8FocusLost(evt);
-        }
-    });
-    lblR_8.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_8MouseClicked(evt);
-        }
-    });
-    pnlLeft_8.add(lblR_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
+        pnlMain_1.add(pnlLeft_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, 40));
 
-    pnlMain_1.add(pnlLeft_8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
+        pnlLeft_1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                pnlLeft_1MouseWheelMoved(evt);
+            }
+        });
+        pnlLeft_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    pnlLeft_7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lblR_1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_1.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_1.setText("HOME");
+        lblR_1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_1FocusLost(evt);
+            }
+        });
+        lblR_1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_1MouseClicked(evt);
+            }
+        });
+        pnlLeft_1.add(lblR_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-    lblR_7.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_7.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_7.setText("BLOCK");
-    lblR_7.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_7FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_7FocusLost(evt);
-        }
-    });
-    lblR_7.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_7MouseClicked(evt);
-        }
-    });
-    pnlLeft_7.add(lblR_7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
+        pnlMain_1.add(pnlLeft_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 40));
 
-    pnlMain_1.add(pnlLeft_7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 180, 40));
+        getContentPane().add(pnlMain_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 600));
 
-    pnlLeft_6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    lblR_6.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_6.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_6.setText("DELETE");
-    lblR_6.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_6FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_6FocusLost(evt);
-        }
-    });
-    lblR_6.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_6MouseClicked(evt);
-        }
-    });
-    pnlLeft_6.add(lblR_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
-
-    pnlMain_1.add(pnlLeft_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 180, 40));
-
-    pnlLeft_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    lblR_5.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_5.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_5.setText("ADD");
-    lblR_5.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_5FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_5FocusLost(evt);
-        }
-    });
-    lblR_5.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_5MouseClicked(evt);
-        }
-    });
-    pnlLeft_5.add(lblR_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
-
-    pnlMain_1.add(pnlLeft_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 180, 40));
-
-    pnlLeft_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    lblR_4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_4.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_4.setText("VIEW");
-    lblR_4.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_4FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_4FocusLost(evt);
-        }
-    });
-    lblR_4.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_4MouseClicked(evt);
-        }
-    });
-    pnlLeft_4.add(lblR_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
-
-    pnlMain_1.add(pnlLeft_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 180, 40));
-
-    pnlLeft_3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    lblR_3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_3.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_3.setText("CONTACT");
-    lblR_3.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_3FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_3FocusLost(evt);
-        }
-    });
-    lblR_3.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_3MouseClicked(evt);
-        }
-    });
-    pnlLeft_3.add(lblR_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
-
-    pnlMain_1.add(pnlLeft_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 180, 40));
-
-    pnlLeft_2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    lblR_2.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_2.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_2.setText("SERVICES");
-    lblR_2.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_2FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_2FocusLost(evt);
-        }
-    });
-    lblR_2.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_2MouseClicked(evt);
-        }
-    });
-    pnlLeft_2.add(lblR_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
-
-    pnlMain_1.add(pnlLeft_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, 40));
-
-    pnlLeft_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    lblR_1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-    lblR_1.setForeground(new java.awt.Color(255, 255, 255));
-    lblR_1.setText("HOME");
-    lblR_1.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            lblR_1FocusGained(evt);
-        }
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            lblR_1FocusLost(evt);
-        }
-    });
-    lblR_1.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            lblR_1MouseClicked(evt);
-        }
-    });
-    pnlLeft_1.add(lblR_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
-
-    pnlMain_1.add(pnlLeft_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 40));
-
-    getContentPane().add(pnlMain_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 600));
-
-    setSize(new java.awt.Dimension(800, 600));
-    setLocationRelativeTo(null);
+        setSize(new java.awt.Dimension(800, 600));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
@@ -719,40 +624,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlRight_5.setVisible(true);
     }//GEN-LAST:event_lblR_5MouseClicked
 
-    private void lblR_6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_6FocusGained
-        Changer(flag);
-    }//GEN-LAST:event_lblR_6FocusGained
-
-    private void lblR_6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_6FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblR_6FocusLost
-
-    private void lblR_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblR_6MouseClicked
-        flag = 6;
-        lblR_6.requestFocus();
-        pnlRight_6.setVisible(true);
-        st = new SetTable(tblDel);
-        st.addCol2();
-        st.addRow2();
-    }//GEN-LAST:event_lblR_6MouseClicked
-
-    private void lblR_7FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_7FocusGained
-        Changer(flag);
-    }//GEN-LAST:event_lblR_7FocusGained
-
-    private void lblR_7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_7FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblR_7FocusLost
-
-    private void lblR_7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblR_7MouseClicked
-        flag = 7;
-        lblR_7.requestFocus();
-        pnlRight_7.setVisible(true);
-        st = new SetTable(tblBlock);
-        st.addCol();
-        st.addRow();
-    }//GEN-LAST:event_lblR_7MouseClicked
-
     private void lblR_8FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_8FocusGained
         Changer(flag);
     }//GEN-LAST:event_lblR_8FocusGained
@@ -776,25 +647,19 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             adder();
         }
+
     }//GEN-LAST:event_txtUserKeyPressed
 
     private void tblViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblViewMouseClicked
+        Delete(tblView.getSelectedRow());
+        getObject(tblView.getSelectedRow());
 
+//        if (evt.getClickCount() == 2 && !evt.isConsumed()) {
+//            evt.consume();
+//            updateBlock(flag2, username2);
+//            flag2 = 1;
+//        }
     }//GEN-LAST:event_tblViewMouseClicked
-
-    private void tblBlockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBlockMouseClicked
-        getObject(tblBlock.getSelectedRow());
-
-        if (evt.getClickCount() == 2 && !evt.isConsumed()) {
-            evt.consume();
-            updateBlock(flag2, username2);
-            flag2 = 1;
-        }
-    }//GEN-LAST:event_tblBlockMouseClicked
-
-    private void tblDelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDelMouseClicked
-        Delete(tblDel.getSelectedRow());
-    }//GEN-LAST:event_tblDelMouseClicked
 
     private void txtUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusGained
         Color customColor = new Color(249, 234, 208);
@@ -814,12 +679,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             user = "";
         }
     }//GEN-LAST:event_txtUserFocusLost
-
-    private void tblBlockMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBlockMouseReleased
-        if (evt.getButton() == MouseEvent.BUTTON3 && tblBlock.getSelectedRow() != -1 && tblBlock.getSelectedColumn() == 1) {
-            popBlock.show(evt.getComponent(), evt.getX(), evt.getY());
-        }
-    }//GEN-LAST:event_tblBlockMouseReleased
 
     private void blocksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blocksActionPerformed
         updateBlock(flag2, username2);
@@ -899,7 +758,38 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pwdPass.requestFocus();
     }//GEN-LAST:event_pwdPassMouseClicked
 
-    private void tblBlockKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblBlockKeyPressed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        startDelete(username2);
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void pwdPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPassKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            adder();
+        }
+
+    }//GEN-LAST:event_pwdPassKeyPressed
+
+    private void tblViewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblViewKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_CONTROL && z == 0) {
+            z++;
+            System.out.println("h1");
+
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_D && z == 1) {
+            z++;
+            System.out.println("h");
+        }
+        if (z == 2) {
+
+            if (tblView.getSelectedRow() != -1) {
+                startDelete(username2);
+                String username2 = "";
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Please Select An Account To Delete");
+            }
+
+            z = 0;
+        }
         if (evt.getKeyCode() == KeyEvent.VK_CONTROL && x == 0) {
             x++;
 
@@ -910,35 +800,66 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         }
         if (x == 2) {
 
-            if (tblBlock.getValueAt(flag2, 1).equals("ENABLED") || tblBlock.getValueAt(flag2, 1).equals("DISABLED")) {
+            if (tblView.getValueAt(flag2, 1).equals("ENABLED") || tblView.getValueAt(flag2, 1).equals("DISABLED")) {
                 updateBlock(flag2, username2);
                 flag2 = 1;
                 String username2 = "";
+                System.out.println(x);
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Select An Account To Block");
             }
 
             x = 0;
         }
-    }//GEN-LAST:event_tblBlockKeyPressed
+    }//GEN-LAST:event_tblViewKeyPressed
 
-    private void tblBlockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblBlockKeyReleased
+    private void tblViewMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblViewMouseReleased
+        if (evt.getButton() == MouseEvent.BUTTON3 && tblView.getSelectedRow() != -1) {
+            popDelete.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+        if (evt.getButton() == MouseEvent.BUTTON3 && tblView.getSelectedRow() != -1 && tblView.getSelectedColumn() == 1) {
+            popDelete.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tblViewMouseReleased
+
+    private void tblViewKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblViewKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_CONTROL && z > 0) {
+            z = 0;
+
+        }
         if (evt.getKeyCode() == KeyEvent.VK_CONTROL && x > 0) {
             x = 0;
 
         }
+    }//GEN-LAST:event_tblViewKeyReleased
 
-    }//GEN-LAST:event_tblBlockKeyReleased
+    private void pnlLeft_1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_pnlLeft_1MouseWheelMoved
 
-    private void tblDelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDelMouseReleased
-        if (evt.getButton() == MouseEvent.BUTTON3 && tblDel.getSelectedRow() != -1) {
-            popDelete.show(evt.getComponent(), evt.getX(), evt.getY());
+    }//GEN-LAST:event_pnlLeft_1MouseWheelMoved
+
+    private void formMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_formMouseWheelMoved
+
+    }//GEN-LAST:event_formMouseWheelMoved
+
+    private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
+        String x = txtSearch.getText();
+        searchForTheOne(x);
+        System.out.println(x);
+    }//GEN-LAST:event_txtSearchCaretUpdate
+
+    private void pnlMain_1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_pnlMain_1MouseWheelMoved
+
+        if (evt.getWheelRotation() == 1) {
+            j++;
+            Changer(j);
+            System.out.println("up");
+
+        } else if (evt.getWheelRotation() == -1) {
+            System.out.println("Mouse wheel down");
+            j--;
+            Changer(j);
         }
-    }//GEN-LAST:event_tblDelMouseReleased
-
-    private void blocks1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blocks1ActionPerformed
-        startDelete(username2);
-    }//GEN-LAST:event_blocks1ActionPerformed
+    }//GEN-LAST:event_pnlMain_1MouseWheelMoved
 
     /**
      * @param args the command line arguments
@@ -981,24 +902,19 @@ public class MainFrameAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem blocks;
-    private javax.swing.JMenuItem blocks1;
     private javax.swing.JButton btnAdd;
     private javax.swing.JLabel btnClose;
+    private javax.swing.JMenuItem delete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblAdmin;
     private javax.swing.JLabel lblB;
     private javax.swing.JLabel lblLogo1;
     private javax.swing.JLabel lblLogo2;
-    private javax.swing.JLabel lblLogo3;
-    private javax.swing.JLabel lblLogo5;
     private javax.swing.JLabel lblLogo6;
     private javax.swing.JLabel lblLogo7;
     private javax.swing.JLabel lblLogo8;
@@ -1008,8 +924,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel lblR_3;
     private javax.swing.JLabel lblR_4;
     private javax.swing.JLabel lblR_5;
-    private javax.swing.JLabel lblR_6;
-    private javax.swing.JLabel lblR_7;
     private javax.swing.JLabel lblR_8;
     private javax.swing.JLabel lblU;
     private javax.swing.JLabel lblUser;
@@ -1018,8 +932,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel pnlLeft_3;
     private javax.swing.JPanel pnlLeft_4;
     private javax.swing.JPanel pnlLeft_5;
-    private javax.swing.JPanel pnlLeft_6;
-    private javax.swing.JPanel pnlLeft_7;
     private javax.swing.JPanel pnlLeft_8;
     private javax.swing.JPanel pnlMain_1;
     private javax.swing.JPanel pnlMain_2;
@@ -1028,15 +940,13 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel pnlRight_3;
     private javax.swing.JPanel pnlRight_4;
     private javax.swing.JPanel pnlRight_5;
-    private javax.swing.JPanel pnlRight_6;
-    private javax.swing.JPanel pnlRight_7;
     private javax.swing.JPanel pnlRight_8;
     private javax.swing.JPopupMenu popBlock;
     private javax.swing.JPopupMenu popDelete;
     private javax.swing.JPasswordField pwdPass;
-    private javax.swing.JTable tblBlock;
-    private javax.swing.JTable tblDel;
+    private javax.swing.JScrollPane scrollP_1;
     private javax.swing.JTable tblView;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 
@@ -1100,10 +1010,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_4.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
@@ -1117,10 +1023,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_4.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
@@ -1134,10 +1036,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_4.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
@@ -1151,10 +1049,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_2.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
@@ -1168,15 +1062,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_2.setVisible(false);
                 pnlLeft_4.setBackground(customColor);
                 pnlRight_4.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
+
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
             case 6:
-                pnlLeft_6.setBackground(Color.GRAY);
                 pnlLeft_1.setBackground(customColor);
                 pnlRight_1.setVisible(false);
                 pnlLeft_3.setBackground(customColor);
@@ -1187,13 +1077,10 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_4.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
             case 7:
-                pnlLeft_7.setBackground(Color.GRAY);
                 pnlLeft_1.setBackground(customColor);
                 pnlRight_1.setVisible(false);
                 pnlLeft_3.setBackground(customColor);
@@ -1204,8 +1091,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_4.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
                 pnlLeft_8.setBackground(customColor);
                 pnlRight_8.setVisible(false);
                 break;
@@ -1221,10 +1106,6 @@ public class MainFrameAdmin extends javax.swing.JFrame {
                 pnlRight_4.setVisible(false);
                 pnlLeft_5.setBackground(customColor);
                 pnlRight_5.setVisible(false);
-                pnlLeft_6.setBackground(customColor);
-                pnlRight_6.setVisible(false);
-                pnlLeft_7.setBackground(customColor);
-                pnlRight_7.setVisible(false);
                 break;
             default:
                 break;
@@ -1236,7 +1117,24 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         int a = new Methods().checker(txtUser.getText(), pwdPass.getText(), f);
         if (a == 1) {
             new Methods().adder(txtUser.getText(), pwdPass.getText(), f);
+            Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_1.png"));
+            lblUser.setIcon(imgIcon);
+            Icon imgIcon2 = new ImageIcon(getClass().getResource("/icons/admin_1.png"));
+            lblAdmin.setIcon(imgIcon2);
+            txtUser.setText("Enter Username");
+            pwdPass.setText("Enter Password");
+            pass = "";
+            pwdPass.setEchoChar((char) 0);
+            txtUser.setFocusable(false);
+            pwdPass.setFocusable(false);
+            a = 0;
+        } else {
+            Icon imgIcon = new ImageIcon(getClass().getResource("/icons/user_1.png"));
+            lblUser.setIcon(imgIcon);
+            Icon imgIcon2 = new ImageIcon(getClass().getResource("/icons/admin_1.png"));
+            lblAdmin.setIcon(imgIcon2);
         }
+        f = -1;
     }
 
     public void functions() {
@@ -1246,16 +1144,12 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlLeft_3.setBackground(c);
         pnlLeft_4.setBackground(c);
         pnlLeft_5.setBackground(c);
-        pnlLeft_6.setBackground(c);
-        pnlLeft_7.setBackground(c);
         pnlLeft_8.setBackground(c);
         pnlRight_1.setVisible(true);
         pnlRight_2.setVisible(false);
         pnlRight_3.setVisible(false);
         pnlRight_4.setVisible(false);
         pnlRight_5.setVisible(false);
-        pnlRight_6.setVisible(false);
-        pnlRight_7.setVisible(false);
         pnlRight_8.setVisible(false);
         Changer(1);
         txtUser.setBackground(new java.awt.Color(0, 0, 0, 1));
@@ -1264,8 +1158,10 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         lblUser.setFocusable(false);
         txtUser.setFocusable(false);
         pwdPass.setFocusable(false);
-        tblBlock.setDefaultEditor(Object.class, null);
         tblView.setDefaultEditor(Object.class, null);
+        new SetTable().fixTable(scrollP_1);
+        txtSearch.setBackground(new java.awt.Color(0, 0, 0, 1));
+
     }
 
     public void check(int c) {
@@ -1299,74 +1195,96 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     }
 
     public void getObject(int row) {
-        if (tblBlock.getValueAt(row, 1).equals("ENABLED")) {
+        if (tblView.getValueAt(row, 1).equals("ENABLED")) {
             blocks.setText("DISABLE");
             flag2 = 3;
-            username2 = tblBlock.getValueAt(row, 0) + "";
+            username2 = tblView.getValueAt(row, 0) + "";
             System.out.println(username2);
-        } else if (tblBlock.getValueAt(row, 1).equals("DISABLED")) {
+        } else if (tblView.getValueAt(row, 1).equals("DISABLED")) {
             blocks.setText("ENABLE");
             flag2 = 0;
-            username2 = tblBlock.getValueAt(row, 0) + "";
+            username2 = tblView.getValueAt(row, 0) + "";
         }
     }
 
     public void updateBlock(int x, String username) {
         sqlconnect();
-        switch (x) {
-            case 0:
+
+        int i = JOptionPane.showConfirmDialog(rootPane, "Do You Want To Block " + username + "'s Account?");
+
+        if (i == 0) {
+            switch (x) {
+                case 0:
                 try {
-                String sql = "update infologin set block = ? where username = ?";
-                PreparedStatement pst;
-                pst = con.prepareStatement(sql);
-                pst.setInt(1, 0);
-                pst.setString(2, username);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Unblocked");
-            } catch (Exception e) {
-                System.out.println("Error in updateBlock case 0: " + e);
-            }
-            break;
-            case 3:
+                    String sql = "update infologin set block = ? where username = ?";
+                    PreparedStatement pst;
+                    pst = con.prepareStatement(sql);
+                    pst.setInt(1, 0);
+                    pst.setString(2, username);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Unblocked");
+                } catch (Exception e) {
+                    System.out.println("Error in updateBlock case 0: " + e);
+                }
+                break;
+                case 3:
                 try {
-                String sql = "update infologin set block = ? where username = ?";
-                PreparedStatement pst;
-                pst = con.prepareStatement(sql);
-                pst.setInt(1, 3);
-                pst.setString(2, username);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Blocked");
-            } catch (Exception e) {
-                System.out.println("Error in updateBlock case 3: " + e);
+                    String sql = "update infologin set block = ? where username = ?";
+                    PreparedStatement pst;
+                    pst = con.prepareStatement(sql);
+                    pst.setInt(1, 3);
+                    pst.setString(2, username);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Blocked");
+                } catch (Exception e) {
+                    System.out.println("Error in updateBlock case 3: " + e);
+                }
+                break;
             }
-            break;
+            st = new SetTable(tblView);
+            st.addCol();
+            st.addRow();
+            txtSearch.setText("");
         }
-        st = new SetTable(tblBlock);
-        st.addCol();
-        st.addRow();
     }
 
     public void Delete(int row) {
-        blocks1.setText("Delete Account");
-        username2 = tblDel.getValueAt(row, 0) + "";
+        delete.setText("Delete Account");
+        username2 = tblView.getValueAt(row, 0) + "";
     }
 
     public void startDelete(String username) {
         sqlconnect();
 
-        try {
-            String sql = "DELETE FROM infologin WHERE username = ?;";
-            PreparedStatement pst;
-            pst = con.prepareStatement(sql);
-            pst.setString(1, username);
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Deleted");
-        } catch (Exception e) {
-            System.out.println("Error in updateBlock case 0: " + e);
-        }
+        int i = JOptionPane.showConfirmDialog(rootPane, "Do You Want To Delete " + username + "'s Account?");
 
-        st = new SetTable(tblDel);
-        st.addCol2();
-        st.addRow2();
+        if (i == 0) {
+            try {
+                String sql = "DELETE FROM infologin WHERE username = ?;";
+                PreparedStatement pst;
+                pst = con.prepareStatement(sql);
+                pst.setString(1, username);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Deleted");
+            } catch (Exception e) {
+                System.out.println("Error in updateBlock case 0: " + e);
+            }
+
+            st = new SetTable(tblView);
+            st.addCol();
+            st.addRow();
+            txtSearch.setText("");
+        }
+    }
+
+    public void searchForTheOne(String IcingSaIbabawNgCupcakeKo) {
+
+        if (!IcingSaIbabawNgCupcakeKo.equals(null)) {
+            String sql = "select * from infologin where username like '" + IcingSaIbabawNgCupcakeKo + "%'";
+
+            st = new SetTable(tblView);
+            st.addCol();
+            st.addRowSearch(sql);
+        }
     }
 }
