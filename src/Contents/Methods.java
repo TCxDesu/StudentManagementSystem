@@ -34,8 +34,8 @@ public class Methods {
         String username = user;
         String password = encrypt(pass);
 
-        String sql = "insert into infologin values(?,?,0,?,0,0,CURRENT_TIMESTAMP())";
-        String sql2 = "insert into user values(?,null,null,null,null,null,null)";
+        String sql = "insert into infologin values(?,?,?,0,0,0,CURRENT_TIMESTAMP())";
+        String sql2 = "insert into infouser values(?,null,null,null,null,null,null)";
         try {
             PreparedStatement pstt = con.prepareStatement(sql2);
             PreparedStatement pst = con.prepareStatement(sql);
@@ -48,6 +48,7 @@ public class Methods {
             pstt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Added!");
         } catch (Exception e) {
+            System.out.println("error: "+ e);
             JOptionPane.showMessageDialog(null, "Account Already Exist!");
         }
     }

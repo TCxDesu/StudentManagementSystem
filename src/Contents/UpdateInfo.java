@@ -367,7 +367,7 @@ public class UpdateInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUIActionPerformed
-        UpdateInfo1();
+        UpdateInformation();
     }//GEN-LAST:event_btnUIActionPerformed
 
     private void txtFNCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtFNCaretUpdate
@@ -376,8 +376,11 @@ public class UpdateInfo extends javax.swing.JFrame {
 
     private void txtFNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFNFocusGained
         Color customColor = new Color(249, 234, 208);
+        if(txtFN.getText().equals("Enter First Name")){
         txtFN.setText("");
+        }else{
         txtFN.setText(firstName);
+        }
         txtFN.setForeground(customColor);
     }//GEN-LAST:event_txtFNFocusGained
 
@@ -410,8 +413,11 @@ public class UpdateInfo extends javax.swing.JFrame {
 
     private void txtLNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLNFocusGained
         Color customColor = new Color(249, 234, 208);
+        if(txtLN.getText().equals("Enter Last Name")){
         txtLN.setText("");
+        }else{
         txtLN.setText(lastName);
+        }
         txtLN.setForeground(customColor);
     }//GEN-LAST:event_txtLNFocusGained
 
@@ -444,8 +450,11 @@ public class UpdateInfo extends javax.swing.JFrame {
 
     private void txtMNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMNFocusGained
         Color customColor = new Color(249, 234, 208);
+        if(txtMN.getText().equals("Enter Middle Name")){
         txtMN.setText("");
+        }else{
         txtMN.setText(middleName);
+        }
         txtMN.setForeground(customColor);
     }//GEN-LAST:event_txtMNFocusGained
 
@@ -819,8 +828,6 @@ public class UpdateInfo extends javax.swing.JFrame {
             rbtnMale.setSelected(true);
         } else if (g.equals("Female")) {
             rbtnFemale.setSelected(true);
-        } else {
-            rbtnOthers.setSelected(true);
         }
         jLabel2.setText(user);
         System.out.println(user);

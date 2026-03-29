@@ -392,7 +392,7 @@ public class ChangePassword extends javax.swing.JFrame {
         }
     }
 
-    public void UpdatePassword() {
+    public void UpdatePassword(int x) {
         try {
 
             String sql = "update infologin set password = ? where status = ?";
@@ -400,15 +400,28 @@ public class ChangePassword extends javax.swing.JFrame {
             MethodsLogIn li = new MethodsLogIn();
             String c = li.encrypt(pwdCCP.getText());
             pst.setString(1, c);
-            pst.setInt(2, 1);
+            switch(x){
+                case 1:
+                    pst.setInt(2, 1);
+                    break;
+                case 2:
+                    pst.setInt(2, 2);
+                    break;
+            }
+            
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
 //            UpdateInfo ui = new UpdateInfo();
 //            ui.setPassword(newPass);
 //            ui.getUsername(getUsername());
 //            ui.setVisible(true);
+            if(x == 2){
+            MainFrameAdmin mfa = new MainFrameAdmin();
+            mfa.setVisible(true);
+            }else{
             MainFrameUser mfu = new MainFrameUser();
             mfu.setVisible(true);
+            }
             dispose();
 
         } catch (Exception e) {
@@ -416,14 +429,21 @@ public class ChangePassword extends javax.swing.JFrame {
         }
     }
 
-    public void UpdateStatus1() {
+    public void UpdateStatus1(int x) {
 
         try {
 
             String sql = "update infologin set pChange = ? where status = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, 2);
-            pst.setInt(2, 1);
+            switch(x){
+                case 1:
+                    pst.setInt(2, 1);
+                    break;
+                case 2:
+                    pst.setInt(2, 2);
+                    break;
+            }
             pst.executeUpdate();
 //            JOptionPane.showMessageDialog(rootPane, "Password Changed!");
 //            MainFrameUser mfu = new MainFrameUser();
@@ -446,10 +466,17 @@ public class ChangePassword extends javax.swing.JFrame {
                 while (rs.next()) {
                     if (rs.getInt("status") == 1) {
                         if (rs.getInt("pChange") == 0) {
-                            UpdateStatus1();
-                            UpdatePassword();
+                            UpdateStatus1(1);
+                            UpdatePassword(1);
                             break;
                         }
+                    } else if (rs.getInt("status") == 2){
+                        if (rs.getInt("pChange") == 0) {
+                            UpdateStatus1(2);
+                            UpdatePassword(2);
+                            break;
+                        }
+
                     }
                 }
             } catch (Exception e) {
@@ -541,7 +568,8 @@ public class ChangePassword extends javax.swing.JFrame {
 //        lblH_2.setVisible(false);
 //        flag = 0;
     }
-public void setUsername(String x) {
+
+    public void setUsername(String x) {
         username = x;
     }
 

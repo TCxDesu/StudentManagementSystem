@@ -16,6 +16,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
@@ -612,19 +614,46 @@ public class MainFrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBMouseClicked
 
     private void btnUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUIActionPerformed
-//        UpdateInfo ui = new UpdateInfo();
-//        ui.setInfo(txtUser.getText(), password, txtFN.getText(), txtLN.getText(), txtMN.getText(), txtAge.getText(), txtBD.getText(), txtGen.getText());
-//        ui.setVisible(true);
-//        try {
-//            sqlconnect();
-//            String sqll = "update infologin set pChange = ? where username = ?";
-//            PreparedStatement pst = con.prepareStatement(sqll);
-//            pst.setInt(1, 2);
-//            pst.setString(2, txtUser.getText());
-//            pst.executeUpdate();
-//        } catch (Exception e) {
-//        }
-//        setVisible(false);
+        UpdateInfo ui = new UpdateInfo();
+        String username1 = txtUser.getText();
+        String firstName = txtFN.getText();
+        String lastName = txtLN.getText();
+        String middleName = txtMN.getText();
+        String Age = txtAge.getText();
+        String birthDay = txtBD.getText();
+        String gender = txtGen.getText();
+        if(firstName.trim().length() == 0){
+        firstName = "Enter First Name";
+        }
+        if(lastName.trim().length() == 0){
+        lastName = "Enter Last Name";
+        }
+        if(middleName.trim().length() == 0){
+        middleName = "Enter Middle Name";
+        }
+        if(Age.trim().length() == 0){
+        Age = "Age";
+        }
+        if(birthDay.trim().length() == 0){
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        birthDay = ft.format(date);
+        }
+        if(gender.trim().length() == 0){
+        gender = "";
+        }
+        ui.setInfo(username1, password, firstName, lastName, middleName, Age, birthDay, gender);
+        ui.setVisible(true);
+        try {
+            sqlconnect();
+            String sqll = "update infologin set pChange = ? where username = ?";
+            PreparedStatement pst = con.prepareStatement(sqll);
+            pst.setInt(1, 2);
+            pst.setString(2, txtUser.getText());
+            pst.executeUpdate();
+        } catch (Exception e) {
+        }
+        setVisible(false);
         JOptionPane.showMessageDialog(rootPane, "Cuurently under Maintenance");
     }//GEN-LAST:event_btnUIActionPerformed
 
@@ -751,6 +780,7 @@ public class MainFrameUser extends javax.swing.JFrame {
             pst.setString(2, username);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Successfully Signed Out");
+            audit(username);
             LogIn li = new LogIn();
             li.setVisible(true);
             dispose();
@@ -912,9 +942,9 @@ public class MainFrameUser extends javax.swing.JFrame {
 
             while (rs.next()) {
                 if (rs.getString("username").equals(jLabel2.getText())) {
-                    txtFN.setText(rs.getString("firstName"));
-                    txtLN.setText(rs.getString("lastName"));
-                    txtMN.setText(rs.getString("middleName"));
+                    txtFN.setText(rs.getString("First_Name"));
+                    txtLN.setText(rs.getString("Last_Name"));
+                    txtMN.setText(rs.getString("Middle_Name"));
                     txtAge.setText(rs.getString("age"));
                     txtBD.setText(rs.getString("birthday"));
                     txtGen.setText(rs.getString("gender"));
@@ -970,4 +1000,23 @@ public class MainFrameUser extends javax.swing.JFrame {
         Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
         return key;
     }
+    
+    public void audit(String username) {
+        String format = "yyyy-MM-dd hh:mm:s";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        System.out.println(sdf.format(date));
+        String sql = "insert into audit values(?,?,?)";
+
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, sdf.format(date));
+            pst.setString(2, username);
+            pst.setString(3, "User Logged Out");
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+    
 }

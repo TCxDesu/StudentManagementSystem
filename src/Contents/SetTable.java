@@ -125,6 +125,8 @@ public class SetTable {
         
     }
     
+    
+    
     public void addRowSearch(String sql) {
         if (tbl.getRowCount() > 0) {
             mod.setRowCount(0);
@@ -214,5 +216,42 @@ public class SetTable {
     }
     public void fixTable(JScrollPane scroll) {
         scroll.setVerticalScrollBar(new ScrollBarCustom());
+    }
+    
+    public void SetTableForAudit(JTable tblData) {
+        tbl = tblData;
+        tbl.setModel(mod);
+        sqlConnect();
+//        dtcr.setHorizontalAlignment(JLabel.CENTER);
+//        tbl.setDefaultRenderer(String.class, dtcr);
+//        for(int x = 0; x < tbl.getColumnCount(); x++){
+//            tbl
+//        }
+    }
+    public void setTableAudit() {
+        
+        mod.addColumn("Time");
+        mod.addColumn("User");
+        mod.addColumn("Action");
+        
+        if (tbl.getRowCount() > 0) {
+            mod.setRowCount(0);
+        }
+        try {
+            int x;
+            Statement st = con.createStatement();
+            String sql = "select * from audit";
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Vector v = new Vector();
+                String date = rs.getString("Time");
+                v.add(date.substring(0,date.length()-2));
+                v.add(rs.getString("User"));
+                v.add(rs.getString("Action"));
+                mod.addRow(v);
+            }
+        } catch (Exception e) {
+            System.out.println("error:" + e);
+        }
     }
 }

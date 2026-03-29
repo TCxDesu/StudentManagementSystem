@@ -484,10 +484,7 @@ public class ChangePasswordUser extends javax.swing.JFrame {
             pst.setString(2, username);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
-            MainFrameUser ui = new MainFrameUser();
-            ui.setPassword(newPass);
-            ui.getUsername(getUsername());
-            ui.setVisible(true);
+           
             dispose();
 
         } catch (Exception e) {
