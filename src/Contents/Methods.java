@@ -8,6 +8,8 @@ import com.mysql.jdbc.Connection;
 import java.security.Key;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
@@ -33,13 +35,17 @@ public class Methods {
         String password = encrypt(pass);
 
         String sql = "insert into infologin values(?,?,0,?,0,0,CURRENT_TIMESTAMP())";
+        String sql2 = "insert into infouser values(?,null,null,null,null,null,null)";
         try {
+            PreparedStatement pstt = con.prepareStatement(sql2);
             PreparedStatement pst = con.prepareStatement(sql);
+            pstt.setString(1, username);
             pst.setString(1, username);
             pst.setString(2, password);
             pst.setInt(3, f);
 
             pst.executeUpdate();
+            pstt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Added!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Account Already Exist!");
@@ -97,5 +103,25 @@ public class Methods {
         }
 
         return a;
+    }
+
+    public void usernames() {
+        sqlconnect();
+        
+        try {
+            String sql = "select username from infologin";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                String sql2 = "insert into infouser (username) values (?)";
+                PreparedStatement pst = con.prepareStatement(sql2);
+                pst.setString(1, rs.getString("username"));
+                pst.executeUpdate();
+            }
+            System.out.println("done");
+        } catch (Exception e) {
+
+        }
     }
 }

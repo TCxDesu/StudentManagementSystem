@@ -6,12 +6,23 @@ package Contents;
 
 import com.mysql.jdbc.Connection;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+import java.security.Key;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -26,6 +37,7 @@ public class MainFrameUser extends javax.swing.JFrame {
     Color c = new Color(0, 0, 0, 1);
     Color customColor = new Color(36, 56, 50);
     int j = 1;
+    String path;
 
     /**
      * Creates new form MainFrame
@@ -35,6 +47,27 @@ public class MainFrameUser extends javax.swing.JFrame {
 //        functions();
         txtUser.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtPass.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtFN.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtLN.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtMN.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtAge.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtBD.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtGen.setBackground(new java.awt.Color(0, 0, 0, 1));
+        loggingIn();
+        Methods m = new Methods();
+        m.usernames();
+        try {
+            //create the font to use. Specify the size!
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src\\Fonts\\Santana-BlackCondensed.ttf")).deriveFont(45f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //register the font
+            ge.registerFont(customFont);
+            lblN.setFont(customFont);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -48,22 +81,39 @@ public class MainFrameUser extends javax.swing.JFrame {
 
         pnlMain_2 = new javax.swing.JPanel();
         btnClose = new javax.swing.JLabel();
-        pnlRight_1 = new javax.swing.JPanel();
-        lblEditPass = new javax.swing.JLabel();
-        lblEditUser = new javax.swing.JLabel();
-        lblUser = new javax.swing.JLabel();
-        lblPass = new javax.swing.JLabel();
-        txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
+        pnlRight_4 = new javax.swing.JPanel();
+        btnUI = new javax.swing.JButton();
+        lblPI = new javax.swing.JLabel();
         lblAI = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         lblN = new javax.swing.JLabel();
+        lblBD = new javax.swing.JLabel();
+        lblGen = new javax.swing.JLabel();
+        lblEditUser = new javax.swing.JLabel();
+        txtLN = new javax.swing.JTextField();
+        lblPass = new javax.swing.JLabel();
+        txtPass = new javax.swing.JTextField();
+        lblFN = new javax.swing.JLabel();
+        lblEditPass = new javax.swing.JLabel();
+        txtMN = new javax.swing.JTextField();
+        txtBD = new javax.swing.JTextField();
+        lblA = new javax.swing.JLabel();
+        lblLN = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
+        txtFN = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
+        lblMN = new javax.swing.JLabel();
+        lblUser = new javax.swing.JLabel();
+        txtGen = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        lblLogo4 = new javax.swing.JLabel();
+        pnlRight_1 = new javax.swing.JPanel();
+        lblHomePage = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         pnlRight_2 = new javax.swing.JPanel();
         lblLogo1 = new javax.swing.JLabel();
         pnlRight_3 = new javax.swing.JPanel();
         lblLogo2 = new javax.swing.JLabel();
-        pnlRight_4 = new javax.swing.JPanel();
+        pnlRight_5 = new javax.swing.JPanel();
         lblB = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblLogo3 = new javax.swing.JLabel();
@@ -71,6 +121,8 @@ public class MainFrameUser extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        pnlLeft_5 = new javax.swing.JPanel();
+        lblR_5 = new javax.swing.JLabel();
         pnlLeft_4 = new javax.swing.JPanel();
         lblR_4 = new javax.swing.JLabel();
         pnlLeft_3 = new javax.swing.JPanel();
@@ -101,16 +153,42 @@ public class MainFrameUser extends javax.swing.JFrame {
         });
         pnlMain_2.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 5, -1, -1));
 
-        pnlRight_1.setBackground(new java.awt.Color(249, 234, 208));
-        pnlRight_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlRight_4.setBackground(new java.awt.Color(197, 186, 165));
+        pnlRight_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblEditPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/edit.png"))); // NOI18N
-        lblEditPass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEditPassMouseClicked(evt);
+        btnUI.setBackground(new java.awt.Color(249, 234, 208));
+        btnUI.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        btnUI.setText("Update Information");
+        btnUI.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnUI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUIActionPerformed(evt);
             }
         });
-        pnlRight_1.add(lblEditPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 303, -1, -1));
+        pnlRight_4.add(btnUI, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 500, 190, 40));
+
+        lblPI.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
+        lblPI.setForeground(new java.awt.Color(255, 255, 255));
+        lblPI.setText("PERSONAL INFORMATION");
+        pnlRight_4.add(lblPI, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 225, -1, -1));
+
+        lblAI.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
+        lblAI.setForeground(new java.awt.Color(255, 255, 255));
+        lblAI.setText("Account Information");
+        pnlRight_4.add(lblAI, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 100, -1, -1));
+
+        lblN.setFont(new java.awt.Font("Stencil", 0, 36)); // NOI18N
+        pnlRight_4.add(lblN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        lblBD.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblBD.setForeground(new java.awt.Color(255, 255, 255));
+        lblBD.setText("Birthday:");
+        pnlRight_4.add(lblBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 420, -1, -1));
+
+        lblGen.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblGen.setForeground(new java.awt.Color(255, 255, 255));
+        lblGen.setText("Gender:");
+        pnlRight_4.add(lblGen, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 460, -1, -1));
 
         lblEditUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/edit.png"))); // NOI18N
         lblEditUser.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,40 +196,107 @@ public class MainFrameUser extends javax.swing.JFrame {
                 lblEditUserMouseClicked(evt);
             }
         });
-        pnlRight_1.add(lblEditUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 263, -1, -1));
+        pnlRight_4.add(lblEditUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 145, -1, -1));
 
-        lblUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        lblUser.setForeground(new java.awt.Color(255, 255, 255));
-        lblUser.setText("Username:");
-        pnlRight_1.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 260, -1, -1));
+        txtLN.setEditable(false);
+        txtLN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtLN.setForeground(new java.awt.Color(255, 255, 255));
+        txtLN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtLN, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 180, -1));
 
         lblPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         lblPass.setForeground(new java.awt.Color(255, 255, 255));
         lblPass.setText("Password:");
-        pnlRight_1.add(lblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 300, -1, -1));
-
-        txtUser.setEditable(false);
-        txtUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        txtUser.setForeground(new java.awt.Color(255, 255, 255));
-        txtUser.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        pnlRight_1.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 260, 180, -1));
+        pnlRight_4.add(lblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
 
         txtPass.setEditable(false);
         txtPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtPass.setForeground(new java.awt.Color(255, 255, 255));
         txtPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        pnlRight_1.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 300, 180, -1));
+        pnlRight_4.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 180, -1));
 
-        lblAI.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
-        lblAI.setForeground(new java.awt.Color(255, 255, 255));
-        lblAI.setText("Account Information");
-        pnlRight_1.add(lblAI, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 190, -1, -1));
+        lblFN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblFN.setForeground(new java.awt.Color(255, 255, 255));
+        lblFN.setText("First Name:");
+        pnlRight_4.add(lblFN, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 260, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/panelmiddle_5.png"))); // NOI18N
-        pnlRight_1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        lblEditPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/edit.png"))); // NOI18N
+        lblEditPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditPassMouseClicked(evt);
+            }
+        });
+        pnlRight_4.add(lblEditPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 185, -1, -1));
 
-        lblN.setFont(new java.awt.Font("Stencil", 0, 36)); // NOI18N
-        pnlRight_1.add(lblN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        txtMN.setEditable(false);
+        txtMN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtMN.setForeground(new java.awt.Color(255, 255, 255));
+        txtMN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtMN, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 180, -1));
+
+        txtBD.setEditable(false);
+        txtBD.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtBD.setForeground(new java.awt.Color(255, 255, 255));
+        txtBD.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 120, -1));
+
+        lblA.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblA.setForeground(new java.awt.Color(255, 255, 255));
+        lblA.setText("Age:");
+        pnlRight_4.add(lblA, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, -1, -1));
+
+        lblLN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblLN.setForeground(new java.awt.Color(255, 255, 255));
+        lblLN.setText("Last Name:");
+        pnlRight_4.add(lblLN, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 300, -1, -1));
+
+        txtAge.setEditable(false);
+        txtAge.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtAge.setForeground(new java.awt.Color(255, 255, 255));
+        txtAge.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, 80, -1));
+
+        txtFN.setEditable(false);
+        txtFN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtFN.setForeground(new java.awt.Color(255, 255, 255));
+        txtFN.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtFN, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 180, -1));
+
+        txtUser.setEditable(false);
+        txtUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtUser.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 180, -1));
+
+        lblMN.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblMN.setForeground(new java.awt.Color(255, 255, 255));
+        lblMN.setText("Middle Name:");
+        pnlRight_4.add(lblMN, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 340, -1, -1));
+
+        lblUser.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblUser.setText("Username:");
+        pnlRight_4.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, -1, -1));
+
+        txtGen.setEditable(false);
+        txtGen.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtGen.setForeground(new java.awt.Color(255, 255, 255));
+        txtGen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        pnlRight_4.add(txtGen, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, 80, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/panelmiddle_6.png"))); // NOI18N
+        pnlRight_4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        lblLogo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
+        pnlRight_4.add(lblLogo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+
+        pnlMain_2.add(pnlRight_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
+
+        pnlRight_1.setBackground(new java.awt.Color(249, 234, 208));
+        pnlRight_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblHomePage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/homePage_2.png"))); // NOI18N
+        pnlRight_1.add(lblHomePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
         pnlRight_1.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
@@ -174,8 +319,8 @@ public class MainFrameUser extends javax.swing.JFrame {
 
         pnlMain_2.add(pnlRight_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
-        pnlRight_4.setBackground(new java.awt.Color(197, 186, 165));
-        pnlRight_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlRight_5.setBackground(new java.awt.Color(249, 234, 208));
+        pnlRight_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblB.setText("Log Out");
         lblB.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -183,15 +328,15 @@ public class MainFrameUser extends javax.swing.JFrame {
                 lblBMouseClicked(evt);
             }
         });
-        pnlRight_4.add(lblB, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
+        pnlRight_5.add(lblB, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
 
         jLabel2.setText("User");
-        pnlRight_4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, -1, -1));
+        pnlRight_5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, -1, -1));
 
         lblLogo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/celo tarangkahan_4.png"))); // NOI18N
-        pnlRight_4.add(lblLogo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
+        pnlRight_5.add(lblLogo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, -1));
 
-        pnlMain_2.add(pnlRight_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
+        pnlMain_2.add(pnlRight_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 600));
 
         getContentPane().add(pnlMain_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 600, 600));
 
@@ -212,11 +357,33 @@ public class MainFrameUser extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contents/line_2.png"))); // NOI18N
         pnlMain_1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 435, -1, -1));
 
+        pnlLeft_5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblR_5.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblR_5.setForeground(new java.awt.Color(255, 255, 255));
+        lblR_5.setText("ABOUT");
+        lblR_5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblR_5FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblR_5FocusLost(evt);
+            }
+        });
+        lblR_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblR_5MouseClicked(evt);
+            }
+        });
+        pnlLeft_5.add(lblR_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
+
+        pnlMain_1.add(pnlLeft_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
+
         pnlLeft_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblR_4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         lblR_4.setForeground(new java.awt.Color(255, 255, 255));
-        lblR_4.setText("ABOUT");
+        lblR_4.setText("ACCOUNT");
         lblR_4.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 lblR_4FocusGained(evt);
@@ -232,7 +399,7 @@ public class MainFrameUser extends javax.swing.JFrame {
         });
         pnlLeft_4.add(lblR_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-        pnlMain_1.add(pnlLeft_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
+        pnlMain_1.add(pnlLeft_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 180, 40));
 
         pnlLeft_3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -318,18 +485,14 @@ public class MainFrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseEntered
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-        Closer();
+        System.exit(0);
     }//GEN-LAST:event_btnCloseMouseClicked
-
-    private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
-        LogOut(jLabel2.getText() + "");
-    }//GEN-LAST:event_lblBMouseClicked
 
     private void lblR_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblR_1MouseClicked
         flag = 1;
         lblR_1.requestFocus();
         pnlRight_1.setVisible(true);
-        lblN.setText("Welcome, " + jLabel2.getText());
+        lblN.setText("WELCOME, " + jLabel2.getText().toUpperCase() + "!");
         j = 1;
     }//GEN-LAST:event_lblR_1MouseClicked
 
@@ -421,8 +584,48 @@ public class MainFrameUser extends javax.swing.JFrame {
     }//GEN-LAST:event_lblEditUserMouseClicked
 
     private void lblEditPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditPassMouseClicked
-        
+        ChangePasswordUser cpu = new ChangePasswordUser();
+        cpu.setUsername(txtUser.getText());
+        cpu.setPass(password);
+        cpu.setUsername(jLabel2.getText());
+        cpu.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_lblEditPassMouseClicked
+
+    private void lblR_5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_5FocusGained
+        Changer(flag);
+    }//GEN-LAST:event_lblR_5FocusGained
+
+    private void lblR_5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblR_5FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblR_5FocusLost
+
+    private void lblR_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblR_5MouseClicked
+        flag = 5;
+        lblR_5.requestFocus();
+        pnlRight_5.setVisible(true);
+        j = 5;
+    }//GEN-LAST:event_lblR_5MouseClicked
+
+    private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
+        LogOut(jLabel2.getText());
+    }//GEN-LAST:event_lblBMouseClicked
+
+    private void btnUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUIActionPerformed
+        UpdateInfo ui = new UpdateInfo();
+        ui.setInfo(txtUser.getText(), password, txtFN.getText(), txtLN.getText(), txtMN.getText(), txtAge.getText(), txtBD.getText(), txtGen.getText());
+        ui.setVisible(true);
+        try {
+            sqlconnect();
+            String sqll = "update infologin set pChange = ? where username = ?";
+            PreparedStatement pst = con.prepareStatement(sqll);
+            pst.setInt(1, 2);
+            pst.setString(2, txtUser.getText());
+            pst.executeUpdate();
+        } catch (Exception e) {
+        }
+        setVisible(false);
+    }//GEN-LAST:event_btnUIActionPerformed
 
     /**
      * @param args the command line arguments
@@ -469,36 +672,55 @@ public class MainFrameUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;
+    private javax.swing.JButton btnUI;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblAI;
     private javax.swing.JLabel lblB;
+    private javax.swing.JLabel lblBD;
     private javax.swing.JLabel lblEditPass;
     private javax.swing.JLabel lblEditUser;
+    private javax.swing.JLabel lblFN;
+    private javax.swing.JLabel lblGen;
+    private javax.swing.JLabel lblHomePage;
+    private javax.swing.JLabel lblLN;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblLogo1;
     private javax.swing.JLabel lblLogo2;
     private javax.swing.JLabel lblLogo3;
+    private javax.swing.JLabel lblLogo4;
+    private javax.swing.JLabel lblMN;
     private javax.swing.JLabel lblN;
+    private javax.swing.JLabel lblPI;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblR_1;
     private javax.swing.JLabel lblR_2;
     private javax.swing.JLabel lblR_3;
     private javax.swing.JLabel lblR_4;
+    private javax.swing.JLabel lblR_5;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlLeft_1;
     private javax.swing.JPanel pnlLeft_2;
     private javax.swing.JPanel pnlLeft_3;
     private javax.swing.JPanel pnlLeft_4;
+    private javax.swing.JPanel pnlLeft_5;
     private javax.swing.JPanel pnlMain_1;
     private javax.swing.JPanel pnlMain_2;
     private javax.swing.JPanel pnlRight_1;
     private javax.swing.JPanel pnlRight_2;
     private javax.swing.JPanel pnlRight_3;
     private javax.swing.JPanel pnlRight_4;
+    private javax.swing.JPanel pnlRight_5;
+    private javax.swing.JTextField txtAge;
+    private javax.swing.JTextField txtBD;
+    private javax.swing.JTextField txtFN;
+    private javax.swing.JTextField txtGen;
+    private javax.swing.JTextField txtLN;
+    private javax.swing.JTextField txtMN;
     private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
@@ -538,12 +760,12 @@ public class MainFrameUser extends javax.swing.JFrame {
 
     public void Closer() {
 
-        String sql = "update infologin set status = ? where status = ?";
+        String sql = "update infologin set status = ? where username = ?";
         sqlconnect();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, 0);
-            pst.setInt(2, 1);
+            pst.setString(2, txtUser.getText());
             pst.executeUpdate();
             System.exit(0);
         } catch (Exception e) {
@@ -572,7 +794,7 @@ public class MainFrameUser extends javax.swing.JFrame {
     public void Changer(int a) {
         switch (a) {
             case 1:
-                lblN.setText("Welcome, " + jLabel2.getText());
+                lblN.setText("WELCOME, " + jLabel2.getText().toUpperCase() + "!");
                 pnlLeft_1.setBackground(Color.GRAY);
                 pnlLeft_2.setBackground(customColor);
                 pnlRight_2.setVisible(false);
@@ -580,6 +802,8 @@ public class MainFrameUser extends javax.swing.JFrame {
                 pnlRight_3.setVisible(false);
                 pnlLeft_4.setBackground(customColor);
                 pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
                 flag = 0;
                 break;
             case 2:
@@ -590,6 +814,8 @@ public class MainFrameUser extends javax.swing.JFrame {
                 pnlRight_3.setVisible(false);
                 pnlLeft_4.setBackground(customColor);
                 pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
                 flag = 0;
                 break;
             case 3:
@@ -600,6 +826,8 @@ public class MainFrameUser extends javax.swing.JFrame {
                 pnlRight_2.setVisible(false);
                 pnlLeft_4.setBackground(customColor);
                 pnlRight_4.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
                 flag = 0;
                 break;
             case 4:
@@ -610,6 +838,20 @@ public class MainFrameUser extends javax.swing.JFrame {
                 pnlRight_3.setVisible(false);
                 pnlLeft_2.setBackground(customColor);
                 pnlRight_2.setVisible(false);
+                pnlLeft_5.setBackground(customColor);
+                pnlRight_5.setVisible(false);
+                flag = 0;
+                break;
+            case 5:
+                pnlLeft_5.setBackground(Color.GRAY);
+                pnlLeft_1.setBackground(customColor);
+                pnlRight_1.setVisible(false);
+                pnlLeft_3.setBackground(customColor);
+                pnlRight_3.setVisible(false);
+                pnlLeft_2.setBackground(customColor);
+                pnlRight_2.setVisible(false);
+                pnlLeft_4.setBackground(customColor);
+                pnlRight_4.setVisible(false);
                 flag = 0;
                 break;
             default:
@@ -636,6 +878,10 @@ public class MainFrameUser extends javax.swing.JFrame {
                 lblR_4.requestFocus();
                 pnlRight_4.setVisible(true);
                 break;
+            case 5:
+                lblR_5.requestFocus();
+                pnlRight_5.setVisible(true);
+                break;
             default:
                 break;
         }
@@ -644,9 +890,83 @@ public class MainFrameUser extends javax.swing.JFrame {
     public void getUsername(String x) {
         jLabel2.setText(x);
         functions();
+        setField();
     }
-    
-    public void setPassword (String y) {
+
+    public void setPassword(String y) {
         password = y;
+    }
+
+    public void setField() {
+        sqlconnect();
+        try {
+            Statement st = con.createStatement();
+            String sql = "select * from infouser";
+            ResultSet rs = st.executeQuery(sql);
+            String sqll = "update infologin set pChange = ? where status = ?";
+            PreparedStatement pst = con.prepareStatement(sqll);
+            pst.setInt(1, 2);
+            pst.setInt(2, 1);
+            pst.executeUpdate();
+
+            while (rs.next()) {
+                if (rs.getString("username").equals(jLabel2.getText())) {
+                    txtFN.setText(rs.getString("firstName"));
+                    txtLN.setText(rs.getString("lastName"));
+                    txtMN.setText(rs.getString("middleName"));
+                    txtAge.setText(rs.getString("age"));
+                    txtBD.setText(rs.getString("birthday"));
+                    txtGen.setText(rs.getString("gender"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in changePassword: " + e);
+        }
+    }
+
+    public void loggingIn() {
+        sqlconnect();
+        String sql = "select * from infologin";
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                if (rs.getInt("status") == 1) {
+                    jLabel2.setText(rs.getString("username"));
+                    password = decrypt(rs.getString("password"));
+                    functions();
+                }
+            }
+            setField();
+
+        } catch (Exception e) {
+            System.out.println("Error in loggingIn: " + e);
+        }
+
+    }
+
+    final String ALGORITHM = "AES";
+    final String KEY = "1Hbfh667adfDEJ78";
+
+    public String decrypt(String value) {
+
+        String decryptedValue = "";
+        try {
+            Key key = generateKey();
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] decryptedValue64 = new BASE64Decoder().decodeBuffer(value);
+            byte[] decryptedByteValue = cipher.doFinal(decryptedValue64);
+            decryptedValue = new String(decryptedByteValue, "utf-8");
+        } catch (Exception e) {
+            System.err.println("Error in Decrypt: " + e);
+        }
+        return decryptedValue;
+    }
+
+    public Key generateKey() throws Exception {
+        Key key = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
+        return key;
     }
 }

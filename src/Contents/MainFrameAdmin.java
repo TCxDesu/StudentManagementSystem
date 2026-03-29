@@ -33,6 +33,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     int y = -1;
     int z = 0;
     int j = 1;
+    int k = 0;
     int[] selected;
 
     Connection con;
@@ -50,7 +51,8 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     public MainFrameAdmin() {
         initComponents();
         functions();
-
+        Methods m = new Methods();
+        m.usernames();
     }
 
     /**
@@ -75,6 +77,16 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         pnlRight_3 = new javax.swing.JPanel();
         lblLogo6 = new javax.swing.JLabel();
         pnlRight_4 = new javax.swing.JPanel();
+        pnlSort = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        lblSort = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         icSearch = new javax.swing.JLabel();
         scrollP_1 = new javax.swing.JScrollPane();
@@ -187,6 +199,57 @@ public class MainFrameAdmin extends javax.swing.JFrame {
 
         pnlRight_4.setBackground(new java.awt.Color(197, 186, 165));
         pnlRight_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlSort.setBackground(new java.awt.Color(249, 234, 208));
+        pnlSort.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlSortMouseEntered(evt);
+            }
+        });
+        pnlSort.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Ascending");
+        pnlSort.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 5, -1, -1));
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Descending");
+        pnlSort.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 35, -1, -1));
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Username");
+        pnlSort.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 65, -1, -1));
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("First Name");
+        pnlSort.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 95, -1, -1));
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Last Name");
+        pnlSort.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 125, -1, -1));
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Middle Initial");
+        pnlSort.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 155, -1, -1));
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Account Status");
+        pnlSort.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 185, -1, -1));
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Level of Access");
+        pnlSort.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 215, -1, -1));
+
+        pnlRight_4.add(pnlSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 100, 240));
+
+        lblSort.setForeground(new java.awt.Color(255, 255, 255));
+        lblSort.setText("SORT");
+        lblSort.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSortMouseClicked(evt);
+            }
+        });
+        pnlRight_4.add(lblSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 42, -1, -1));
 
         txtSearch.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtSearch.setForeground(new java.awt.Color(255, 255, 255));
@@ -943,6 +1006,20 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlMain_1MouseWheelMoved
 
+    private void lblSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSortMouseClicked
+        if (k == 0) {
+            pnlSort.setVisible(true);
+            k = 1;
+        } else {
+            pnlSort.setVisible(false);
+            k = 0;
+        }
+    }//GEN-LAST:event_lblSortMouseClicked
+
+    private void pnlSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlSortMouseEntered
+        pnlSort.requestFocus();
+    }//GEN-LAST:event_pnlSortMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -989,12 +1066,20 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuItem delete;
     private javax.swing.JLabel icSearch;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblAdmin;
     private javax.swing.JLabel lblB;
@@ -1010,6 +1095,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel lblR_4;
     private javax.swing.JLabel lblR_5;
     private javax.swing.JLabel lblR_6;
+    private javax.swing.JLabel lblSort;
     private javax.swing.JLabel lblU;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlLeft_1;
@@ -1026,6 +1112,7 @@ public class MainFrameAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel pnlRight_4;
     private javax.swing.JPanel pnlRight_5;
     private javax.swing.JPanel pnlRight_6;
+    private javax.swing.JPanel pnlSort;
     private javax.swing.JPopupMenu popBlock;
     private javax.swing.JPopupMenu popDelete;
     private javax.swing.JPasswordField pwdPass;
@@ -1288,9 +1375,11 @@ public class MainFrameAdmin extends javax.swing.JFrame {
         lblUser.setFocusable(false);
         txtUser.setFocusable(false);
         pwdPass.setFocusable(false);
+        pnlSort.setVisible(false);
+//        pnlSort.setBackground(new java.awt.Color(249, 234, 208, 100));
+        txtSearch.setBackground(new java.awt.Color(0, 0, 0, 1));
         tblAccounts.setDefaultEditor(Object.class, null);
         new SetTable().fixTable(scrollP_1);
-        txtSearch.setBackground(new java.awt.Color(0, 0, 0, 1));
 
     }
 
@@ -1346,30 +1435,30 @@ public class MainFrameAdmin extends javax.swing.JFrame {
             switch (x) {
                 case 0:
                     try {
-                        String sql = "update infologin set block = ? where username = ?";
-                        PreparedStatement pst;
-                        pst = con.prepareStatement(sql);
-                        pst.setInt(1, 0);
-                        pst.setString(2, username);
-                        pst.executeUpdate();
-                        JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Unblocked");
-                    } catch (Exception e) {
-                        System.out.println("Error in updateBlock case 0: " + e);
-                    }
-                    break;
+                    String sql = "update infologin set block = ? where username = ?";
+                    PreparedStatement pst;
+                    pst = con.prepareStatement(sql);
+                    pst.setInt(1, 0);
+                    pst.setString(2, username);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Unblocked");
+                } catch (Exception e) {
+                    System.out.println("Error in updateBlock case 0: " + e);
+                }
+                break;
                 case 3:
                     try {
-                        String sql = "update infologin set block = ? where username = ?";
-                        PreparedStatement pst;
-                        pst = con.prepareStatement(sql);
-                        pst.setInt(1, 3);
-                        pst.setString(2, username);
-                        pst.executeUpdate();
-                        JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Blocked");
-                    } catch (Exception e) {
-                        System.out.println("Error in updateBlock case 3: " + e);
-                    }
-                    break;
+                    String sql = "update infologin set block = ? where username = ?";
+                    PreparedStatement pst;
+                    pst = con.prepareStatement(sql);
+                    pst.setInt(1, 3);
+                    pst.setString(2, username);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Blocked");
+                } catch (Exception e) {
+                    System.out.println("Error in updateBlock case 3: " + e);
+                }
+                break;
             }
             st = new SetTable(tblAccounts);
             st.addCol();
@@ -1385,26 +1474,40 @@ public class MainFrameAdmin extends javax.swing.JFrame {
 
     public void startDelete(String username) {
         sqlconnect();
+        try {
+            Statement st = con.createStatement();
+            String sql2 = "select * from infologin";
+            ResultSet rs = st.executeQuery(sql2);
 
-        int i = JOptionPane.showConfirmDialog(rootPane, "Do You Want To Delete " + username + "'s Account?");
+            while (rs.next()) {
+                if (rs.getInt("status") == 0) {
+                    int i = JOptionPane.showConfirmDialog(rootPane, "Do You Want To Delete " + username + "'s Account?");
 
-        if (i == 0) {
-            try {
-                String sql = "DELETE FROM infologin WHERE username = ?;";
-                PreparedStatement pst;
-                pst = con.prepareStatement(sql);
-                pst.setString(1, username);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Deleted");
-            } catch (Exception e) {
-                System.out.println("Error in updateBlock case 0: " + e);
+                    if (i == 0) {
+                        try {
+                            String sql = "DELETE FROM infologin WHERE username = ?;";
+                            PreparedStatement pst;
+                            pst = con.prepareStatement(sql);
+                            pst.setString(1, username);
+                            pst.executeUpdate();
+                            JOptionPane.showMessageDialog(rootPane, username + "'s Account Has Been Deleted");
+                        } catch (Exception e) {
+                            System.out.println("Error in updateBlock case 0: " + e);
+                        }
+
+                        SetTable sts = new SetTable(tblAccounts);
+                        sts.addCol();
+                        sts.addRow();
+                        txtSearch.setText("");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, username + "'s Account Can't Be Deleted \n \nREASON: The Account Is Logged In");
+                    break;
+                }
             }
-
-            st = new SetTable(tblAccounts);
-            st.addCol();
-            st.addRow();
-            txtSearch.setText("");
+        } catch (Exception e) {
         }
+
     }
 
     public void searchForTheOne(String IcingSaIbabawNgCupcakeKo) {

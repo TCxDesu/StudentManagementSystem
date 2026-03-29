@@ -64,7 +64,6 @@ public class ChangeUsername extends javax.swing.JFrame {
         btnCU = new javax.swing.JButton();
         txtNU = new javax.swing.JTextField();
         txtOU = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         lblS_1 = new javax.swing.JLabel();
         lblH_1 = new javax.swing.JLabel();
         lblS_2 = new javax.swing.JLabel();
@@ -117,7 +116,7 @@ public class ChangeUsername extends javax.swing.JFrame {
         txtNU.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtNU.setForeground(java.awt.Color.gray);
         txtNU.setText("Enter New Username");
-        txtNU.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        txtNU.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtNU.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtNUCaretUpdate(evt);
@@ -141,7 +140,7 @@ public class ChangeUsername extends javax.swing.JFrame {
         txtOU.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         txtOU.setForeground(java.awt.Color.gray);
         txtOU.setText("Enter Old Username");
-        txtOU.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+        txtOU.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtOU.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtOUCaretUpdate(evt);
@@ -161,10 +160,6 @@ public class ChangeUsername extends javax.swing.JFrame {
             }
         });
         jPanel2.add(txtOU, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 35, 310, 25));
-
-        jLabel3.setForeground(new java.awt.Color(36, 56, 50));
-        jLabel3.setText("Change Username");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 160, -1, -1));
 
         lblS_1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         lblS_1.setForeground(java.awt.Color.gray);
@@ -263,7 +258,7 @@ public class ChangeUsername extends javax.swing.JFrame {
         if (newUser.trim().length() != 0 && !newUser.equals("Enter New Username")) {// may trim dito kanina
             txtNU.setText(newUser);
         } else {
-            txtNU.setText("Enter Username");
+            txtNU.setText("Enter New Username");
             newUser = "";
         }
     }//GEN-LAST:event_txtNUFocusLost
@@ -360,7 +355,6 @@ public class ChangeUsername extends javax.swing.JFrame {
     private javax.swing.JLabel btnClose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblH_1;
@@ -385,11 +379,16 @@ public class ChangeUsername extends javax.swing.JFrame {
         try {
 
             String sql = "update infologin set username = ? where username = ?";
+            String sqll = "update infouser set username = ? where username = ?";
             PreparedStatement pst = con.prepareStatement(sql);
+            PreparedStatement pstt = con.prepareStatement(sqll);
             LogIn li = new LogIn();
             pst.setString(1, newUser);
             pst.setString(2, txtOU.getText());
+            pstt.setString(1, newUser);
+            pstt.setString(2, txtOU.getText());
             pst.executeUpdate();
+            pstt.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Username Changed!");
             MainFrameUser mfu = new MainFrameUser();
             mfu.setPassword(password);

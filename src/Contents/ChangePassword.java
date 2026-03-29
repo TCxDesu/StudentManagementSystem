@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -63,7 +63,6 @@ public class ChangePassword extends javax.swing.JFrame {
         btnCP = new javax.swing.JButton();
         pwdCCP = new javax.swing.JPasswordField();
         pwdCP = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
         lblS_1 = new javax.swing.JLabel();
         lblH_1 = new javax.swing.JLabel();
         lblS_2 = new javax.swing.JLabel();
@@ -172,10 +171,6 @@ public class ChangePassword extends javax.swing.JFrame {
             }
         });
         jPanel2.add(pwdCP, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 35, 310, -1));
-
-        jLabel3.setForeground(new java.awt.Color(36, 56, 50));
-        jLabel3.setText("Change Password");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 160, -1, -1));
 
         lblS_1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         lblS_1.setForeground(java.awt.Color.gray);
@@ -377,7 +372,6 @@ public class ChangePassword extends javax.swing.JFrame {
     private javax.swing.JLabel btnClose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblH_1;
@@ -403,16 +397,16 @@ public class ChangePassword extends javax.swing.JFrame {
 
             String sql = "update infologin set password = ? where status = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            LogIn li = new LogIn();
+            MethodsLogIn li = new MethodsLogIn();
             String c = li.encrypt(pwdCCP.getText());
             pst.setString(1, c);
             pst.setInt(2, 1);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(rootPane, "Password Changed!");
-            MainFrameUser mfu = new MainFrameUser();
-            mfu.setPassword(newPass);
-            mfu.getUsername(getUsername());
-            mfu.setVisible(true);
+            UpdateInfo ui = new UpdateInfo();
+            ui.setPassword(newPass);
+            ui.getUsername(getUsername());
+            ui.setVisible(true);
             dispose();
 
         } catch (Exception e) {
@@ -426,7 +420,7 @@ public class ChangePassword extends javax.swing.JFrame {
 
             String sql = "update infologin set pChange = ? where status = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, 1);
+            pst.setInt(1, 2);
             pst.setInt(2, 1);
             pst.executeUpdate();
 //            JOptionPane.showMessageDialog(rootPane, "Password Changed!");
