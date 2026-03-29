@@ -118,47 +118,45 @@ v1.1.3
     - Table Can Be Saved To PDF
 
 FOUND and FIXED BUGS
-v1.0.1    - (Not Fixed) TextField And PasswordField Auto Clears 
+- v1.0.1    - (Not Fixed) TextField And PasswordField Auto Clears 
                         If A User Attempts To Log In And Fails
-v1.0.5.3  - (Not Fixed) Account That Is Logged In Or Is Being Used Can Be Deleted Or Blocked
-v1.0.5.5  - (Not Fixed) UpdateInfo not working properly (currently under maintenance)
-v1.1.0    - (Not Fixed) Logged In Account Won't Log In Properly 
-v1.1.1    - (Not Fixed) Admin Username shows even if the account is being used
-v1.1.1    - (Not Fixed) Multiple Block/Delete/Unblock
-v1.1.1    - (Not Fixed) Admin LogOut Not on Audit Trail
-
-
-
-v1.0.2    - (Fixed) A Bug With The Block Function
-v1.0.3a   - (Fixed) A Minor Bug With The PowerUser Function
-v1.0.3b   - (Fixed) A Bug With The PowerUser Function
-v1.0.3b   - (Fixed) A Bug With The Block Function
-v1.0.4    - (Fixed) A Bug From Tabbed Pane in Admin Main Frame
-v1.0.4    - (Fixed) When An Admin Logged In And Close The Program, The Admin Won't Be Able To Log Back In
-v1.0.4    - (Fixed) System Slows Down At First Attempt Log In
-v1.0.5    - (Fixed) Validation Message When Admin Clicked Back On Admin Frame
-v1.0.5.2  - (Fixed) Log In Where If An User Is Already Signed In And An Admin Tried To Log 
+- v1.0.5.3  - (Not Fixed) Account That Is Logged In Or Is Being Used Can Be Deleted Or Blocked
+- v1.0.5.5  - (Not Fixed) UpdateInfo not working properly (currently under maintenance)
+- v1.1.0    - (Not Fixed) Logged In Account Won't Log In Properly 
+- v1.1.1    - (Not Fixed) Admin Username shows even if the account is being used
+- v1.1.1    - (Not Fixed) Multiple Block/Delete/Unblock
+- v1.1.1    - (Not Fixed) Admin LogOut Not on Audit Trail
+- v1.0.2    - (Fixed) A Bug With The Block Function
+- v1.0.3   - (Fixed) A Minor Bug With The PowerUser Function
+- v1.0.3   - (Fixed) A Bug With The PowerUser Function
+- v1.0.3   - (Fixed) A Bug With The Block Function
+- v1.0.4    - (Fixed) A Bug From Tabbed Pane in Admin Main Frame
+- v1.0.4    - (Fixed) When An Admin Logged In And Close The Program, The Admin Won't Be Able To Log Back In
+- v1.0.4    - (Fixed) System Slows Down At First Attempt Log In
+- v1.0.5    - (Fixed) Validation Message When Admin Clicked Back On Admin Frame
+- v1.0.5.2  - (Fixed) Log In Where If An User Is Already Signed In And An Admin Tried To Log 
                     In, The Admin Won't Be Able To Log In
-v1.0.5.2  - (Fixed) Can't Detect If An Added Account Is Existing
-v1.0.5.3  - (Fixed) Block Count Still Stacked From Other Account
-v1.0.5.4  - (Fixed) Wrong Colors On User Frame When User Enters Main Frame From Change Password Frame
-v1.0.5.4  - (Fixed) Multiple Logged In User Account Get Affected When One Account Signed Out
-v1.0.5.5  - (Fixed) "Username does not exist" validation does not show 
+- v1.0.5.2  - (Fixed) Can't Detect If An Added Account Is Existing
+- v1.0.5.3  - (Fixed) Block Count Still Stacked From Other Account
+- v1.0.5.4  - (Fixed) Wrong Colors On User Frame When User Enters Main Frame From Change Password Frame
+- v1.0.5.4  - (Fixed) Multiple Logged In User Account Get Affected When One Account Signed Out
+- v1.0.5.5  - (Fixed) "Username does not exist" validation does not show 
                     when user tried to log in with non existing account
-v1.1.0    - (Fixed) Problem with system can't handle multiple user log in
-v1.1.1    - (Fixed) "Username and Password must not be blank" validation doesn't show up
+- v1.1.0    - (Fixed) Problem with system can't handle multiple user log in
+- v1.1.1    - (Fixed) "Username and Password must not be blank" validation doesn't show up
 
 
 RECORD LOG
-v1.0.0 - Start of creating system
+- v1.0.0 - Start of creating system
 
-v1.0.5.5 - Most Bugged System Version
+- v1.0.5.5 - Most Bugged System Version
     
 
 
 
 SAMPLE TABLE ON MY DATABASE
-as of(v1.0.0 -> v1.0.3a)
+- as of(v1.0.0 -> v1.0.3a)
+- 
 +----------+--------------------------+---------+--------+-------+------------+
 | Username | Password                 | isAdmin | status | block | Date       |
 +----------+--------------------------+---------+--------+-------+------------+
@@ -167,7 +165,8 @@ as of(v1.0.0 -> v1.0.3a)
 | user3    | D2U06T4KBLxCkYFEbHwnqw== |       0 |      0 |     0 | 2023-03-06 |
 +----------+--------------------------+---------+--------+-------+------------+
 
-as of(v1.0.3b)
+- as of(v1.0.3b)
+- 
 +----------+--------------------------+---------+--------+-------+------------+
 | Username | Password                 | isAdmin | Status | Block | Date       |
 +----------+--------------------------+---------+--------+-------+------------+
@@ -175,12 +174,10 @@ as of(v1.0.3b)
 | user1    | lrZNofhNfwtCCupoVU9eJw== |       0 |      0 |     0 | 2023-03-09 |
 +----------+--------------------------+---------+--------+-------+------------+
 
-as of(v1.0.4 -> current)
+- as of(v1.0.4 -> current)
 
-infologin table 
-|
-V
-
+- infologin table
+- 
 +----------+--------------------------+---------+---------+--------+-------+------------+
 | Username | Password                 | pChange | isAdmin | status | block | Date       |
 +----------+--------------------------+---------+---------+--------+-------+-----------+
@@ -191,10 +188,8 @@ V
 | user4    | lrZNofhNfwtCCupoVU9eJw== |       0 |       0 |      0 |     3 | 2023-03-16 |
 +----------+--------------------------+---------+---------+--------+-------+-----------+
 
-infouser table 
-|
-V
-
+- infouser table
+- 
 +----------+-----------+----------+------------+------+----------+--------+
 | username | firstName | lastName | middleName | age  | birthday | gender |
 +----------+-----------+----------+------------+------+----------+--------+
@@ -204,9 +199,8 @@ V
 | user3    | NULL      | NULL     | NULL       | NULL | NULL     | NULL   |
 +----------+-----------+----------+------------+------+----------+--------+
 
-audit table
-|
-V
+- audit table
+- 
 +---------------------+--------+------+--------------------------+
 | Time                | User   |Admin | Action                   |
 +---------------------+--------+------+--------------------------+
